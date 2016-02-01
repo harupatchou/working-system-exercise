@@ -1,0 +1,9 @@
+.idea/
+skill_check.iml
+target/classes/jp/co/rakus/tech/SkillCheckServlet$1.class
+target/maven-status/
+target/skill_check-0.0.1-SNAPSHOT.war
+target/skill_check-0.0.1-SNAPSHOT/
+
+
+/target/
