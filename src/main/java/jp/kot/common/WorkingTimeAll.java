@@ -1,5 +1,9 @@
 package main.java.jp.kot.common;
 
+/**
+ * 総労働・残業時間
+ * @author ueno
+ **/
 public class WorkingTimeAll {
 	//総労働時間
 	private Integer workingTimeAll;

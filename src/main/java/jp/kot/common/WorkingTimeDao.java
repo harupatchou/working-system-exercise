@@ -4,28 +4,47 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import resources.DBManager;
 
-
+/**
+ *労働時間関連DAO
+ * @author ueno
+ **/
 public class WorkingTimeDao {
 
 	private static String tableName = "-----";
 
+	/*総労働時間取得*/
 	public static WorkingTimeAll WorkingTimeAll(String employeeName){
 		String sql = "SELECT * FROM " + tableName;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
-			//途中～
+			//総労働時間格納用
 			WorkingTimeAll workingTimeAll = new WorkingTimeAll();
 
 			try(ResultSet rs = pstmt.executeQuery()){
-				WorkingTime workingTime = new WorkingTime();
-				while(rs.next()){
 
+				//労働時間格納用リスト
+				List<Integer> workingTimeList = new ArrayList<>();
+				while(rs.next()){
+					WorkingTime workingTime = new WorkingTime();
+					workingTime.setWorkTime(rs.getInt("working_time"));
+					//変数が増えることを見越してあえてこの書き方
+					workingTimeList.add(workingTime.getWorkTime());
 				}
-				return null;
+
+				//総労働時間算出
+				int total = 0;
+				for(int i = 0; i < workingTimeList.size(); i++){
+					total += workingTimeList.get(i);
+				}
+				workingTimeAll.setWorkingTimeAll(total);
+
+				return workingTimeAll;
 			}
 
 		}catch(SQLException e){

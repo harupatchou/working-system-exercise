@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin;
+package main.java.jp.kot.admin.calculation;
 
 import java.io.IOException;
 
@@ -26,10 +26,12 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		String name =req.getParameter("name");
+		String employeeName =req.getParameter("name");
+
+		req.setAttribute("workingTimeAll", CalculationWorkingTimeLogic.WorkingTimeAll(employeeName));
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/index.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/display.jsp");
 		rd.forward(req, resp);
 	}
 
