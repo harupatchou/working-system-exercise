@@ -9,13 +9,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
   <head>
-    <title>スキルチェック</title>
+    <title>kot</title>
   </head>
   <body>
-  <form action="/skill_check/SkillCheckServlet" method="get">
-  <span>社員番号と</span><input type="text" name="hr_code"/>
-  <span>名前を入れてください。</span><input type="text" name="name"/>
-<input type="submit" value="スキルチェックを始める"/>
-  </form>
+  s
   </body>
 </html>

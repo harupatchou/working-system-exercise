@@ -12,10 +12,6 @@
     <title>スキルチェック</title>
   </head>
   <body>
-  <form action="/skill_check_servlet" method="get">
-  <span>社員番号と</span><input type="text" name="hr_code"/>
-  <span>名前を入れてください。</span><input type="text" name="name"/>
-<input type="submit" value="スキルチェックを始める"/>
-  </form>
+  a
   </body>
 </html>
