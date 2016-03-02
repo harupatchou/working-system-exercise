@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/KOT")
+@WebServlet("/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
 
 	@Override
@@ -29,7 +29,7 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		String name =req.getParameter("name");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/display.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/index.jsp");
 		rd.forward(req, resp);
 	}
 
