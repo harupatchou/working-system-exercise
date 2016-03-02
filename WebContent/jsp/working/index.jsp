@@ -5,7 +5,7 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
     <h4>労働計算</h4>
-    <form action="/Kot_project/Calculate" method="POST">
+    <form action="/kot/Calculation" method="POST">
       <input type="submit" name="employee" value="計算">
     </form>
 <%--ここから上にコンテンツを挿入 --%>
