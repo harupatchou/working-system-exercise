@@ -10,3 +10,12 @@
     line-height: 28px;
 }
 
+table,th,td{
+	border: 1px #000000 solid;
+}
+
+.normal_table {
+	border:1;
+	width:60%;
+}
+
