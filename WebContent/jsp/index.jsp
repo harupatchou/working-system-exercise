@@ -6,11 +6,11 @@
 <%--ここから下にコンテンツを挿入 --%>
     <h4 class="subTitle">労働計算</h4>
     <form action="/kot/Calculation" method="POST">
-      <input type="submit" name="id" value="計算">
+      <input type="submit" name="id" value="1">
     </form>
 
 
-    ${workingTimeAll.workingTimeAll}
+    ${workingTimeTotal.workingTimeTotal}
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>
 </c:import>
