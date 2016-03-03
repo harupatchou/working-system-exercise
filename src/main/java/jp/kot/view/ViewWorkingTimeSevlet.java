@@ -21,7 +21,7 @@ public class ViewWorkingTimeSevlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/index.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/index.jsp");
 		rd.forward(req, resp);
 	}
 

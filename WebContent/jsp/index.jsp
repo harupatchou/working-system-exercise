@@ -4,7 +4,7 @@
 <c:import url="/jsp/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
-    <h4>労働計算</h4>
+    <h4 class="subTitle">労働計算</h4>
     <form action="/kot/Calculation" method="POST">
       <input type="submit" name="employee" value="計算">
     </form>
