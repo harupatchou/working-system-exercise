@@ -6,19 +6,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/layout.css">
+<link rel="stylesheet" type="text/css" href="css/contents.css">
 <title>KOT</title>
 </head>
 <body>
-
-<header>
-	<c:import url="/jsp/common/header.jsp"/>
-</header>
-<article>
-	${param.content}
-</article>
-<footer>
-	<c:import url="/jsp/common/footer.jsp"/>
-</footer>
-
+  <div id="content">
+    <div id="header-bk">
+      <div id="kot-header">
+        <c:import url="/jsp/common/header.jsp"/>
+      </div>
+    </div>
+    <div id="main-bk">
+      <div id="kot-main">
+        ${param.content}
+      </div>
+    </div>
+    <div id="side-bk">
+      <div id="kot-side">
+        <c:import url="/jsp/common/sideMenu.jsp"/>
+      </div>
+    </div>
+    <div id="footer-bk">
+      <div id="kot-footer">
+        <c:import url="/jsp/common/footer.jsp"/>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

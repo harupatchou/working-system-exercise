@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+.subTitle {
+    color: #1D9E48;
+    font-size: 16px;
+    border-left: solid 5px #1D9E48;
+    padding-left: 8px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    line-height: 28px;
+}
+
