@@ -8,6 +8,9 @@
     <form action="/kot/Calculation" method="POST">
       <input type="submit" name="employee" value="計算">
     </form>
+
+
+    ${workingTimeAll}
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>
 </c:import>

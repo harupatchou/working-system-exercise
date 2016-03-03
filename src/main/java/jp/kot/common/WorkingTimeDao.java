@@ -15,16 +15,18 @@ import resources.DBManager;
  **/
 public class WorkingTimeDao {
 
-	private static String tableName = "-----";
+	private static String tableName = "working_all";
 
 	/*総労働時間取得*/
 	public static WorkingTimeAll WorkingTimeAll(String employeeName){
-		String sql = "SELECT * FROM " + tableName;
+		String sql = "SELECT working_time_all FROM " + tableName;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
 			//総労働時間格納用
 			WorkingTimeAll workingTimeAll = new WorkingTimeAll();
+			//workingTimeAll.setWorkingTimeAll(10);
+			//return workingTimeAll;
 
 			try(ResultSet rs = pstmt.executeQuery()){
 
@@ -32,7 +34,8 @@ public class WorkingTimeDao {
 				List<Integer> workingTimeList = new ArrayList<>();
 				while(rs.next()){
 					WorkingTime workingTime = new WorkingTime();
-					workingTime.setWorkTime(rs.getInt("working_time"));
+					workingTime.setWorkTime(rs.getInt("working_time_all"));
+
 					//変数が増えることを見越してあえてこの書き方
 					workingTimeList.add(workingTime.getWorkTime());
 				}
