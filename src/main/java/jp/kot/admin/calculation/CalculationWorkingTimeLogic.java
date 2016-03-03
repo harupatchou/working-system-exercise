@@ -6,9 +6,10 @@ import main.java.jp.kot.common.WorkingTimeAll;
 
 public class CalculationWorkingTimeLogic {
 
-	//従業員名から総労働時間を取得
-	public static WorkingTimeAll WorkingTimeAll(String employeeName){
-		WorkingTimeAll workingTimeAll = WorkingTimeDao.WorkingTimeAll(employeeName);
+	//従業員IDから総労働時間を取得
+	public static WorkingTimeAll WorkingTimeAll(Integer employeeId){
+
+		WorkingTimeAll workingTimeAll = WorkingTimeDao.WorkingTimeAll(employeeId);
 		return workingTimeAll;
 	}
 }

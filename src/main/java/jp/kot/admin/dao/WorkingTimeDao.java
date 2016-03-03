@@ -20,15 +20,13 @@ public class WorkingTimeDao {
 	private static String tableName = "working_all";
 
 	/*総労働時間取得*/
-	public static WorkingTimeAll WorkingTimeAll(String employeeName){
+	public static WorkingTimeAll WorkingTimeAll(Integer employeeId){
 		String sql = "SELECT working_time_all FROM " + tableName;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
 			//総労働時間格納用
 			WorkingTimeAll workingTimeAll = new WorkingTimeAll();
-			//workingTimeAll.setWorkingTimeAll(10);
-			//return workingTimeAll;
 
 			try(ResultSet rs = pstmt.executeQuery()){
 

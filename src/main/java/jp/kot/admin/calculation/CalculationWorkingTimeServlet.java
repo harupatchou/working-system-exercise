@@ -26,9 +26,10 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		String employeeName =req.getParameter("name");
+		String stringEmployeeId =req.getParameter("id");
+		Integer employeeId = Integer.parseInt(stringEmployeeId);
 
-		req.setAttribute("workingTimeAll", CalculationWorkingTimeLogic.WorkingTimeAll(employeeName));
+		req.setAttribute("workingTimeAll", CalculationWorkingTimeLogic.WorkingTimeAll(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
