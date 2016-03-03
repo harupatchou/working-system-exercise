@@ -2,12 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/jsp/common/base.jsp">
   <c:param name="content">
-
 <%--ここから下にコンテンツを挿入 --%>
 
 
-
 <%--ここから上にコンテンツを挿入 --%>
-
   </c:param>
 </c:import>

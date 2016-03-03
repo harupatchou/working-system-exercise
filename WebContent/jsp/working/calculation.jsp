@@ -11,6 +11,8 @@
               <th>従業員種別</th>
               <th>総労働時間</th>
               <th>総残業時間</th>
+              <th>深夜</th>
+              <th>深夜残業</th>
             </tr>
           </thead>
           <tbody>
@@ -19,10 +21,12 @@
               <td>a</td>
               <td>b</td>
               <td>c</td>
+              <td>d</td>
+              <td>e</td>
             </tr>
           </tbody>
         </table>
       </div>
-    ${workingTimeAll}
+    ${workingTimeAll.workingTimeAll}
   </c:param>
 </c:import>

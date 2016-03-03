@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.jp.kot.admin.logic;
 
 import main.java.jp.kot.admin.dao.WorkingTimeDao;
 import main.java.jp.kot.common.WorkingTimeAll;

@@ -6,8 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="js/common/sideMenu.js"></script>
+<script src="js/setup/edit.js"></script>
 <link rel="stylesheet" type="text/css" href="css/layout.css">
 <link rel="stylesheet" type="text/css" href="css/contents.css">
+<link rel="stylesheet" type="text/css" href="css/a_pattern.css">
 <title>KOT</title>
 </head>
 <body>

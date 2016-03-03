@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.jp.kot.admin.setup;
 
 import java.io.IOException;
 
@@ -10,15 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
-
-@WebServlet("/Calculation")
-public class CalculationWorkingTimeServlet extends HttpServlet{
+@WebServlet("/EmployeeEdit")
+public class EmployeeEditServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doPost(req, resp);
+
+		//文字形式をUTF-8指定
+		req.setCharacterEncoding("UTF-8");
+
+		ServletContext application = req.getServletContext();
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/employeeEdit.jsp");
+
+		rd.forward(req, resp);
+
 	}
 
 	@Override
@@ -28,10 +34,17 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		String firstName =req.getParameter("firstName");
+		String lastName =req.getParameter("lastName");
 		String stringEmployeeId =req.getParameter("employeeId");
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
+		String stringCompanyId =req.getParameter("companyId");
+		Integer companyId = Integer.parseInt(stringCompanyId);
+		/** 現状workingtypeがないためコメントアウト */
+		/*String stringWorkingtypeId =req.getParameter("workingtypeId");
+		Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);*/
+		String password = req.getParameter("password");
 
-		req.setAttribute("workingTimeAll", CalculationWorkingTimeLogic.WorkingTimeAll(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
