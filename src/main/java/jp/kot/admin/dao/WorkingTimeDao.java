@@ -1,4 +1,4 @@
-package main.java.jp.kot.common;
+package main.java.jp.kot.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.jp.kot.common.WorkingTime;
+import main.java.jp.kot.common.WorkingTimeAll;
 import resources.DBManager;
 
 /**
@@ -46,6 +48,9 @@ public class WorkingTimeDao {
 					total += workingTimeList.get(i);
 				}
 				workingTimeAll.setWorkingTimeAll(total);
+
+				//暫定的に残業時間をnull
+				workingTimeAll.setOverWorkingTimeAll(null);
 
 				return workingTimeAll;
 			}

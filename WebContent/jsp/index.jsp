@@ -10,7 +10,7 @@
     </form>
 
 
-    ${workingTimeAll}
+    ${workingTimeAll.workingTimeAll}
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>
 </c:import>
