@@ -31,7 +31,7 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		String stringEmployeeId =req.getParameter("employeeId");
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
 
-		req.setAttribute("workingTimeAll", CalculationWorkingTimeLogic.WorkingTimeAll(employeeId));
+		req.setAttribute("workingTimeTotal", CalculationWorkingTimeLogic.workingTimeTotal(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");

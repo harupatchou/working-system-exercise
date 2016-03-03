@@ -9,6 +9,8 @@
       <input type="submit" value="計算">
       <input type="hidden" name="employeeId" value="1">
     </form>
+
+    ${workingTimeTotal.workingTimeTotal}
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>
 </c:import>
