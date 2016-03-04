@@ -20,8 +20,8 @@ public class WorkingTimeDao {
 	private static String tableName = "working_all";
 
 	/*総労働時間取得*/
-	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month){
-		String sql = "SELECT month,working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
+	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month, Integer year){
+		String sql = "SELECT month,year,working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
@@ -33,13 +33,10 @@ public class WorkingTimeDao {
 			List<String> overWorkTimeList = new ArrayList<>();
 			List<String> nightTimeList = new ArrayList<>();
 			List<String> overNightTimeList = new ArrayList<>();
-			//ここから途中
-			List<Integer> monthList = new ArrayList<>();
 
 			try(ResultSet rs = pstmt.executeQuery()){
 				while(rs.next()){
-					Integer targetMonth = rs.getInt("month");
-					if(month == targetMonth || month == null){
+					if(year == rs.getInt("year") && month == rs.getInt("month")){
 						workTimeList.add(rs.getString("working_time_all"));
 						overWorkTimeList.add(rs.getString("overtime_all"));
 						nightTimeList.add(rs.getString("night_time_all"));
@@ -47,14 +44,16 @@ public class WorkingTimeDao {
 					}
 				}
 
+					//各要素総労働時間算出・格納
+					workingTimeTotal.setMonth(month);
+					workingTimeTotal.setYear(year);
+					workingTimeTotal.setWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(workTimeList));
+					workingTimeTotal.setOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overWorkTimeList));
+					workingTimeTotal.setNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nightTimeList));
+					workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
 
-				//各要素総労働時間算出・格納
-				workingTimeTotal.setWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(workTimeList));
-				workingTimeTotal.setOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overWorkTimeList));
-				workingTimeTotal.setNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nightTimeList));
-				workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
+					return workingTimeTotal;
 
-				return workingTimeTotal;
 			}
 
 		}catch(SQLException e){

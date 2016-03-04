@@ -4,6 +4,9 @@
   <c:param name="content">
     <h4 class="subTitle">計算結果</h4>
       <div class="a_pattern_table">
+
+        表示期間：${workingTimeTotal.year} 年 ${workingTimeTotal.month}月
+
         <table class="normal_table">
           <thead>
             <tr>

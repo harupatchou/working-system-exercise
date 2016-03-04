@@ -9,7 +9,8 @@
     <form action="/kot/Calculation" method="POST">
       <input type="submit" value="計算">
       <input type="hidden" name="employeeId" value="1">
-      <input type="hidden" name="month" value="2015">
+      <input type="hidden" name="year" value="2015">
+      <input type="hidden" name="month" value="12">
     </form>
 
 <%--ここから上にコンテンツを挿入 --%>

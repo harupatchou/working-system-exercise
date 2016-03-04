@@ -16,9 +16,9 @@ public class CalculationWorkingTimeService {
 		return EmployeeDao.getEmployee(employeeId);
 	}
 
-	//従業員IDから総労働時間を取得
-	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month){
-		return WorkingTimeDao.workingTimeTotal(employeeId, month);
+	//従業員ID・年月から総労働時間を取得
+	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month,Integer year){
+		return WorkingTimeDao.workingTimeTotal(employeeId, month,year);
 	}
 
 	//会社IDから会社情報を取得

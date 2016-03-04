@@ -30,10 +30,12 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		String stringEmployeeId =req.getParameter("employeeId");
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
+		String stringYear = req.getParameter("year");
+		Integer year = Integer.parseInt(stringYear);
 		String stringMonth = req.getParameter("month");
 		Integer month = Integer.parseInt(stringMonth);
 
-		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month));
+		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
 		req.setAttribute("workingtype", CalculationWorkingTimeService.getWorkingtypeFromEmployeeId(employeeId));
 
