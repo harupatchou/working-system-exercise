@@ -1,4 +1,4 @@
-package main.java.jp.kot.common;
+package main.java.jp.kot.admin.calculation;
 
 /**
  * 総労働・残業時間

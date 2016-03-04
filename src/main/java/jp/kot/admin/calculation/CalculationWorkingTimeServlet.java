@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.jp.kot.admin.dao.EmployeeDao;
-import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
 
 @WebServlet("/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
@@ -31,10 +30,12 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		String stringEmployeeId =req.getParameter("employeeId");
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
+		String stringMonth = req.getParameter("month");
+		Integer month = Integer.parseInt(stringMonth);
 
-		req.setAttribute("workingTimeTotal", CalculationWorkingTimeLogic.workingTimeTotal(employeeId));
+		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
-		req.setAttribute("workingtype", CalculationWorkingTimeLogic.getWorkingtypeFromEmployeeId(employeeId));
+		req.setAttribute("workingtype", CalculationWorkingTimeService.getWorkingtypeFromEmployeeId(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
