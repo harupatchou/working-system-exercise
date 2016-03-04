@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.jp.kot.common.WorkingTime;
-import main.java.jp.kot.common.WorkingTimeAll;
+import main.java.jp.kot.common.WorkingTimeTotal;
 import resources.DBManager;
 
 /**
@@ -20,37 +19,56 @@ public class WorkingTimeDao {
 	private static String tableName = "working_all";
 
 	/*総労働時間取得*/
-	public static WorkingTimeAll WorkingTimeAll(Integer employeeId){
-		String sql = "SELECT working_time_all FROM " + tableName;
+	public static WorkingTimeTotal workingTimeTotal(Integer employeeId){
+		String sql = "SELECT working_time_all,overtime_all FROM " + tableName + " WHERE" + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
 			//総労働時間格納用
-			WorkingTimeAll workingTimeAll = new WorkingTimeAll();
+			WorkingTimeTotal workingTimeTotal = new WorkingTimeTotal();
 
 			try(ResultSet rs = pstmt.executeQuery()){
 
 				//労働時間格納用リスト
-				List<Integer> workingTimeList = new ArrayList<>();
-				while(rs.next()){
-					WorkingTime workingTime = new WorkingTime();
-					workingTime.setWorkTime(rs.getInt("working_time_all"));
+				List<Integer> workingTimeHourList = new ArrayList<>();
+				List<Integer> workingTimeMinuteList =new ArrayList<>();
 
-					//変数が増えることを見越してあえてこの書き方
-					workingTimeList.add(workingTime.getWorkTime());
+				//残業時間格納用リスト
+				List<Integer> overWorkingTimeHourList = new ArrayList<>();
+				List<Integer> overWorkingTimeMinuteList =new ArrayList<>();
+
+				while(rs.next()){
+					String[] strWorkTimeList = rs.getString("working_time_all").split(":");
+					workingTimeHourList.add(Integer.parseInt(strWorkTimeList[0]));
+					workingTimeMinuteList.add(Integer.parseInt(strWorkTimeList[1]));
+
+					String[] strOverWorkTime = rs.getString("overtime_all").split(":");
+					overWorkingTimeHourList.add(Integer.parseInt(strOverWorkTime[0]));
+					overWorkingTimeMinuteList.add(Integer.parseInt(strOverWorkTime[1]));
 				}
+
 
 				//総労働時間算出
-				int total = 0;
-				for(int i = 0; i < workingTimeList.size(); i++){
-					total += workingTimeList.get(i);
+				int workingTimeHourTotal = 0;
+				for(int i = 0; i < workingTimeHourList.size(); i++){
+					workingTimeHourTotal += workingTimeHourList.get(i);
 				}
-				workingTimeAll.setWorkingTimeAll(total);
 
-				//暫定的に残業時間をnull
-				workingTimeAll.setOverWorkingTimeAll(null);
+				int workingTimeMinuteTotal = 0;
+				for (int i = 0; i < workingTimeMinuteList.size(); i++) {
+					workingTimeMinuteTotal += workingTimeMinuteList.get(i);
+				}
+				workingTimeHourTotal += workingTimeMinuteTotal / 60;
+				workingTimeMinuteTotal = workingTimeMinuteTotal % 60;
 
-				return workingTimeAll;
+
+				//String de tunagu
+				//String tempWorkingTimeTotal
+
+				//workingTimeTotal.setWorkingTimeTotal();
+
+
+				return workingTimeTotal;
 			}
 
 		}catch(SQLException e){
