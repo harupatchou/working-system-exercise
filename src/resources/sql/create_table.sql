@@ -15,6 +15,15 @@ CREATE TABLE company
   FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
 );
 
+CREATE TABLE week
+(
+  id integer,
+  week_name text NOT NULL,
+  holiday_flag integer NOT NULL,
+  CONSTRAINT week_pkc PRIMARY KEY (id)
+);
+
+
 CREATE TABLE employee
 (
   id integer,
@@ -35,6 +44,7 @@ CREATE TABLE working_day
   break_time text,
   nap_time text,
   employee_id integer NOT NULL,
+  legal_flag integer NOT NULL,
   CONSTRAINT working_day_pkc PRIMARY KEY (id),
   FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
@@ -60,6 +70,8 @@ CREATE TABLE working_all
   night_time_all text,
   night_overtime_all text,
   late_time_all text,
+  legal_holiday_time_all text,
+  statutory_holiday_time_all text,
   employee_id integer NOT NULL,
   CONSTRAINT working_all_pkc PRIMARY KEY (id),
   FOREIGN KEY (employee_id) REFERENCES employee(id)
