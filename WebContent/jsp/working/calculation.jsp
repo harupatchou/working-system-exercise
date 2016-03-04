@@ -17,16 +17,15 @@
           </thead>
           <tbody>
             <tr>
-              <td>test</td>
+              <td>${employee.firstName} ${employee.lastName}</td>
               <td>a</td>
-              <td>b</td>
-              <td>c</td>
-              <td>d</td>
-              <td>e</td>
+              <td>${workingTimeTotal.workingTimeTotal}</td>
+              <td>${workingTimeTotal.overWorkingTimeTotal}</td>
+              <td>${workingTimeTotal.nightTimeTotal}</td>
+              <td>${workingTimeTotal.overNightTimeTotal}</td>
             </tr>
           </tbody>
         </table>
       </div>
-    ${workingTimeAll.workingTimeAll}
   </c:param>
 </c:import>

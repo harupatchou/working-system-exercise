@@ -9,13 +9,19 @@ public class WorkingTimeTotal {
 	private String workingTimeTotal;
 	//総残業時間
 	private String overWorkingTimeTotal;
+	//深夜労働時間
+	private String nightTimeTotal;
+	//深夜残業時間
+	private String overNightTimeTotal;
 
 	public WorkingTimeTotal(){
 	}
 
-	public WorkingTimeTotal(String workingTimeAll, String overWorkingTimeAll){
-		this.workingTimeTotal = workingTimeAll;
-		this.overWorkingTimeTotal = overWorkingTimeAll;
+	public WorkingTimeTotal(String workingTimeTotal, String overWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
+		this.workingTimeTotal = workingTimeTotal;
+		this.overWorkingTimeTotal = overWorkingTimeTotal;
+		this.nightTimeTotal = nightTimeTotal;
+		this.overNightTimeTotal = overNightTimeTotal;
 	}
 
 	public String getWorkingTimeTotal() {
@@ -29,5 +35,17 @@ public class WorkingTimeTotal {
 	}
 	public void setOverWorkingTimeTotal(String overWorkingTimeAll) {
 		this.overWorkingTimeTotal = overWorkingTimeAll;
+	}
+	public String getNightTimeTotal() {
+		return nightTimeTotal;
+	}
+	public void setNightTimeTotal(String nightTimeTotal) {
+		this.nightTimeTotal = nightTimeTotal;
+	}
+	public String getOverNightTimeTotal() {
+		return overNightTimeTotal;
+	}
+	public void setOverNightTimeTotal(String overNightTimeTotal) {
+		this.overNightTimeTotal = overNightTimeTotal;
 	}
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
 import main.java.jp.kot.common.WorkingTimeTotal;
 import resources.DBManager;
 
@@ -20,53 +21,32 @@ public class WorkingTimeDao {
 
 	/*総労働時間取得*/
 	public static WorkingTimeTotal workingTimeTotal(Integer employeeId){
-		String sql = "SELECT working_time_all,overtime_all FROM " + tableName + " WHERE" + employeeId;
+		String sql = "SELECT working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
 			//総労働時間格納用
 			WorkingTimeTotal workingTimeTotal = new WorkingTimeTotal();
 
+			//各要素格納用リスト
+			List<String> workTimeList = new ArrayList<>();
+			List<String> overWorkTimeList = new ArrayList<>();
+			List<String> nightTimeList = new ArrayList<>();
+			List<String> overNightTimeList = new ArrayList<>();
+
 			try(ResultSet rs = pstmt.executeQuery()){
-
-				//労働時間格納用リスト
-				List<Integer> workingTimeHourList = new ArrayList<>();
-				List<Integer> workingTimeMinuteList =new ArrayList<>();
-
-				//残業時間格納用リスト
-				List<Integer> overWorkingTimeHourList = new ArrayList<>();
-				List<Integer> overWorkingTimeMinuteList =new ArrayList<>();
-
 				while(rs.next()){
-					String[] strWorkTimeList = rs.getString("working_time_all").split(":");
-					workingTimeHourList.add(Integer.parseInt(strWorkTimeList[0]));
-					workingTimeMinuteList.add(Integer.parseInt(strWorkTimeList[1]));
-
-					String[] strOverWorkTime = rs.getString("overtime_all").split(":");
-					overWorkingTimeHourList.add(Integer.parseInt(strOverWorkTime[0]));
-					overWorkingTimeMinuteList.add(Integer.parseInt(strOverWorkTime[1]));
+					workTimeList.add(rs.getString("working_time_all"));
+					overWorkTimeList.add(rs.getString("overtime_all"));
+					nightTimeList.add(rs.getString("night_time_all"));
+					overNightTimeList.add(rs.getString("night_overtime_all"));
 				}
 
-
-				//総労働時間算出
-				int workingTimeHourTotal = 0;
-				for(int i = 0; i < workingTimeHourList.size(); i++){
-					workingTimeHourTotal += workingTimeHourList.get(i);
-				}
-
-				int workingTimeMinuteTotal = 0;
-				for (int i = 0; i < workingTimeMinuteList.size(); i++) {
-					workingTimeMinuteTotal += workingTimeMinuteList.get(i);
-				}
-				workingTimeHourTotal += workingTimeMinuteTotal / 60;
-				workingTimeMinuteTotal = workingTimeMinuteTotal % 60;
-
-
-				//String de tunagu
-				//String tempWorkingTimeTotal
-
-				//workingTimeTotal.setWorkingTimeTotal();
-
+				//各要素総労働時間算出・格納
+				workingTimeTotal.setWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(workTimeList));
+				workingTimeTotal.setOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overWorkTimeList));
+				workingTimeTotal.setNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nightTimeList));
+				workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
 
 				return workingTimeTotal;
 			}

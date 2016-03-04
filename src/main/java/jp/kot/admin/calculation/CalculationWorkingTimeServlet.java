@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.jp.kot.admin.dao.EmployeeDao;
 import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
 
 @WebServlet("/Calculation")
@@ -32,6 +33,7 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
 
 		req.setAttribute("workingTimeTotal", CalculationWorkingTimeLogic.workingTimeTotal(employeeId));
+		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
