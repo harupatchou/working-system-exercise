@@ -33,4 +33,34 @@ public class EmployeeDao {
 			throw new RuntimeException("処理に失敗しました", e);
 		}
 	}
+
+	/*従業員情報のインサート*/
+	public static boolean registEmployee(Employee employee){
+
+
+
+		String sql = "INSERT INTO " + tableName + " (id, first_name, last_name, password, company_id) VALUES (?, ?, ?, ?, ?)";
+
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, employee.getEmployeeId());
+			pstmt.setString(2, employee.getFirstName());
+			pstmt.setString(3, employee.getLastName());
+			pstmt.setString(4, employee.getPassword());
+			pstmt.setInt(5, employee.getCompanyId());
+
+
+			pstmt.executeUpdate();
+
+			return true;
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
+
+
 }

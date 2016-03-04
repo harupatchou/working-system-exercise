@@ -59,7 +59,9 @@ div#side-bk{
 }
 
 /* サイド */
-div#kot-side {
+div#kot-side ul{
+  list-style:none;
+}
 }
 
 #menuL {

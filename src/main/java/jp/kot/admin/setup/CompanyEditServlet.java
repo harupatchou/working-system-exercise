@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.jp.kot.admin.dao.EmployeeDao;
-import main.java.jp.kot.common.Employee;
+import main.java.jp.kot.admin.dao.CompanyDao;
+import main.java.jp.kot.common.Company;
 
-@WebServlet("/EmployeeEdit")
-public class EmployeeEditServlet extends HttpServlet{
+@WebServlet("/CompanyEdit")
+public class CompanyEditServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +24,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/employeeEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/companyEdit.jsp");
 
 		rd.forward(req, resp);
 
@@ -37,30 +37,29 @@ public class EmployeeEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Employee employee = new Employee();
+		Company company = new Company();
 
-		String firstName =req.getParameter("firstName");
-		String lastName =req.getParameter("lastName");
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
 		String stringCompanyId =req.getParameter("companyId");
+		Integer companyId = Integer.parseInt(stringCompanyId);
 
-		if(stringCompanyId != null){
-			Integer companyId = Integer.parseInt(stringCompanyId);
-			employee.setCompanyId(companyId);
+		String companyName  =req.getParameter("companyName");
+
+		String stringWorkingtypeId =req.getParameter("workingtypeId");
+
+		if(stringWorkingtypeId != null){
+			Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
+			company.setWorkingtypeId(workingtypeId);
 		}else{
 			/* TODO 決め打ち */
-			employee.setCompanyId(1);
+			company.setWorkingtypeId(1);
 		}
 
 		String password = req.getParameter("password");
 
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setEmployeeId(employeeId);
-		employee.setPassword(password);
+		company.setId(companyId);
+		company.setCompanyName(companyName);
 
-		EmployeeDao.registEmployee(employee);
+		CompanyDao.registCompany(company);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");

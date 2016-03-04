@@ -5,15 +5,15 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
     <form action="/kot/EmployeeEdit" method="POST">
-      <h1>従業員編集</h1>
+      <h1>従業員情報編集</h1>
       <span class="warnA">*</span>は必須項目
       <div class="patternA">
         <ul>
           <li>
             <label>姓・名<span class="warnA">*</span>：</label>
             <div>
-              <input type="text" name="lastname">
-              <input type="text" name="firstname">
+              <input type="text" name="lastName">
+              <input type="text" name="firstName">
             </div>
           </li>
           <li>
@@ -50,7 +50,7 @@
         </ul>
       </div>
       <div class="saveButton">
-        <input type="button" value="登録">
+        <input type="submit" value="登録">
       </div>
     </form>
 <%--ここから上にコンテンツを挿入 --%>

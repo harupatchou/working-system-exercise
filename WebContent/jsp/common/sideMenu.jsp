@@ -4,13 +4,13 @@
   <input type="hidden" name="employeeId" value="1">
   <ul>
     <li>
-      <input type="submit" value="従業員編集" class="sideButton" name="EmployeeEdit">
+      <input type="submit" value="従業員情報編集" class="sideButton" id="EmployeeEdit">
     </li>
     <li>
-      b
+      <input type="submit" value="会社情報編集" class="sideButton" id="CompanyEdit">
     </li>
     <li>
-      c
+      <input type="submit" value="従業員種別情報編集" class="sideButton" id="WorkingtypeEdit">
     </li>
     <li>
       d

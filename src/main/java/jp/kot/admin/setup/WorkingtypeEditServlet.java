@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.jp.kot.admin.dao.EmployeeDao;
-import main.java.jp.kot.common.Employee;
+import main.java.jp.kot.admin.dao.WorkingtypeDao;
+import main.java.jp.kot.common.Workingtype;
 
-@WebServlet("/EmployeeEdit")
-public class EmployeeEditServlet extends HttpServlet{
+@WebServlet("/WorkingtypeEdit")
+public class WorkingtypeEditServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +24,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/employeeEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/workingtypeEdit.jsp");
 
 		rd.forward(req, resp);
 
@@ -37,30 +37,19 @@ public class EmployeeEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Employee employee = new Employee();
+		Workingtype workingtype = new Workingtype();
 
-		String firstName =req.getParameter("firstName");
-		String lastName =req.getParameter("lastName");
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
-		String stringCompanyId =req.getParameter("companyId");
+		String workingName =req.getParameter("workingName");
+		String workingTime =req.getParameter("workingTime");
 
-		if(stringCompanyId != null){
-			Integer companyId = Integer.parseInt(stringCompanyId);
-			employee.setCompanyId(companyId);
-		}else{
-			/* TODO 決め打ち */
-			employee.setCompanyId(1);
-		}
+		String stringWorkingtypeId =req.getParameter("workingtypeId");
+		Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
 
-		String password = req.getParameter("password");
+		workingtype.setId(workingtypeId);
+		workingtype.setWorkingName(workingName);
+		workingtype.setWorkingTime(workingTime);
 
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setEmployeeId(employeeId);
-		employee.setPassword(password);
-
-		EmployeeDao.registEmployee(employee);
+		WorkingtypeDao.registWorkingtype(workingtype);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
