@@ -54,8 +54,6 @@ public class CompanyEditServlet extends HttpServlet{
 			company.setWorkingtypeId(1);
 		}
 
-		String password = req.getParameter("password");
-
 		company.setId(companyId);
 		company.setCompanyName(companyName);
 
