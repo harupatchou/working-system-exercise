@@ -2,6 +2,7 @@ package main.java.jp.kot.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.jp.kot.common.Workingtype;
@@ -36,6 +37,28 @@ public class WorkingtypeDao {
 			System.err.println(ex);
 			throw new RuntimeException();
 		}
+	}
+
+	public static Workingtype getWorkingtype(Integer workingtypeId){
+
+		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + workingtypeId;
+
+		try(Connection con = DBManager.createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery();){
+
+			Workingtype workingtype = new Workingtype();
+				while(rs.next()){
+					workingtype.setId(rs.getInt("id"));
+					workingtype.setWorkingName(rs.getString("working_name"));
+					workingtype.setWorkingTime(rs.getString("working_time"));
+				}
+				return workingtype;
+
+			}catch(SQLException e){
+				System.err.println("SQL = " + sql);
+				throw new RuntimeException("処理に失敗しました", e);
+			}
 	}
 
 

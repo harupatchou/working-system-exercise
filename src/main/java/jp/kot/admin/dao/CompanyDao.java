@@ -2,6 +2,7 @@ package main.java.jp.kot.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.jp.kot.common.Company;
@@ -38,5 +39,26 @@ public class CompanyDao {
 		}
 	}
 
+	public static Company getCompany(Integer companyId){
+
+		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + companyId;
+
+		try(Connection con = DBManager.createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery();){
+
+				Company company = new Company();
+				while(rs.next()){
+					company.setId(rs.getInt("id"));
+					company.setCompanyName(rs.getString("company_name"));
+					company.setWorkingtypeId(rs.getInt("workingtype_id"));
+				}
+				return company;
+
+			}catch(SQLException e){
+				System.err.println("SQL = " + sql);
+				throw new RuntimeException("処理に失敗しました", e);
+			}
+	}
 
 }

@@ -8,7 +8,7 @@
           <thead>
             <tr>
               <th>従業員名</th>
-              <th>従業員種別</th>
+              <th>労働種別</th>
               <th>総労働時間</th>
               <th>総残業時間</th>
               <th>深夜</th>
@@ -18,7 +18,7 @@
           <tbody>
             <tr>
               <td>${employee.firstName} ${employee.lastName}</td>
-              <td>a</td>
+              <td>${workingtype.workingName}</td>
               <td>${workingTimeTotal.workingTimeTotal}</td>
               <td>${workingTimeTotal.overWorkingTimeTotal}</td>
               <td>${workingTimeTotal.nightTimeTotal}</td>

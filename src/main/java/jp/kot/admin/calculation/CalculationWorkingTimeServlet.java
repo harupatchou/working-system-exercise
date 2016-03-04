@@ -34,6 +34,7 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		req.setAttribute("workingTimeTotal", CalculationWorkingTimeLogic.workingTimeTotal(employeeId));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
+		req.setAttribute("workingtype", CalculationWorkingTimeLogic.getWorkingtypeFromEmployeeId(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
