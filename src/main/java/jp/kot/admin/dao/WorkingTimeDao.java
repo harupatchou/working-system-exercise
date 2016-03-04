@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.jp.kot.admin.calculation.WorkingTimeTotal;
 import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
-import main.java.jp.kot.common.WorkingTimeTotal;
 import resources.DBManager;
 
 /**
@@ -20,8 +20,8 @@ public class WorkingTimeDao {
 	private static String tableName = "working_all";
 
 	/*総労働時間取得*/
-	public static WorkingTimeTotal workingTimeTotal(Integer employeeId){
-		String sql = "SELECT working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
+	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month){
+		String sql = "SELECT month,working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
@@ -33,14 +33,20 @@ public class WorkingTimeDao {
 			List<String> overWorkTimeList = new ArrayList<>();
 			List<String> nightTimeList = new ArrayList<>();
 			List<String> overNightTimeList = new ArrayList<>();
+			//ここから途中
+			List<Integer> monthList = new ArrayList<>();
 
 			try(ResultSet rs = pstmt.executeQuery()){
 				while(rs.next()){
-					workTimeList.add(rs.getString("working_time_all"));
-					overWorkTimeList.add(rs.getString("overtime_all"));
-					nightTimeList.add(rs.getString("night_time_all"));
-					overNightTimeList.add(rs.getString("night_overtime_all"));
+					Integer targetMonth = rs.getInt("month");
+					if(month == targetMonth || month == null){
+						workTimeList.add(rs.getString("working_time_all"));
+						overWorkTimeList.add(rs.getString("overtime_all"));
+						nightTimeList.add(rs.getString("night_time_all"));
+						overNightTimeList.add(rs.getString("night_overtime_all"));
+					}
 				}
+
 
 				//各要素総労働時間算出・格納
 				workingTimeTotal.setWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(workTimeList));
