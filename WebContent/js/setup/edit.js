@@ -32,6 +32,8 @@ $(document).ready(function(){
     var checkInf = arrayOfStrings.length;
     if(checkInf == 2){
         $(".insert_button").prop("disabled",false)
+        
+
         return
     }else{
     	$(".insert_button").prop("disabled",true)
@@ -45,7 +47,7 @@ $(document).ready(function(){
     var strings = "";
     if(checkInf.length == 3){
         for(i=0; i<checkInf.length; i++){
-        	strings += checkInf[i];
+            strings += checkInf[i];
         }
         if(strings.length == 8){
             $(".insert_button").prop("disabled",false)
@@ -62,6 +64,10 @@ $(document).ready(function(){
     	$(".insert_button").prop("disabled",true)
         alert("/区切りの形式で入力してください。");
     }
+  });
+
+  $(document).on("click",".insert_button",function(){
+	  
   });
 
 
