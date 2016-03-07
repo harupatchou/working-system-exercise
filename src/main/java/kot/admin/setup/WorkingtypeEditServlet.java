@@ -45,20 +45,15 @@ public class WorkingtypeEditServlet extends HttpServlet{
 		Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
 
 		String stringLaborSystemId =req.getParameter("laborSystemId");
-
-
-		if(stringLaborSystemId != null){
-			Integer laborSystemId = Integer.parseInt(stringLaborSystemId);
-			workingtype.setLaborSystemId(laborSystemId);
-		}else{
-			/* TODO 決め打ち */
-			workingtype.setLaborSystemId(1);
-		}
-
+		Integer laborSystemId = Integer.parseInt(stringLaborSystemId);
+		/* TODO 決め打ち */
+		Integer companyId = 1;
 
 
 		workingtype.setId(workingtypeId);
 		workingtype.setWorkingName(workingName);
+		workingtype.setLaborSystemId(laborSystemId);
+		workingtype.setCompanyId(companyId);
 
 		WorkingtypeDao.registWorkingtype(workingtype);
 

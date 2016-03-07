@@ -23,25 +23,25 @@
           <li>
             <label>出勤：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time">
+              <input type="text" placeholder="00:00" class="attendance_time" name="startTime">
             </div>
           </li>
           <li>
             <label>退勤：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time">
+              <input type="text" placeholder="00:00" class="attendance_time" name="endTime">
             </div>
           </li>
           <li>
             <label>休憩開始：</label>
             <div>
-              <input type="text" placeholder="00">
+              <input type="text" placeholder="00:00" class="attendance_time" name="breakStartTime">
             </div>
           </li>
           <li>
             <label>休憩終了：</label>
             <div>
-              <input type="text" placeholder="00">
+              <input type="text" placeholder="00:00" class="attendance_time" name="breakEndTime">
             </div>
           </li>
         </ul>

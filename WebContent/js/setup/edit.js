@@ -49,7 +49,11 @@ $(document).ready(function(){
         }
         if(strings.length == 8){
             $(".insert_button").prop("disabled",false)
-            alert(strings);
+
+            $("#yearHidden").val(checkInf[0]);
+            $("#monthHidden").val(checkInf[1]);
+            $("#dayHidden").val(checkInf[2]);
+
         }else{
              alert("0000/00/00の形式で入力してください。");
         }

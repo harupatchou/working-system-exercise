@@ -7,7 +7,7 @@ import java.util.List;
 public class CalculationWorkingTimeLogic {
 
 	//総労働時間算出
-	public static String getWorkTimeTotal(List<String> timeList){
+		public static String getWorkTimeTotal(List<String> timeList){
 
 		//時分格納用リスト
 		List<Integer> HourList = new ArrayList<>();

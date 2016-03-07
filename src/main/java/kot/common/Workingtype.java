@@ -46,7 +46,7 @@ public class Workingtype {
 	public Integer getCompanyId() {
 		return company_id;
 	}
-	public void setCompany(Integer company_id) {
+	public void setCompanyId(Integer company_id) {
 		this.company_id = company_id;
 	}
 

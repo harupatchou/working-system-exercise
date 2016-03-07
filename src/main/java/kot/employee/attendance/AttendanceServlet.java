@@ -1,6 +1,8 @@
 package main.java.kot.employee.attendance;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import main.java.kot.common.WorkingDay;
+import main.java.kot.logic.GenelalLogic;
 
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
@@ -26,11 +31,29 @@ public class AttendanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		WorkingDay workingDay = new WorkingDay();
+
 		String stringEmployeeId =req.getParameter("employeeId");
 		Integer employeeId = Integer.parseInt(stringEmployeeId);
-		String year =req.getParameter("yearHidden");
-		String month =req.getParameter("monthHidden");
-		String day =req.getParameter("dayHidden");
+		String year =req.getParameter("year");
+		String month =req.getParameter("month");
+		String day =req.getParameter("day");
+
+		List<String> attendDate = new ArrayList<String>();
+
+		attendDate.add(year);
+		attendDate.add(month);
+		attendDate.add(day);
+
+		String insertDate = GenelalLogic.joinString(attendDate, "-");
+
+		String startTime =req.getParameter("startTime");
+		String endTime =req.getParameter("endTime");
+		String breakStartTime =req.getParameter("breakStartTime");
+		String breakEndTime =req.getParameter("breakEndTime");
+
+
+
 
 
 		ServletContext application = req.getServletContext();
