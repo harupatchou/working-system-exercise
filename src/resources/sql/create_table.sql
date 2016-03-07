@@ -23,6 +23,17 @@ CREATE TABLE workingtype
   FOREIGN KEY (company_id) REFERENCES company(id)
 );
 
+CREATE TABLE attendance_time
+(
+  id serial,
+  start_time text NOT NULL,
+  end_time text NOT NULL,
+  core_time_strat text,
+  core_time_end text,
+  workingtype_id integer NOT NULL,
+  CONSTRAINT attendance_time_pkc PRIMARY KEY (id),
+  FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
+);
 
 CREATE TABLE employee
 (

@@ -3,7 +3,7 @@ INSERT INTO company VALUES (1, 'A会社');
 INSERT INTO company VALUES (2, 'B会社');
 INSERT INTO company VALUES (3, 'C会社');
 
-
+/*労働制*/
 INSERT INTO labor_system VALUES (1, '通常労働制');
 INSERT INTO labor_system VALUES (2, '変形労働制');
 INSERT INTO labor_system VALUES (3, 'フレックス制');
@@ -12,6 +12,9 @@ INSERT INTO labor_system VALUES (3, 'フレックス制');
 INSERT INTO workingtype VALUES (1, '正社員', 1,1);
 INSERT INTO workingtype VALUES (2, 'パート/アルバイト', 2,1);
 INSERT INTO workingtype VALUES (3, 'フレックス社員', 3,1);
+
+/*出退勤時間*/
+INSERT INTO attendance_time VALUES (1,'09:00','18:00','','',1);
 
 /*従業員情報*/
 INSERT INTO employee VALUES (1, '通常','従業員','rakus2000',1,1);

@@ -1,6 +1,8 @@
 package main.java.kot.employee.attendance;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.common.WorkingDay;
+import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GenelalLogic;
 
 @WebServlet("/employee/Attendance")
@@ -47,14 +50,22 @@ public class AttendanceServlet extends HttpServlet{
 
 		String insertDate = GenelalLogic.joinString(attendDate, "-");
 
-		String startTime =req.getParameter("startTime");
-		String endTime =req.getParameter("endTime");
-		String breakStartTime =req.getParameter("breakStartTime");
-		String breakEndTime =req.getParameter("breakEndTime");
+		String[] startTime = DateLogic.timeStr(req.getParameter("startTime"));
+		String[] endTime = DateLogic.timeStr(req.getParameter("endTime"));
 
+		//一日の労働時間算出
+		String attendDay = DateLogic.attend(startTime, endTime);
 
+		String[] breakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
+		String[] breakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
+		try {
+			workingDay.setDate(sdf.parse(insertDate));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
