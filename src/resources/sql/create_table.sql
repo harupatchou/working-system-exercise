@@ -7,7 +7,7 @@ CREATE TABLE company
 
 CREATE TABLE labor_system
 (
-  id integer,
+  id serial,
   labor_system_name text NOT NULL,
   CONSTRAINT labor_system_pkc PRIMARY KEY (id)
 );
@@ -19,7 +19,7 @@ CREATE TABLE workingtype
   labor_system_id integer NOT NULL,
   company_id integer NOT NULL,
   CONSTRAINT workingtype_pkc PRIMARY KEY (id),
-  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id)
+  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id),
   FOREIGN KEY (company_id) REFERENCES company(id)
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE employee
 
 CREATE TABLE week
 (
-  id integer,
+  id serial,
   week_name text NOT NULL,
   holiday_flag integer NOT NULL,
   CONSTRAINT week_pkc PRIMARY KEY (id)
@@ -47,7 +47,7 @@ CREATE TABLE week
 
 CREATE TABLE working_day
 (
-  id integer,
+  id serial,
   date DATE NOT NULL,
   week integer NOT NULL,
   attendance_time text,
@@ -62,7 +62,7 @@ CREATE TABLE working_day
 
 CREATE TABLE overtime
 (
-  id integer,
+  id serial,
   legal_overtime text,
   non_legal_overtime text,
   daily_id integer NOT NULL,
@@ -72,13 +72,14 @@ CREATE TABLE overtime
 
 CREATE TABLE working_all
 (
-  id integer,
+  id serial,
   day integer NOT NULL,
   month integer NOT NULL,
   year integer NOT NULL,
   week integer NOT NULL,
   working_time_all text,
-  overtime_all text,
+  legal_overtime_all text,
+  non_legal_overtime_all text,
   night_time_all text,
   night_overtime_all text,
   late_time_all text,

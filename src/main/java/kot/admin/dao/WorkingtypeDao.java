@@ -40,6 +40,7 @@ public class WorkingtypeDao {
 		}
 	}
 
+	/*従業員種別IDから従業員種別情報を取得*/
 	public static Workingtype getWorkingtype(Integer workingtypeId){
 
 		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + workingtypeId;
@@ -52,7 +53,8 @@ public class WorkingtypeDao {
 				while(rs.next()){
 					workingtype.setId(rs.getInt("id"));
 					workingtype.setWorkingName(rs.getString("working_name"));
-					workingtype.setWorkingTime(rs.getString("working_time"));
+					workingtype.setLaborSystemId(rs.getInt("labor_system_id"));
+					workingtype.setCompanyId(rs.getInt("company_id"));
 				}
 				return workingtype;
 

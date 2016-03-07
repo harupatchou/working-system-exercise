@@ -21,7 +21,7 @@ public class WorkingTimeDao {
 
 	/*総労働時間取得*/
 	public static WorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month, Integer year){
-		String sql = "SELECT month,year,working_time_all,overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
+		String sql = "SELECT month,year,working_time_all,legal_overtime_all,non_legal_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
@@ -30,7 +30,8 @@ public class WorkingTimeDao {
 
 			//各要素格納用リスト
 			List<String> workTimeList = new ArrayList<>();
-			List<String> overWorkTimeList = new ArrayList<>();
+			List<String> legalOverWorkTimeList = new ArrayList<>();
+			List<String> nonLegalOverWorkTimeList = new ArrayList<>();
 			List<String> nightTimeList = new ArrayList<>();
 			List<String> overNightTimeList = new ArrayList<>();
 
@@ -38,7 +39,8 @@ public class WorkingTimeDao {
 				while(rs.next()){
 					if(year == rs.getInt("year") && month == rs.getInt("month")){
 						workTimeList.add(rs.getString("working_time_all"));
-						overWorkTimeList.add(rs.getString("overtime_all"));
+						legalOverWorkTimeList.add(rs.getString("legal_overtime_all"));
+						nonLegalOverWorkTimeList.add(rs.getString("non_legal_overtime_all"));
 						nightTimeList.add(rs.getString("night_time_all"));
 						overNightTimeList.add(rs.getString("night_overtime_all"));
 					}
@@ -48,7 +50,8 @@ public class WorkingTimeDao {
 					workingTimeTotal.setMonth(month);
 					workingTimeTotal.setYear(year);
 					workingTimeTotal.setWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(workTimeList));
-					workingTimeTotal.setOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overWorkTimeList));
+					workingTimeTotal.setLegalOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(legalOverWorkTimeList));
+					workingTimeTotal.setNonLegalOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nonLegalOverWorkTimeList));
 					workingTimeTotal.setNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nightTimeList));
 					workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
 

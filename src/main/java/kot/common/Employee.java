@@ -15,7 +15,7 @@ public class Employee {
 	private String password;
 	//会社ID
 	private Integer companyId;
-	//労働種別ID
+	//従業員種別ID
 	private Integer workingTypeId;
 
 	public Employee(){

@@ -26,15 +26,14 @@ public class CalculationWorkingTimeService {
 		return CompanyDao.getCompany(companyId);
 	}
 
-	//労働種別IDから労働種別情報を取得
+	//従業員種別IDから従業員種別情報を取得
 	public static Workingtype getWorkingtype(Integer workingtypeId){
 		return WorkingtypeDao.getWorkingtype(workingtypeId);
 	}
 
-	//従業員IDから労働種別情報を取得
+	//従業員IDから従業員種別情報を取得
 	public static Workingtype getWorkingtypeFromEmployeeId(Integer employeeId){
-		Integer companyId = getEmployee(employeeId).getCompanyId();
-		Integer workingtypeId = getCompany(companyId).getWorkingtypeId();
+		Integer workingtypeId = getEmployee(employeeId).getWorkingTypeId();
 		return getWorkingtype(workingtypeId);
 	}
 }
