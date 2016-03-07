@@ -15,6 +15,8 @@ public class Employee {
 	private String password;
 	//会社ID
 	private Integer companyId;
+	//労働種別ID
+	private Integer workingTypeId;
 
 	public Employee(){
 	}
@@ -66,6 +68,11 @@ public class Employee {
 	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
-
+	public Integer getWorkingTypeId() {
+		return workingTypeId;
+	}
+	public void setWorkingTypeId(Integer workingTypeId) {
+		this.workingTypeId = workingTypeId;
+	}
 
 }

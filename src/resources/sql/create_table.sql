@@ -52,7 +52,8 @@ CREATE TABLE working_day
 CREATE TABLE overtime
 (
   id integer,
-  overtime text,
+  legal_overtime text,
+  non_legal_overtime text,
   daily_id integer NOT NULL,
   CONSTRAINT overtime_pkc PRIMARY KEY (id),
   FOREIGN KEY (daily_id) REFERENCES working_day(id)

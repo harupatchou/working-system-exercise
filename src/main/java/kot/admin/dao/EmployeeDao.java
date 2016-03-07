@@ -26,6 +26,7 @@ public class EmployeeDao {
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
+				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
 			}
 			return employee;
 
