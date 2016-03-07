@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.setup;
+package main.java.kot.admin.setup;
 
 import java.io.IOException;
 
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.jp.kot.admin.dao.EmployeeDao;
-import main.java.jp.kot.common.Employee;
+import main.java.kot.admin.dao.EmployeeDao;
+import main.java.kot.common.Employee;
 
 @WebServlet("/EmployeeEdit")
 public class EmployeeEditServlet extends HttpServlet{

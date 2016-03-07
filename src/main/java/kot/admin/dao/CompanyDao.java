@@ -1,11 +1,11 @@
-package main.java.jp.kot.admin.dao;
+package main.java.kot.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.jp.kot.common.Company;
+import main.java.kot.common.Company;
 import resources.DBManager;
 
 public class CompanyDao {

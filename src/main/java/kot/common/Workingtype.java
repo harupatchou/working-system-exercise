@@ -1,4 +1,4 @@
-package main.java.jp.kot.common;
+package main.java.kot.common;
 /**
  * 従業員種別情報
  * @author kuro

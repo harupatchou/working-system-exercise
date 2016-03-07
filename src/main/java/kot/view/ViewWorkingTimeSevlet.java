@@ -1,4 +1,4 @@
-package main.java.jp.kot.view;
+package main.java.kot.view;
 
 import java.io.IOException;
 

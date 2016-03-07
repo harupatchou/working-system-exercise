@@ -1,12 +1,12 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.kot.admin.calculation;
 
-import main.java.jp.kot.admin.dao.CompanyDao;
-import main.java.jp.kot.admin.dao.EmployeeDao;
-import main.java.jp.kot.admin.dao.WorkingTimeDao;
-import main.java.jp.kot.admin.dao.WorkingtypeDao;
-import main.java.jp.kot.common.Company;
-import main.java.jp.kot.common.Employee;
-import main.java.jp.kot.common.Workingtype;
+import main.java.kot.admin.dao.CompanyDao;
+import main.java.kot.admin.dao.EmployeeDao;
+import main.java.kot.admin.dao.WorkingTimeDao;
+import main.java.kot.admin.dao.WorkingtypeDao;
+import main.java.kot.common.Company;
+import main.java.kot.common.Employee;
+import main.java.kot.common.Workingtype;
 
 public class CalculationWorkingTimeService {
 

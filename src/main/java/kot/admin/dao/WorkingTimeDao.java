@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.dao;
+package main.java.kot.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.jp.kot.admin.calculation.WorkingTimeTotal;
-import main.java.jp.kot.admin.logic.CalculationWorkingTimeLogic;
+import main.java.kot.admin.calculation.WorkingTimeTotal;
+import main.java.kot.admin.logic.CalculationWorkingTimeLogic;
 import resources.DBManager;
 
 /**

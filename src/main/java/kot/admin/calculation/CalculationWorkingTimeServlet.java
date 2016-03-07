@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.kot.admin.calculation;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.jp.kot.admin.dao.EmployeeDao;
+import main.java.kot.admin.dao.EmployeeDao;
 
 @WebServlet("/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{

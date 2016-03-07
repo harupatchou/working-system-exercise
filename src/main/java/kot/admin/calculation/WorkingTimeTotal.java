@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.kot.admin.calculation;
 
 
 /**
