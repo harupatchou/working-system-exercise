@@ -20,12 +20,6 @@
               <input type="text" name="companyId">
             </div>
           </li>
-          <li>
-            <label>所属従業員種別：</label>
-            <div>
-              <input type="button" value="編集">
-            </div>
-          </li>
         </ul>
       </div>
       <div class="saveButton">

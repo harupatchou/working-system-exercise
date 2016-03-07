@@ -9,17 +9,21 @@ public class Workingtype {
 	private Integer id;
 	//種別名
 	private String workingName;
-	//種別毎時間（フレックスの場合はfが入る）
-	private String workingTime;
+	//労働制（フレックスの場合はfが入る）
+	private Integer labor_system_id;
+	//会社コード
+	private Integer company_id;
 
 	public Workingtype(){
 	}
 
-	public Workingtype(Integer id, String workingName, String workingTime){
+	public Workingtype(Integer id, String workingName, Integer labor_system_id,Integer company_id){
 		this.id = id;
 		this.workingName = workingName;
-		this.workingTime = workingTime;
+		this.labor_system_id = labor_system_id;
+		this.company_id = company_id;
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -33,11 +37,17 @@ public class Workingtype {
 	public void setWorkingName(String workingName) {
 		this.workingName = workingName;
 	}
-	public String getWorkingTime() {
-		return workingTime;
+	public Integer getLaborSystemId() {
+		return labor_system_id;
 	}
-	public void setWorkingTime(String workingTime) {
-		this.workingTime = workingTime;
+	public void setLaborSystemId(Integer labor_system_id) {
+		this.labor_system_id = labor_system_id;
+	}
+	public Integer getCompanyId() {
+		return company_id;
+	}
+	public void setCompany(Integer company_id) {
+		this.company_id = company_id;
 	}
 
 

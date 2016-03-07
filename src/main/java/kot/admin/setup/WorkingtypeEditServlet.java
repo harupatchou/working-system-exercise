@@ -40,14 +40,25 @@ public class WorkingtypeEditServlet extends HttpServlet{
 		Workingtype workingtype = new Workingtype();
 
 		String workingName =req.getParameter("workingName");
-		String workingTime =req.getParameter("workingTime");
 
 		String stringWorkingtypeId =req.getParameter("workingtypeId");
 		Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
 
+		String stringLaborSystemId =req.getParameter("laborSystemId");
+
+
+		if(stringLaborSystemId != null){
+			Integer laborSystemId = Integer.parseInt(stringLaborSystemId);
+			workingtype.setLaborSystemId(laborSystemId);
+		}else{
+			/* TODO 決め打ち */
+			workingtype.setLaborSystemId(1);
+		}
+
+
+
 		workingtype.setId(workingtypeId);
 		workingtype.setWorkingName(workingName);
-		workingtype.setWorkingTime(workingTime);
 
 		WorkingtypeDao.registWorkingtype(workingtype);
 

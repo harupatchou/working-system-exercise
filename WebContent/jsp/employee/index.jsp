@@ -12,6 +12,11 @@
             <label>日付選択：</label>
             <div>
               <input type="text" placeholder="0000/00/00" class="attendance_day">
+<!-- hidden領域  -->
+              <input type="hidden" name="year" id="yearHidden">
+              <input type="hidden" name="month" id="monthHidden">
+              <input type="hidden" name="day" id="dayHidden">
+<!-- ここまで  -->
             </div>
           </li>
           <li><hr><br></li>

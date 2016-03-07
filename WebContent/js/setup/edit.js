@@ -39,5 +39,26 @@ $(document).ready(function(){
     }
   });
 
+  $(".attendance_day").focus(function(){
+  }).blur(function(){
+    var checkInf = $(this).val().split("/");
+    var strings = "";
+    if(checkInf.length == 3){
+        for(i=0; i<checkInf.length; i++){
+        	strings += checkInf[i];
+        }
+        if(strings.length == 8){
+            $(".insert_button").prop("disabled",false)
+            alert(strings);
+        }else{
+             alert("0000/00/00の形式で入力してください。");
+        }
+        return
+    }else{
+    	$(".insert_button").prop("disabled",true)
+        alert("/区切りの形式で入力してください。");
+    }
+  });
+
 
 });

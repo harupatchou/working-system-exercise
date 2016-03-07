@@ -1,4 +1,4 @@
-package main.java.kot.admin.logic;
+package main.java.kot.logic;
 
 import java.util.ArrayList;
 import java.util.List;

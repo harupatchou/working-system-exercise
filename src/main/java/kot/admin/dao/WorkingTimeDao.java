@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.kot.admin.calculation.WorkingTimeTotal;
-import main.java.kot.admin.logic.CalculationWorkingTimeLogic;
+import main.java.kot.logic.CalculationWorkingTimeLogic;
 import resources.DBManager;
 
 /**

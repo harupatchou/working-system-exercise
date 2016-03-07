@@ -18,7 +18,7 @@ public class WorkingtypeDao {
 
 
 
-		String sql = "INSERT INTO " + tableName + " (id, working_name, working_time) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " (id, working_name, labor_system_id ,company_id) VALUES (?, ?,?, ?)";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -26,7 +26,8 @@ public class WorkingtypeDao {
 
 			pstmt.setInt(1, workingtype.getId());
 			pstmt.setString(2, workingtype.getWorkingName());
-			pstmt.setString(3, workingtype.getWorkingTime());
+			pstmt.setInt(3, workingtype.getLaborSystemId());
+			pstmt.setInt(4, workingtype.getCompanyId());
 
 
 			pstmt.executeUpdate();

@@ -26,6 +26,12 @@ public class AttendanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		String stringEmployeeId =req.getParameter("employeeId");
+		Integer employeeId = Integer.parseInt(stringEmployeeId);
+		String year =req.getParameter("yearHidden");
+		String month =req.getParameter("monthHidden");
+		String day =req.getParameter("dayHidden");
+
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

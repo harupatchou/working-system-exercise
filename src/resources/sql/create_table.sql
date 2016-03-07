@@ -1,17 +1,39 @@
-CREATE TABLE workingtype
-(
-  id integer,
-  working_name text NOT NULL,
-  working_time text,
-  CONSTRAINT workingtype_pkc PRIMARY KEY (id)
-);
-
 CREATE TABLE company
 (
   id integer,
   company_name text NOT NULL,
-  workingtype_id integer NOT NULL,
-  CONSTRAINT company_pkc PRIMARY KEY (id),
+  CONSTRAINT company_pkc PRIMARY KEY (id)
+);
+
+CREATE TABLE labor_system
+(
+  id integer,
+  labor_system_name text NOT NULL,
+  CONSTRAINT labor_system_pkc PRIMARY KEY (id)
+);
+
+CREATE TABLE workingtype
+(
+  id integer,
+  working_name text NOT NULL,
+  labor_system_id integer NOT NULL,
+  company_id integer NOT NULL,
+  CONSTRAINT workingtype_pkc PRIMARY KEY (id),
+  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id)
+  FOREIGN KEY (company_id) REFERENCES company(id)
+);
+
+
+CREATE TABLE employee
+(
+  id integer,
+  first_name text NOT NULL,
+  last_name text NOT NULL,
+  password text NOT NULL,
+  company_id integer,
+  workingtype_id integer,
+  CONSTRAINT employee_pkc PRIMARY KEY (id),
+  FOREIGN KEY (company_id) REFERENCES company(id),
   FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
 );
 
@@ -23,22 +45,11 @@ CREATE TABLE week
   CONSTRAINT week_pkc PRIMARY KEY (id)
 );
 
-
-CREATE TABLE employee
-(
-  id integer,
-  first_name text NOT NULL,
-  last_name text NOT NULL,
-  password text NOT NULL,
-  company_id integer,
-  CONSTRAINT employee_pkc PRIMARY KEY (id),
-  FOREIGN KEY (company_id) REFERENCES company(id)
-);
-
 CREATE TABLE working_day
 (
   id integer,
   date DATE NOT NULL,
+  week integer NOT NULL,
   attendance_time text,
   leave_time text,
   break_time text,
@@ -64,7 +75,7 @@ CREATE TABLE working_all
   day integer NOT NULL,
   month integer NOT NULL,
   year integer NOT NULL,
-  week text NOT NULL,
+  week integer NOT NULL,
   working_time_all text,
   overtime_all text,
   night_time_all text,

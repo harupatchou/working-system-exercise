@@ -21,10 +21,13 @@
             </div>
           </li>
           <li>
-            <label>種別基準時間：</label>
+            <label>労働制選択：</label>
             <div>
-              <input type="text" name="workingTime">
-              <span class="infomation">※フレックスの場合は「f」と入力してください</span>
+              <select name="laborSystemId" >
+                <option value=1>通常</option>
+                <option value=2>変形</option>
+                <option value=3>フレックス</option>
+              </select>
             </div>
           </li>
         </ul>

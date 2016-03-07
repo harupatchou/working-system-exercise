@@ -44,16 +44,6 @@ public class CompanyEditServlet extends HttpServlet{
 
 		String companyName  =req.getParameter("companyName");
 
-		String stringWorkingtypeId =req.getParameter("workingtypeId");
-
-		if(stringWorkingtypeId != null){
-			Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
-			company.setWorkingtypeId(workingtypeId);
-		}else{
-			/* TODO 決め打ち */
-			company.setWorkingtypeId(1);
-		}
-
 		company.setId(companyId);
 		company.setCompanyName(companyName);
 
