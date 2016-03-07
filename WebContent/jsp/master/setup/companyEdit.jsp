@@ -1,30 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/jsp/common/base.jsp">
+<c:import url="/jsp/master/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
-    <form action="/kot/WorkingtypeEdit" method="POST">
-      <h1>従業員種別情報編集</h1>
+    <form action="/kot/master/CompanyEdit" method="POST">
+      <h1>会社情報編集</h1>
       <span class="warnA">*</span>は必須項目
       <div class="patternA">
         <ul>
           <li>
-            <label>従業員種別名<span class="warnA">*</span>：</label>
+            <label>会社名<span class="warnA">*</span>：</label>
             <div>
-              <input type="text" name="workingName">
+              <input type="text" name="companyName">
             </div>
           </li>
           <li>
-            <label>従業員種別ID<span class="warnA">*</span>：</label>
+            <label>会社ID<span class="warnA">*</span>：</label>
             <div>
-              <input type="text" name="workingtypeId">
+              <input type="text" name="companyId">
             </div>
           </li>
           <li>
-            <label>種別基準時間：</label>
+            <label>所属従業員種別：</label>
             <div>
-              <input type="text" name="workingTime">
-              <span class="infomation">※フレックスの場合は「f」と入力してください</span>
+              <input type="button" value="編集">
             </div>
           </li>
         </ul>

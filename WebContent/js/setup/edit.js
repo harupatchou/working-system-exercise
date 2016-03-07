@@ -19,5 +19,25 @@ $(function(){
     }
   });
 
+/** 出退勤画面 */
+
+$(document).ready(function(){
+  $(".insert_button").prop("disabled",true)
+});
+
+  /* 出退勤形式チェック */
+  $(".attendance_time").focus(function(){
+  }).blur(function(){
+    var arrayOfStrings = $(this).val().split(":");
+    var checkInf = arrayOfStrings.length;
+    if(checkInf == 2){
+        $(".insert_button").prop("disabled",false)
+        return
+    }else{
+    	$(".insert_button").prop("disabled",true)
+        alert("00:00の形式で入力してください。");
+    }
+  });
+
 
 });

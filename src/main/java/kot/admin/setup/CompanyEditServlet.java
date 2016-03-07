@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.kot.admin.dao.CompanyDao;
 import main.java.kot.common.Company;
 
-@WebServlet("/CompanyEdit")
+@WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
 
 	@Override
@@ -24,7 +24,7 @@ public class CompanyEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/companyEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
 
 		rd.forward(req, resp);
 
@@ -60,7 +60,7 @@ public class CompanyEditServlet extends HttpServlet{
 		CompanyDao.registCompany(company);
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
 		rd.forward(req, resp);
 	}
 
