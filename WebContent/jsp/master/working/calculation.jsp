@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/jsp/common/base.jsp">
+<c:import url="/jsp/master/common/base.jsp">
   <c:param name="content">
     <h4 class="subTitle">計算結果</h4>
       <div class="a_pattern_table">

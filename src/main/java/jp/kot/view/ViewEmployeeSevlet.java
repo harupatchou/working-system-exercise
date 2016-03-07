@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/master/Top")
-public class ViewWorkingTimeSevlet extends HttpServlet {
+@WebServlet("/employee/Top")
+public class ViewEmployeeSevlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -21,7 +21,7 @@ public class ViewWorkingTimeSevlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/index.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/index.jsp");
 		rd.forward(req, resp);
 	}
 

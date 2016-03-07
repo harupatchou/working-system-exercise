@@ -1,4 +1,4 @@
-package main.java.jp.kot.admin.calculation;
+package main.java.kot.employee.attendance;
 
 import java.io.IOException;
 
@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.jp.kot.admin.calculation.CalculationWorkingTimeService;
 import main.java.jp.kot.admin.dao.EmployeeDao;
 
-@WebServlet("/master/Calculation")
-public class CalculationWorkingTimeServlet extends HttpServlet{
+@WebServlet("/employee/Attendance")
+public class AttendanceServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

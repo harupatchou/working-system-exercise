@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.jp.kot.admin.dao.EmployeeDao;
 import main.java.jp.kot.common.Employee;
 
-@WebServlet("/EmployeeEdit")
+@WebServlet("/master/EmployeeEdit")
 public class EmployeeEditServlet extends HttpServlet{
 
 	@Override
@@ -24,7 +24,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/setup/employeeEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employeeEdit.jsp");
 
 		rd.forward(req, resp);
 
@@ -63,7 +63,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		EmployeeDao.registEmployee(employee);
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/working/calculation.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
 		rd.forward(req, resp);
 	}
 

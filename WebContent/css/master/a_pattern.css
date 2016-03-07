@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+.patternA {
+
+}
+
+div.patternA label{
+  margin-left:auto;
+
+}
+
+div.patternA div{
+  margin-left: 200px;
+  margin-top: -60px;
+  padding: 40px 0;
+}
+
+div.patternA ul{
+  list-style:none;
+}
+
+div.patternA li{
+}
+
+div.saveButton{
+    width:200px;
+    padding:0 200px;
+}
+
+div.saveButton input{
+    background: #FF8C00;
+    color:#FFFFFF;
+    width: 140px;
+    padding: 10px 0;
+}

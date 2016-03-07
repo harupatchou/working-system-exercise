@@ -1,0 +1,91 @@
+@CHARSET "UTF-8";
+
+/* html,bodyタグの設定 */
+html, body{
+  margin: 0;	/* 余白の削除 */
+  padding: 0;	/* 余白の削除 */
+  height: 100%;	/* 縦の高さを100% */
+  width: 100%;	/* 横の幅を100% */
+}
+/* 全体を囲う大枠 */
+div#content {
+  position: relative;		/* フッター部の配置用に定義 */
+  min-height: 100%;		/* 縦の表示領域を100% */
+}
+
+/* ヘッダーの背景 */
+div#header-bk {
+  background-color:#A9A9A9;  /* 背景色(黒) */
+  padding:10px 0 0;       /* 上から10px分余白をあける */
+  height:140px;           /* 縦の高さ140px */
+  width:100%;             /* 横の幅を100% */
+}
+/* ヘッダーの表示領域 */
+div#kot-header {
+  height: 120px;  /* 縦の表示領域120px */
+  width: 95%;   /* 横の幅970px */
+  margin: auto;   /* 中央揃え */
+}
+
+/* ボディ */
+/* ボディの大枠 */
+div#main-bk{
+  width: 100%;
+  float: right;
+  margin: 10px auto 0;     /* 上から10px分余白を取る */
+  padding-bottom: 150px;   /* フッターの高さの分余白を取る */
+}
+
+/* ボディ */
+div#kot-main{
+  margin-left: 250px;
+}
+
+/* サイドの大枠 */
+div#side-bk{
+  width: 200px;
+  margin-right: -200px;
+  float: left;
+  background-color: #D7EEFF;
+}
+
+.sideButton{
+  background: -moz-linear-gradient(top,#0099CC 0%,#006699);
+  background: -webkit-gradient(linear, left top, left bottom, from(#0099CC), to(#006699));
+  border: 1px solid #DDD;
+  color:#FFF;
+  width: 140px;
+  height:30px;
+}
+
+/* サイド */
+div#kot-side ul{
+  list-style:none;
+}
+}
+
+#menuL {
+  float: left;
+  width: 300px;
+  margin: 0px 0px 20px;
+  background-color: #F6F6F6;
+}
+
+/* フッターの背景 */
+div#footer-bk
+{
+  background-color: #000000;   /* 背景色(黒) */
+  width:100%;               /* 横の幅を100% */
+  height: 30px;            /* 縦の幅を120px */
+  position: absolute;       /* 絶対位置指定することを定義 */
+  bottom: 0px;              /* 絶対位置指定(左0px,下0px) */
+  padding: 10px 0;          /* 上下に余白を取る */
+}
+
+/* フッターの表示領域 */
+div#kot-footer{
+  color:#ffffff;
+  height: 50px;          /* 縦幅の指定100px */
+  width: 95%;            /* 横の幅970px */
+  margin: auto;           /* 中央揃え */
+}

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:import url="/jsp/common/base.jsp">
+<c:import url="/jsp/master/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
-    <form action="/kot/EmployeeEdit" method="POST">
+    <form action="/kot/master/EmployeeEdit" method="POST">
       <h1>従業員情報編集</h1>
       <span class="warnA">*</span>は必須項目
       <div class="patternA">
