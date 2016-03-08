@@ -8,9 +8,9 @@
     <h4 class="subTitle">労働計算</h4>
     <form action="/kot/master/Calculation" method="POST">
       <input type="submit" value="計算">
-      <input type="hidden" name="employeeId" value="1">
-      <input type="hidden" name="year" value="2015">
-      <input type="hidden" name="month" value="12">
+      <input type="hidden" name="employeeId" value="2">
+      <input type="hidden" name="year" value="2016">
+      <input type="hidden" name="month" value="1">
     </form>
 
 <%--ここから上にコンテンツを挿入 --%>

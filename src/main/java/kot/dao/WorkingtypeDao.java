@@ -1,4 +1,4 @@
-package main.java.kot.admin.dao;
+package main.java.kot.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

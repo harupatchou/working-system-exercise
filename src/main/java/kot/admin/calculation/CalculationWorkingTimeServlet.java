@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.dao.EmployeeDao;
+import main.java.kot.dao.EmployeeDao;
+import main.java.kot.logic.NonLegalWorkingTimeLogic;
 
 @WebServlet("/master/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
@@ -34,6 +35,10 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		Integer year = Integer.parseInt(stringYear);
 		String stringMonth = req.getParameter("month");
 		Integer month = Integer.parseInt(stringMonth);
+
+
+		//ロジック実装確認用、後で消す
+		NonLegalWorkingTimeLogic.getOvertime();
 
 		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
