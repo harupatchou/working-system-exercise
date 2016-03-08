@@ -84,9 +84,7 @@ CREATE TABLE overtime
 CREATE TABLE working_all
 (
   id serial,
-  day integer NOT NULL,
-  month integer NOT NULL,
-  year integer NOT NULL,
+  date DATE NOT NULL,
   week integer NOT NULL,
   working_time_all text,
   legal_overtime_all text,

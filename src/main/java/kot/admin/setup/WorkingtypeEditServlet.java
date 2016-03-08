@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.dao.WorkingtypeDao;
 import main.java.kot.common.Workingtype;
+import main.java.kot.dao.WorkingtypeDao;
 
 @WebServlet("/master/WorkingtypeEdit")
 public class WorkingtypeEditServlet extends HttpServlet{

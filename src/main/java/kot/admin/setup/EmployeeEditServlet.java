@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.dao.EmployeeDao;
 import main.java.kot.common.Employee;
+import main.java.kot.dao.EmployeeDao;
 
 @WebServlet("/master/EmployeeEdit")
 public class EmployeeEditServlet extends HttpServlet{

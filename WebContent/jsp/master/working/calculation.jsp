@@ -10,10 +10,11 @@
         <table class="normal_table">
           <thead>
             <tr>
-              <th>従業員名</th>
-              <th>労働種別</th>
+              <th rowspan="2">従業員名</th>
+              <th rowspan="2">労働種別</th>
               <th>総労働時間</th>
-              <th colspan="2">総残業時間</th>
+              <th>法定内残業時間</th>
+              <th>法定外残業時間</th>
               <th>深夜</th>
               <th>深夜残業</th>
             </tr>

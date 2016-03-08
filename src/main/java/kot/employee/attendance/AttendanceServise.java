@@ -1,7 +1,7 @@
 package main.java.kot.employee.attendance;
 
-import main.java.kot.admin.dao.EmployeeDao;
 import main.java.kot.common.Employee;
+import main.java.kot.dao.EmployeeDao;
 
 public class AttendanceServise {
 
