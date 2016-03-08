@@ -18,6 +18,15 @@ public class AttendanceTime {
 	//従業員種別コード
 	private Integer workingtype_id;
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
 	public String getStart_time() {
 		return start_time;
 	}

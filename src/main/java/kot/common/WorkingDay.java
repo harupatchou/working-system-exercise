@@ -10,8 +10,10 @@ public class WorkingDay {
 	private Date date;
 	//曜日
 	private Integer week;
-	//労働時間
+	//出勤時間
 	private String attendanceTime;
+	//退勤時間
+	private String leaveTime;
 	//休憩時間
 	private String breakTime;
 	//仮眠時間
@@ -49,6 +51,12 @@ public class WorkingDay {
 	}
 	public void setAttendanceTime(String attendanceTime) {
 		this.attendanceTime = attendanceTime;
+	}
+	public String getLeaveTime() {
+		return leaveTime;
+	}
+	public void setLeaveTime(String leaveTime) {
+		this.leaveTime = leaveTime;
 	}
 	public String getBreakTime() {
 		return breakTime;

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.dao.EmployeeDao;
-import main.java.kot.logic.NonLegalWorkingTimeLogic;
+import main.java.kot.logic.GetDataLogic;
 
 @WebServlet("/master/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
@@ -38,11 +38,18 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 
 		//ロジック実装確認用、後で消す
-		NonLegalWorkingTimeLogic.getOvertime();
+		/*
+		WorkingDay test = new WorkingDay();
+		test.setAttendanceTime("9:00");
+		test.setLeaveTime("18:45");
+		test.setEmployeeId(1);
+		String workingTimeTest = DateLogic.getWorkingTime(test);
+
+		Overtime overtimeTest = OvertimeLogic.getOvertime(test);*/
 
 		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
-		req.setAttribute("workingtype", CalculationWorkingTimeService.getWorkingtypeFromEmployeeId(employeeId));
+		req.setAttribute("workingtype", GetDataLogic.getWorkingtypeFromEmployeeId(employeeId));
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
