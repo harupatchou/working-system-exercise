@@ -15,8 +15,6 @@ import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Employee;
-import main.java.kot.entity.Overtime;
-import main.java.kot.entity.WorkingDay;
 import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.OvertimeLogic;
@@ -47,11 +45,11 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		//ロジック実装確認用、後で消す
 
-		WorkingDay test = new WorkingDay();
+		/*WorkingDay test = new WorkingDay();
 		test.setAttendanceTime("9:00");
 		test.setLeaveTime("18:45");
 		test.setEmployeeId(1);
-		Overtime overtimeTest = OvertimeLogic.getOvertime(test);
+		Overtime overtimeTest = OvertimeLogic.getOvertime(test);*/
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
 		OvertimeLogic.getTimeDoubleToString(timeLag);
 

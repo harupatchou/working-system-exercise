@@ -25,7 +25,7 @@
               <td>${workingtype.workingName}</td>
               <td>${workingTimeTotal.workingTimeTotal}</td>
               <td>${workingTimeTotal.legalOverWorkingTimeTotal}</td>
-              <td>${workingTimeTotal.nonLegalOverWorkingTimeTotal}</td>
+              <td>${workingTimeTotal.statutoryOverWorkingTimeTotal}</td>
               <td>${workingTimeTotal.nightTimeTotal}</td>
               <td>${workingTimeTotal.overNightTimeTotal}</td>
             </tr>
