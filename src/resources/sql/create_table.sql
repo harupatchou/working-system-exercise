@@ -28,7 +28,7 @@ CREATE TABLE attendance_time
   id serial,
   start_time text NOT NULL,
   end_time text NOT NULL,
-  core_time_strat text,
+  core_time_start text,
   core_time_end text,
   workingtype_id integer NOT NULL,
   CONSTRAINT attendance_time_pkc PRIMARY KEY (id),
@@ -84,9 +84,7 @@ CREATE TABLE overtime
 CREATE TABLE working_all
 (
   id serial,
-  day integer NOT NULL,
-  month integer NOT NULL,
-  year integer NOT NULL,
+  date DATE NOT NULL,
   week integer NOT NULL,
   working_time_all text,
   legal_overtime_all text,
