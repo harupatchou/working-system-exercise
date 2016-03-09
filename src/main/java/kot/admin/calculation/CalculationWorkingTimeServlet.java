@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.common.Overtime;
 import main.java.kot.common.WorkingDay;
+import main.java.kot.common.workingtime.ConstantWorkingTime;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.logic.GetDataLogic;
 import main.java.kot.logic.OvertimeLogic;
@@ -46,8 +47,10 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		test.setAttendanceTime("9:00");
 		test.setLeaveTime("18:45");
 		test.setEmployeeId(1);
-
 		Overtime overtimeTest = OvertimeLogic.getOvertime(test);
+		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
+		OvertimeLogic.getTimeDoubleToString(timeLag);
+
 
 		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year));
 		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));

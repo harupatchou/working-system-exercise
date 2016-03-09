@@ -24,8 +24,14 @@ public class OvertimeLogic {
 	/*double型からString型の時分に変換(例.0.5→「0:30」)*/
 	public static String getTimeDoubleToString(double time){
 		int hour = (int)time;
-		//int minute = (int)60 * (hour -time);
-		return null;
+		int minute;
+		if(hour == 0){
+			minute = (int)(60 * time);
+		}else{
+			minute = (int)(60 * (hour - time));
+		}
+		String timeString = String.valueOf(hour) + ":" + String.valueOf(minute);
+		return timeString;
 	}
 
 	/*startからendまでの時間差を算出してString型で返す*/
@@ -94,7 +100,7 @@ public class OvertimeLogic {
 
 		//法定労働時間と所定労働時間の差
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
-
+		getTimeDoubleToString(timeLag);
 		String strTimeLag ="";
 
 
