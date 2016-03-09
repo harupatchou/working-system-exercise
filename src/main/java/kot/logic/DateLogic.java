@@ -1,6 +1,6 @@
 package main.java.kot.logic;
 
-import main.java.kot.common.AttendanceTime;
+import main.java.kot.entity.AttendanceTime;
 
 
 public class DateLogic {

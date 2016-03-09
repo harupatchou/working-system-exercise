@@ -1,4 +1,4 @@
-package main.java.kot.common;
+package main.java.kot.entity;
 /**
  * 従業員情報
  * @author ueno

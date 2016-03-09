@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.kot.common.AttendanceTime;
-import resources.DBManager;
+import main.java.kot.common.database.DBManager;
+import main.java.kot.entity.AttendanceTime;
 
 public class AttendanceTimeDao {
 
