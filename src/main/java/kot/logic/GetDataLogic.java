@@ -23,7 +23,7 @@ public class GetDataLogic {
 	}
 	/*従業員IDから対応従業員種別の勤務時間を取得*/
 	public static AttendanceTime getAttendanceTimeFromEmployeeId(Integer employeeId){
-		int workingtypeId = GetDataLogic.getWorkingtypeFromEmployeeId(employeeId).getId();
+		int workingtypeId = getWorkingtypeFromEmployeeId(employeeId).getId();
 		return getAttendanceTimeFromWorkingtypeId(workingtypeId);
 	}
 	/*会社IDから会社情報を取得*/
