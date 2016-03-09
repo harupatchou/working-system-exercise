@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.Overtime;
+import main.java.kot.common.WorkingAll;
 import main.java.kot.common.WorkingDay;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GenelalLogic;
+import main.java.kot.logic.OvertimeLogic;
 
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
@@ -36,6 +39,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		WorkingDay workingDay = new WorkingDay();
+		WorkingAll workingAll = new WorkingAll();
 
 		Calendar cal = Calendar.getInstance();
 
@@ -43,6 +47,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		//TODO 決め打ち
 		Integer employeeId = 1;
+
 		String year =req.getParameter("year");
 		String month =req.getParameter("month");
 		String day =req.getParameter("day");
@@ -55,39 +60,70 @@ public class AttendanceServlet extends HttpServlet{
 
 		String insertDate = GenelalLogic.joinString(attendDate, "/");
 
+		//working_day Tableにinsert
 		String startTime =req.getParameter("startTime");
 		String endTime =req.getParameter("endTime");
-
-		String[] startTimes = DateLogic.timeStr(req.getParameter("startTime"));
-		String[] endTimes = DateLogic.timeStr(req.getParameter("endTime"));
-
-		//一日の労働時間算出
-		String attendDay = DateLogic.attend(startTimes, endTimes,0);
 
 		String[] breakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
 		String[] breakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
 		//一日の休憩時間算出
-		String breakTime = DateLogic.attend(breakStartTime, breakEndTime,1);
+		String breakTime = DateLogic.getStringTime(breakStartTime, breakEndTime);
 
-
-		//workingDayTableにinsert
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
 			//TODO 決め打ち
 			workingDay.setWeek(1);
 			workingDay.setAttendanceTime(startTime);
 			workingDay.setLeaveTime(endTime);
-			//TODO
 			workingDay.setBreakTime(breakTime);
+			//TODO 決め打ち
 			workingDay.setNapTime(breakTime);
 			workingDay.setEmployeeId(employeeId);
 			workingDay.setLegalFlag(1);
+			// ここまで
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
+		//一日の残業時間算出
+		Overtime overtime = OvertimeLogic.getOvertime(workingDay);
+
 		AttendanceServise.insertWorkingDay(workingDay);
+
+		//working_all Tableにinsert
+
+		//00:00形式に変換
+		String[] startTimeStr = DateLogic.timeStr(startTime);
+		String[] endTimeStr = DateLogic.timeStr(endTime);
+
+		//一日の総労働時間算出
+		String attendDayAll = DateLogic.getStringTime(startTimeStr,endTimeStr);
+
+		//一日の実労働時間算出
+		String attendDay= DateLogic.getCalculateTime(attendDayAll,breakTime);
+
+		//TODO 深夜計算 今は決め打ち
+		String overNightTime = "00:00";
+		String overNightOvertime = "00:00";
+
+		//TODO 遅刻早退 今は決め打ち
+		String lateTime = "00:00";
+
+		//TODO 休日出勤 今は決め打ち
+		String legalHolidayTimeAll = "00:00";
+		String statutoryHolidayTimeAll = "00:00";
+
+		try {
+			workingAll.setDate(sdf.parse(insertDate));
+			//決め打ち
+			workingAll.setWeek(1);
+			workingAll.setWorkingTimeAll(attendDayAll);
+			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

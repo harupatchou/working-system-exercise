@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import main.java.kot.common.AttendanceTime;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.WorkingDay;
 
@@ -68,63 +67,94 @@ public class DateLogic {
 	}
 
 
-	/* 送られてきた二つのString[]を比較し、開始から終了までの時間を返す */
-	public static String attend (String[] startStr,String[] endStr,Integer attendFlag){
-
-		if(attendFlag == 0){
-			AttendanceTime at = new AttendanceTime();
+	/* 送られてきた二つのString[]を比較し、String型00:00表記の時間を返す */
+	public static String getStringTime (String[] startStr,String[] endStr){
 
 			Integer startHour = Integer.parseInt(startStr[0]);
 			Integer endHour = Integer.parseInt(endStr[0]);
 			Integer startMinute = Integer.parseInt(startStr[1]);
 			Integer endMinute = Integer.parseInt(endStr[1]);
 
-			String attendDay = "";
+			String strTime = timeCalculate(startHour,endHour,startMinute,endMinute);
 
-			//計算用integer型変数
-			Integer minuteData = 0;
-			Integer hourData = 0;
-
-			/* 分数計算 */
-			if((endMinute-startMinute)<0){
-				hourData -= 1;
-			}
-
-			return null;
-		}else{
-			Integer startHour = Integer.parseInt(startStr[0]);
-			Integer endHour = Integer.parseInt(endStr[0]);
-			Integer startMinute = Integer.parseInt(startStr[1]);
-			Integer endMinute = Integer.parseInt(endStr[1]);
-
-			//計算用integer型変数
-			Integer minuteTime = 60;
-			Integer hourTime = 0;
-
-			/* 分数計算 */
-			if((endMinute-startMinute)<0){
-				hourTime -= 1;
-				minuteTime += endMinute-startMinute;
-			}else{
-				minuteTime = endMinute-startMinute;
-			}
-
-			/* 時間計算 */
-			if((endHour-startHour)<0){
-				hourTime += 24-startHour;
-			}else{
-				hourTime += endHour-startHour;
-			}
-
-			String strHourTime = String.valueOf(hourTime);
-			String strMinuteTime = String.valueOf(minuteTime);
-			if(strMinuteTime.length() == 1) strMinuteTime = "0" + strMinuteTime;
-
-			String breakTime = strHourTime + ":" + strMinuteTime;
-
-			return breakTime;
-		}
+			return strTime;
 	}
+
+	/* 比較部分切り出し */
+	public static String timeCalculate (Integer startHour,Integer endHour,Integer startMinute,Integer endMinute){
+
+		//計算用integer型変数
+		Integer minuteTime = 60;
+		Integer hourTime = 0;
+
+		/* 分計算 */
+		if((endMinute - startMinute)<0){
+			hourTime -= 1;
+			minuteTime += endMinute - startMinute;
+		}else{
+			minuteTime = endMinute - startMinute;
+		}
+
+		/* 時間計算 */
+		if((endHour - startHour)<0){
+			hourTime += 24 - startHour;
+		}else{
+			hourTime += endHour - startHour;
+		}
+
+		String strHourTime = String.valueOf(hourTime);
+		String strMinuteTime = String.valueOf(minuteTime);
+		if(strMinuteTime.length() == 1) strMinuteTime = "0" + strMinuteTime;
+
+		String time = strHourTime + ":" + strMinuteTime;
+
+		return time;
+	}
+
+	/* 実労働算出 */
+	public static String getCalculateTime (String allAttendTime,String breakTime){
+
+		String[] allAttendStr = timeStr(allAttendTime);
+		String[] breakTimeStr = timeStr(breakTime);
+
+		Integer attendHour = Integer.parseInt(allAttendStr[0]);
+		Integer attendMinute = Integer.parseInt(allAttendStr[1]);
+		Integer breakHour = Integer.parseInt(breakTimeStr[0]);
+		Integer breakMinute = Integer.parseInt(breakTimeStr[1]);
+
+		String strTime = realCalculate(attendHour,breakHour,attendMinute,breakMinute);
+
+		return strTime;
+
+	}
+
+	/* 実労働計算 */
+	public static String realCalculate (Integer attendHour,Integer breakHour,Integer attendMinute,Integer breakMinute){
+
+		//計算用integer型変数
+		Integer minuteTime = 60;
+		Integer hourTime = 0;
+
+		/* 分計算 */
+		if((attendMinute - breakMinute)<0){
+			hourTime -= 1;
+			minuteTime += attendMinute - breakMinute;
+		}else{
+			minuteTime = attendMinute - breakMinute;
+		}
+
+		/* 時間計算 */
+		hourTime += attendHour - breakHour;
+
+		String strHourTime = String.valueOf(hourTime);
+		String strMinuteTime = String.valueOf(minuteTime);
+		if(strMinuteTime.length() == 1) strMinuteTime = "0" + strMinuteTime;
+
+		String time = strHourTime + ":" + strMinuteTime;
+
+		return time;
+	}
+
 
 	/* Dataの変換 util→sql */
 	public static Date sqlDate (Date utilDate){

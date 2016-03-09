@@ -1,11 +1,9 @@
 package main.java.kot.employee.attendance;
 
-import main.java.kot.common.WorkingDay;
-import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.common.AttendanceTime;
-import main.java.kot.common.Employee;
+import main.java.kot.common.WorkingDay;
 import main.java.kot.dao.AttendanceTimeDao;
-import main.java.kot.dao.EmployeeDao;
+import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.logic.GetDataLogic;
 
 public class AttendanceServise {
