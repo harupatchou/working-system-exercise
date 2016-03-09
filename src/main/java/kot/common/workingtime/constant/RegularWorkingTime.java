@@ -1,4 +1,4 @@
-package main.java.kot.common.workingtime;
+package main.java.kot.common.workingtime.constant;
 
 /**
  * 所定労働時間用

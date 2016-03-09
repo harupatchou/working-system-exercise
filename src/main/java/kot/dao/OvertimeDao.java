@@ -4,8 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import main.java.kot.common.Overtime;
-import resources.DBManager;
+import main.java.kot.common.database.DBManager;
+import main.java.kot.entity.Overtime;
+
 
 public class OvertimeDao {
 

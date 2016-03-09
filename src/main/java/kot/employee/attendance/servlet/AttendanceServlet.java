@@ -1,4 +1,4 @@
-package main.java.kot.employee.attendance;
+package main.java.kot.employee.attendance.servlet;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.Overtime;
 import main.java.kot.common.WorkingAll;
-import main.java.kot.common.WorkingDay;
+import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.entity.Overtime;
+import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GenelalLogic;
 import main.java.kot.logic.OvertimeLogic;

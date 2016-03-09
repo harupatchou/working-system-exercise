@@ -3,10 +3,10 @@ package main.java.kot.logic;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import main.java.kot.common.Overtime;
 import main.java.kot.common.TempTime;
-import main.java.kot.common.WorkingDay;
-import main.java.kot.common.workingtime.ConstantWorkingTime;
+import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
+import main.java.kot.entity.Overtime;
+import main.java.kot.entity.WorkingDay;
 
 /**
  * 残業関連ロジッククラス
@@ -24,8 +24,14 @@ public class OvertimeLogic {
 	/*double型からString型の時分に変換(例.0.5→「0:30」)*/
 	public static String getTimeDoubleToString(double time){
 		int hour = (int)time;
-		//int minute = (int)60 * (hour -time);
-		return null;
+		int minute;
+		if(hour == 0){
+			minute = (int)(60 * time);
+		}else{
+			minute = (int)(60 * (hour - time));
+		}
+		String timeString = String.valueOf(hour) + ":" + String.valueOf(minute);
+		return timeString;
 	}
 
 	/*startからendまでの時間差を算出してString型で返す*/
@@ -63,7 +69,7 @@ public class OvertimeLogic {
 	public static Overtime getOvertime(WorkingDay workingday){
 
 		//対象従業員種別の終業時刻
-		String workingtypeEndtime = GetDataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
+		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
 		TempTime startOvertime = getTimeInt(DateLogic.timeStr(workingtypeEndtime));
 
 		//退勤時刻
@@ -83,7 +89,7 @@ public class OvertimeLogic {
 	public static Overtime getIrregularWorkingHourSystemOvertime(WorkingDay workingday){
 
 		//対象従業員種別の終業時刻
-		String workingtypeEndtime = GetDataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
+		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
 		TempTime startOvertime = getTimeInt(DateLogic.timeStr(workingtypeEndtime));
 
 		//退勤時刻
@@ -94,7 +100,7 @@ public class OvertimeLogic {
 
 		//法定労働時間と所定労働時間の差
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
-
+		getTimeDoubleToString(timeLag);
 		String strTimeLag ="";
 
 

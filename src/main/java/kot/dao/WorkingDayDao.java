@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import main.java.kot.common.WorkingDay;
-import resources.DBManager;
+import main.java.kot.common.database.DBManager;
+import main.java.kot.entity.WorkingDay;
+
 
 public class WorkingDayDao {
 

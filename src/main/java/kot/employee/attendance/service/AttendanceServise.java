@@ -1,7 +1,8 @@
-package main.java.kot.employee.attendance;
+package main.java.kot.employee.attendance.service;
 
-import main.java.kot.common.WorkingDay;
 import main.java.kot.dao.WorkingDayDao;
+import main.java.kot.entity.WorkingDay;
+
 
 public class AttendanceServise {
 

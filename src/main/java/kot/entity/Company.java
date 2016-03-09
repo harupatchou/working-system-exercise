@@ -1,4 +1,4 @@
-package main.java.kot.common;
+package main.java.kot.entity;
 /**
  * 会社情報
  * @author kuro

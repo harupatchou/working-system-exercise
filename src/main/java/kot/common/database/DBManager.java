@@ -1,4 +1,4 @@
-package resources;
+package main.java.kot.common.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

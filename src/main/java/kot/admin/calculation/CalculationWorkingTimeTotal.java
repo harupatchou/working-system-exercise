@@ -5,7 +5,7 @@ package main.java.kot.admin.calculation;
  * 総労働・残業時間
  * @author ueno
  **/
-public class WorkingTimeTotal {
+public class CalculationWorkingTimeTotal {
 
 	/*月情報*/
 	private Integer month;
@@ -23,10 +23,10 @@ public class WorkingTimeTotal {
 	private String overNightTimeTotal;
 
 
-	public WorkingTimeTotal(){
+	public CalculationWorkingTimeTotal(){
 	}
 
-	public WorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String nonLegalOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
+	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String nonLegalOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
 		this.workingTimeTotal = workingTimeTotal;
 		this.legalOverWorkingTimeTotal = legalOverWorkingTimeTotal;
 		this.nonLegalOverWorkingTimeTotal = nonLegalOverWorkingTimeTotal;
