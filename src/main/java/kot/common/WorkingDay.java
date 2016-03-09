@@ -10,8 +10,10 @@ public class WorkingDay {
 	private Date date;
 	//曜日
 	private Integer week;
-	//労働時間
+	//出社時間
 	private String attendanceTime;
+	//退社時間
+	private String leaveTime;
 	//休憩時間
 	private String breakTime;
 	//仮眠時間
@@ -23,7 +25,7 @@ public class WorkingDay {
 	 * 0 通常出勤
 	 * 1 休日出勤
 	 **/
-	private String legalFlag;
+	private Integer legalFlag;
 
 
 	public Integer getId() {
@@ -50,6 +52,12 @@ public class WorkingDay {
 	public void setAttendanceTime(String attendanceTime) {
 		this.attendanceTime = attendanceTime;
 	}
+	public String getLeaveTime() {
+		return leaveTime;
+	}
+	public void setLeaveTime(String leaveTime) {
+		this.leaveTime = leaveTime;
+	}
 	public String getBreakTime() {
 		return breakTime;
 	}
@@ -68,11 +76,11 @@ public class WorkingDay {
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
-	public String getLegalFlag() {
+	public Integer getLegalFlag() {
 		return legalFlag;
 	}
-	public void setLegalFlag(String legalFlag) {
-		this.legalFlag = legalFlag;
+	public void setLegalFlag(int i) {
+		this.legalFlag = i;
 	}
 
 

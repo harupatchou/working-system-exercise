@@ -10,8 +10,9 @@ public class GenelalLogic {
 		for(int i=0;i<str.size();i++){
 			if(i==0){
 				strAll = str.get(i);
+			}else{
+				strAll += separate + str.get(i);
 			}
-			strAll += separate + str.get(i);
 		}
 		return strAll;
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -36,8 +37,12 @@ public class AttendanceServlet extends HttpServlet{
 
 		WorkingDay workingDay = new WorkingDay();
 
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
+		Calendar cal = Calendar.getInstance();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		//TODO 決め打ち
+		Integer employeeId = 1;
 		String year =req.getParameter("year");
 		String month =req.getParameter("month");
 		String day =req.getParameter("day");
@@ -48,24 +53,41 @@ public class AttendanceServlet extends HttpServlet{
 		attendDate.add(month);
 		attendDate.add(day);
 
-		String insertDate = GenelalLogic.joinString(attendDate, "-");
+		String insertDate = GenelalLogic.joinString(attendDate, "/");
 
-		String[] startTime = DateLogic.timeStr(req.getParameter("startTime"));
-		String[] endTime = DateLogic.timeStr(req.getParameter("endTime"));
+		String startTime =req.getParameter("startTime");
+		String endTime =req.getParameter("endTime");
+
+		String[] startTimes = DateLogic.timeStr(req.getParameter("startTime"));
+		String[] endTimes = DateLogic.timeStr(req.getParameter("endTime"));
 
 		//一日の労働時間算出
-		String attendDay = DateLogic.attend(startTime, endTime);
+		String attendDay = DateLogic.attend(startTimes, endTimes,0);
 
 		String[] breakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
 		String[] breakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		//一日の休憩時間算出
+		String breakTime = DateLogic.attend(breakStartTime, breakEndTime,1);
 
+
+		//workingDayTableにinsert
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
+			//TODO 決め打ち
+			workingDay.setWeek(1);
+			workingDay.setAttendanceTime(startTime);
+			workingDay.setLeaveTime(endTime);
+			//TODO
+			workingDay.setBreakTime(breakTime);
+			workingDay.setNapTime(breakTime);
+			workingDay.setEmployeeId(employeeId);
+			workingDay.setLegalFlag(1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		AttendanceServise.insertWorkingDay(workingDay);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
