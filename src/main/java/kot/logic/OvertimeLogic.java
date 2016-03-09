@@ -21,6 +21,7 @@ public class OvertimeLogic {
 		temptime.setMinute(Integer.parseInt(strArray[1]));
 		return temptime;
 	}
+
 	/*double型からString型の時分に変換(例.0.5→「0:30」)*/
 	public static String getTimeDoubleToString(double time){
 		int hour = (int)time;
@@ -100,8 +101,7 @@ public class OvertimeLogic {
 
 		//法定労働時間と所定労働時間の差
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
-		getTimeDoubleToString(timeLag);
-		String strTimeLag ="";
+		String timeLagStr = getTimeDoubleToString(timeLag);
 
 
 

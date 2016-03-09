@@ -88,7 +88,7 @@ CREATE TABLE working_all
   week integer NOT NULL,
   working_time_all text,
   legal_overtime_all text,
-  statutory_legal_overtime_all text,
+  statutory_overtime_all text,
   night_time_all text,
   night_overtime_all text,
   late_time_all text,

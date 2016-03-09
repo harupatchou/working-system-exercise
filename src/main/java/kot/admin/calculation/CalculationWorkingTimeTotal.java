@@ -16,7 +16,7 @@ public class CalculationWorkingTimeTotal {
 	/*総法定内残業時間*/
 	private String legalOverWorkingTimeTotal;
 	/*総法定外残業時間*/
-	private String nonLegalOverWorkingTimeTotal;
+	private String statutoryOverWorkingTimeTotal;
 	/*深夜労働時間*/
 	private String nightTimeTotal;
 	/*深夜残業時間*/
@@ -26,10 +26,10 @@ public class CalculationWorkingTimeTotal {
 	public CalculationWorkingTimeTotal(){
 	}
 
-	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String nonLegalOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
+	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String statutoryOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
 		this.workingTimeTotal = workingTimeTotal;
 		this.legalOverWorkingTimeTotal = legalOverWorkingTimeTotal;
-		this.nonLegalOverWorkingTimeTotal = nonLegalOverWorkingTimeTotal;
+		this.statutoryOverWorkingTimeTotal = statutoryOverWorkingTimeTotal;
 		this.nightTimeTotal = nightTimeTotal;
 		this.overNightTimeTotal = overNightTimeTotal;
 	}
@@ -59,12 +59,12 @@ public class CalculationWorkingTimeTotal {
 		this.legalOverWorkingTimeTotal = legalOverWorkingTimeTotal;
 	}
 
-	public String getNonLegalOverWorkingTimeTotal() {
-		return nonLegalOverWorkingTimeTotal;
+	public String getStatutoryOverWorkingTimeTotal() {
+		return statutoryOverWorkingTimeTotal;
 	}
 
-	public void setNonLegalOverWorkingTimeTotal(String nonLegalOverWorkingTimeTotal) {
-		this.nonLegalOverWorkingTimeTotal = nonLegalOverWorkingTimeTotal;
+	public void setStatutoryOverWorkingTimeTotal(String statutoryOverWorkingTimeTotal) {
+		this.statutoryOverWorkingTimeTotal = statutoryOverWorkingTimeTotal;
 	}
 
 	public String getNightTimeTotal() {
