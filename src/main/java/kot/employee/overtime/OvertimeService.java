@@ -1,7 +1,7 @@
 package main.java.kot.employee.overtime;
 
-import main.java.kot.common.Overtime;
 import main.java.kot.dao.OvertimeDao;
+import main.java.kot.entity.Overtime;
 
 public class OvertimeService {
 

@@ -21,7 +21,7 @@ public class WorkingTimeDao {
 
 	/*総労働時間取得*/
 	public static CalculationWorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month, Integer year){
-		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,working_time_all,legal_overtime_all,statutory_legal_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE" + employeeId;
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE employee_id = " + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
@@ -40,7 +40,7 @@ public class WorkingTimeDao {
 					if(year == rs.getInt("year") && month == rs.getInt("month")){
 						workTimeList.add(rs.getString("working_time_all"));
 						legalOverWorkTimeList.add(rs.getString("legal_overtime_all"));
-						nonLegalOverWorkTimeList.add(rs.getString("statutory_legal_overtime_all"));
+						nonLegalOverWorkTimeList.add(rs.getString("statutory_overtime_all"));
 						nightTimeList.add(rs.getString("night_time_all"));
 						overNightTimeList.add(rs.getString("night_overtime_all"));
 					}

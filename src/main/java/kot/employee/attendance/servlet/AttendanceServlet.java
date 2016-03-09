@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.common.WorkingAll;
+import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.employee.overtime.OvertimeService;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.DateLogic;
@@ -134,6 +136,12 @@ public class AttendanceServlet extends HttpServlet{
 
 		//残業にinsertするためにworkingDayTableのIDを取得
 		WorkingDay insertDay =AttendanceServise.selectByDayAndEmployeeId(insertDate, employeeId);
+		//出勤を押した日のidを残業のdailyIdと紐付け
+		overtime.setDailyId(insertDay.getId());
+
+		OvertimeService.insertWorkingDay(overtime);
+
+		WorkingAllDao.insertWorkingAll(workingAll);
 
 
 		ServletContext application = req.getServletContext();

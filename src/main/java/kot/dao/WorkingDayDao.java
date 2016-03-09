@@ -14,7 +14,7 @@ public class WorkingDayDao {
 
 	private static String tableName = "working_day";
 
-	/*従業員情報のインサート*/
+	/*出退勤情報のインサート*/
 	public static boolean insertWorkingDay(WorkingDay workingDay){
 
 		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time,nap_time,employee_id,legal_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -53,7 +53,7 @@ public class WorkingDayDao {
 
 	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeId) {
 
-		String sql = "select * from " + tableName + " where date = " + selectDay +" AND employee_id = " +employeId;
+		String sql = "select * from " + tableName + " where date = '" + selectDay +"' AND employee_id = " +employeId;
 
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
