@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.Schedule;
 import main.java.kot.common.WorkingAll;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
@@ -24,6 +24,7 @@ import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GenelalLogic;
 import main.java.kot.logic.OvertimeLogic;
+import main.java.kot.util.CalendarUtil;
 
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
@@ -44,8 +45,6 @@ public class AttendanceServlet extends HttpServlet{
 		WorkingDay workingDay = new WorkingDay();
 		WorkingAll workingAll = new WorkingAll();
 
-		Calendar cal = Calendar.getInstance();
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		//TODO 決め打ち
@@ -54,6 +53,13 @@ public class AttendanceServlet extends HttpServlet{
 		String year =req.getParameter("year");
 		String month =req.getParameter("month");
 		String day =req.getParameter("day");
+
+		Integer year_int = Integer.parseInt(year);
+		Integer month_int = Integer.parseInt(month);
+		Integer day_int = Integer.parseInt(day);
+
+		//年月日から曜日の値取得
+		Schedule weekInfo = CalendarUtil.getWeek(year_int, month_int, day_int);
 
 		List<String> attendDate = new ArrayList<String>();
 
@@ -75,8 +81,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
-			//TODO 決め打ち
-			workingDay.setWeek(1);
+			workingDay.setWeek(weekInfo.getWeekNum());
 			workingDay.setAttendanceTime(startTime);
 			workingDay.setLeaveTime(endTime);
 			workingDay.setBreakTime(breakTime);
@@ -119,8 +124,8 @@ public class AttendanceServlet extends HttpServlet{
 
 		try {
 			workingAll.setDate(sdf.parse(insertDate));
-			//決め打ち
-			workingAll.setWeek(1);
+			workingAll.setWeek(weekInfo.getWeekNum());
+			//TODO 決め打ち
 			workingAll.setWorkingTimeAll(attendDay);
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
 			workingAll.setSatutoryOverTimeAll(overtime.getStatutoryLeagalOvertime());

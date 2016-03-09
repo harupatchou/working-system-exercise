@@ -165,3 +165,7 @@ INSERT INTO working_all VALUES(59,'2016/1/28',5,'9:30','0:30','1:30','0:00','0:0
 INSERT INTO working_all VALUES(60,'2016/1/29',6,'8:35','0:30','0:35','0:00','0:00','0:00','0:00','0:00',2);
 INSERT INTO working_all VALUES(61,'2016/1/30',7,'0:00','0:00','0:00','0:00','0:00','0:00','0:00','0:00',2);
 INSERT INTO working_all VALUES(62,'2016/1/31',1,'0:00','0:00','0:00','0:00','0:00','0:00','0:00','0:00',2);
+
+ALTER SEQUENCE overtime_id_seq RESTART WITH 62;
+ALTER SEQUENCE working_all_id_seq RESTART WITH 62;
+ALTER SEQUENCE working_day_id_seq RESTART WITH 62;
