@@ -60,6 +60,13 @@ public class OvertimeLogic {
 		workingTimeLag.setTimeInMillis(tempWorkingTimeLag);
 
 		String[] workingTimeArray = sdf.format(workingTimeLag.getTime()).split(":");
+
+		//時の先頭が0のときは0以降の文字列を取得(「00:00」→「0:00」)
+		String firstChar = workingTimeArray[0].substring(0, 1);
+		if(firstChar.equals("0")){
+			workingTimeArray[0] = workingTimeArray[0].substring(1);
+		}
+
 		String workingTime = workingTimeArray[0] + ":" + workingTimeArray[1];
 
 		return workingTime;
