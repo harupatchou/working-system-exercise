@@ -6,8 +6,8 @@ package main.java.kot.common.workingtime;
  **/
 public class WeeklyLegalWorkingTime {
 	/* 通常 */
-	static final int weeklyLegalWorkingTime = 40;
+	public static final double weeklyLegalWorkingTime = 40.0;
 	/*特例措置*/
-	static final int specificWeeklyLegalWorkingTime = 44;
+	public static final double specificWeeklyLegalWorkingTime = 44.0;
 
 }
