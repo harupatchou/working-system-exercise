@@ -1,4 +1,4 @@
-package main.java.kot.common.workingtime;
+package main.java.kot.common.workingtime.constant;
 
 public class ConstantWorkingTime {
 

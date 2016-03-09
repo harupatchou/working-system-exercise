@@ -1,4 +1,4 @@
-package main.java.kot.admin.calculation;
+package main.java.kot.admin.calculation.servlet;
 
 import java.io.IOException;
 
@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.Overtime;
-import main.java.kot.common.WorkingDay;
+import main.java.kot.admin.calculation.CalculationWorkingTimeTotal;
+import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
 import main.java.kot.dao.EmployeeDao;
-import main.java.kot.logic.GetDataLogic;
+import main.java.kot.entity.Employee;
+import main.java.kot.entity.Overtime;
+import main.java.kot.entity.WorkingDay;
+import main.java.kot.entity.Workingtype;
+import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.OvertimeLogic;
 
 @WebServlet("/master/Calculation")
@@ -49,9 +53,15 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		Overtime overtimeTest = OvertimeLogic.getOvertime(test);
 
-		req.setAttribute("workingTimeTotal", CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year));
-		req.setAttribute("employee", EmployeeDao.getEmployee(employeeId));
-		req.setAttribute("workingtype", GetDataLogic.getWorkingtypeFromEmployeeId(employeeId));
+
+
+		CalculationWorkingTimeTotal workingTimeTotal = CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year);
+		Employee employee = EmployeeDao.getEmployee(employeeId);
+		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
+
+		req.setAttribute("workingTimeTotal", workingTimeTotal);
+		req.setAttribute("employee", employee);
+		req.setAttribute("workingtype", workingtype);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

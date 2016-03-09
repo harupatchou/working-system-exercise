@@ -1,4 +1,4 @@
-package main.java.kot.admin.setup;
+package main.java.kot.admin.setup.servlet;
 
 import java.io.IOException;
 
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.Company;
-import main.java.kot.dao.CompanyDao;
+import main.java.kot.dao.WorkingtypeDao;
+import main.java.kot.entity.Workingtype;
 
-@WebServlet("/master/CompanyEdit")
-public class CompanyEditServlet extends HttpServlet{
+@WebServlet("/master/WorkingtypeEdit")
+public class WorkingtypeEditServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +24,7 @@ public class CompanyEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/workingtypeEdit.jsp");
 
 		rd.forward(req, resp);
 
@@ -37,17 +37,25 @@ public class CompanyEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Company company = new Company();
+		Workingtype workingtype = new Workingtype();
 
-		String stringCompanyId =req.getParameter("companyId");
-		Integer companyId = Integer.parseInt(stringCompanyId);
+		String workingName =req.getParameter("workingName");
 
-		String companyName  =req.getParameter("companyName");
+		String stringWorkingtypeId =req.getParameter("workingtypeId");
+		Integer workingtypeId = Integer.parseInt(stringWorkingtypeId);
 
-		company.setId(companyId);
-		company.setCompanyName(companyName);
+		String stringLaborSystemId =req.getParameter("laborSystemId");
+		Integer laborSystemId = Integer.parseInt(stringLaborSystemId);
+		/* TODO 決め打ち */
+		Integer companyId = 1;
 
-		CompanyDao.registCompany(company);
+
+		workingtype.setId(workingtypeId);
+		workingtype.setWorkingName(workingName);
+		workingtype.setLaborSystemId(laborSystemId);
+		workingtype.setCompanyId(companyId);
+
+		WorkingtypeDao.registWorkingtype(workingtype);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

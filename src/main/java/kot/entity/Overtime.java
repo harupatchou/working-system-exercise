@@ -1,4 +1,4 @@
-package main.java.kot.common;
+package main.java.kot.entity;
 
 public class Overtime {
 

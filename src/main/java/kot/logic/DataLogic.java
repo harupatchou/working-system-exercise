@@ -1,15 +1,15 @@
 package main.java.kot.logic;
 
-import main.java.kot.common.AttendanceTime;
-import main.java.kot.common.Company;
-import main.java.kot.common.Employee;
-import main.java.kot.common.Workingtype;
 import main.java.kot.dao.AttendanceTimeDao;
 import main.java.kot.dao.CompanyDao;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.dao.WorkingtypeDao;
+import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.Company;
+import main.java.kot.entity.Employee;
+import main.java.kot.entity.Workingtype;
 
-public class GetDataLogic {
+public class DataLogic {
 
 	/*従業員IDから従業員情報を取得*/
 	public static Employee getEmployee(Integer employeeId){
