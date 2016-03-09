@@ -2,6 +2,7 @@ package main.java.kot.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
@@ -14,8 +15,6 @@ public class WorkingDayDao {
 
 	/*従業員情報のインサート*/
 	public static boolean insertWorkingDay(WorkingDay workingDay){
-
-
 
 		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time,nap_time,employee_id,legal_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -48,6 +47,33 @@ public class WorkingDayDao {
 		} catch (SQLException ex) {
 			System.err.println(ex);
 			throw new RuntimeException();
+		}
+	}
+
+	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeId) {
+
+		String sql = "select * from " + tableName + " where date = " + selectDay +" AND employee_id = " +employeId;
+
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();){
+
+			WorkingDay workingDay = new WorkingDay();
+			while(rs.next()){
+				workingDay.setId(rs.getInt("id"));
+				workingDay.setWeek(rs.getInt("week"));
+				workingDay.setAttendanceTime(rs.getString("attendance_time"));
+				workingDay.setLeaveTime(rs.getString("leave_time"));
+				workingDay.setBreakTime(rs.getString("break_time"));
+				workingDay.setNapTime(rs.getString("nap_time"));
+				workingDay.setEmployeeId(rs.getInt("employee_id"));
+				workingDay.setLegalFlag(rs.getInt("legal_flag"));
+			}
+			return workingDay;
+
+		}catch(SQLException e){
+			System.err.println("SQL = " + sql);
+			throw new RuntimeException("処理に失敗しました", e);
 		}
 	}
 

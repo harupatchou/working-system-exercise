@@ -10,4 +10,9 @@ public class AttendanceServise {
 		return WorkingDayDao.insertWorkingDay(workingDay);
 	}
 
+	//working_day検索
+	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId){
+		return WorkingDayDao.selectByDayAndEmployeeId(selectDay,employeeId);
+	}
+
 }

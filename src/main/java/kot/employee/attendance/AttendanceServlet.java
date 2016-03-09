@@ -43,7 +43,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		Calendar cal = Calendar.getInstance();
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		//TODO 決め打ち
 		Integer employeeId = 1;
@@ -58,7 +58,7 @@ public class AttendanceServlet extends HttpServlet{
 		attendDate.add(month);
 		attendDate.add(day);
 
-		String insertDate = GenelalLogic.joinString(attendDate, "/");
+		String insertDate = GenelalLogic.joinString(attendDate, "-");
 
 		//working_day Tableにinsert
 		String startTime =req.getParameter("startTime");
@@ -86,10 +86,10 @@ public class AttendanceServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 
+		AttendanceServise.insertWorkingDay(workingDay);
+
 		//一日の残業時間算出
 		Overtime overtime = OvertimeLogic.getOvertime(workingDay);
-
-		AttendanceServise.insertWorkingDay(workingDay);
 
 		//working_all Tableにinsert
 
@@ -104,26 +104,36 @@ public class AttendanceServlet extends HttpServlet{
 		String attendDay= DateLogic.getCalculateTime(attendDayAll,breakTime);
 
 		//TODO 深夜計算 今は決め打ち
-		String overNightTime = "00:00";
-		String overNightOvertime = "00:00";
+		String nightTime = "00:00";
+		String nightOvertime = "00:00";
 
 		//TODO 遅刻早退 今は決め打ち
 		String lateTime = "00:00";
 
 		//TODO 休日出勤 今は決め打ち
-		String legalHolidayTimeAll = "00:00";
-		String statutoryHolidayTimeAll = "00:00";
+		String legalHolidayTime = "00:00";
+		String statutoryHolidayTime = "00:00";
 
 		try {
 			workingAll.setDate(sdf.parse(insertDate));
 			//決め打ち
 			workingAll.setWeek(1);
-			workingAll.setWorkingTimeAll(attendDayAll);
+			workingAll.setWorkingTimeAll(attendDay);
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
-
+			workingAll.setSatutoryOverTimeAll(overtime.getStatutoryLeagalOvertime());
+			workingAll.setNightTimeAll(nightTime);
+			workingAll.setNightOvertimeAll(nightOvertime);
+			workingAll.setLateTimeAll(lateTime);
+			workingAll.setLegalHolidayTimeAll(legalHolidayTime);
+			workingAll.setStatutoryHolidayTimeAll(statutoryHolidayTime);
+			workingAll.setEmployeeId(employeeId);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		//残業にinsertするためにworkingDayTableのIDを取得
+		WorkingDay insertDay =AttendanceServise.selectByDayAndEmployeeId(insertDate, employeeId);
+
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
