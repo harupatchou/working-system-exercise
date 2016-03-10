@@ -1,6 +1,8 @@
 package main.java.kot.admin.calculation.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.calculation.CalculationWorkingTimeTotal;
 import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
+import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Employee;
@@ -45,17 +47,26 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		Integer month = Integer.parseInt(stringMonth);
 
 
-		//ロジック実装確認用、後で消す
+		/*ロジック実装確認用、後で消す */
 
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		WorkingDay test = new WorkingDay();
-		test.setAttendanceTime("9:00");
-		test.setLeaveTime("18:25");
-		test.setEmployeeId(1);
+		try {
+			test.setAttendanceTime("9:00");
+			test.setLeaveTime("18:25");
+			test.setDate(sdf.parse("2015-12-5"));
+			test.setWeek(7);
+			test.setNapTime("1:00");
+			test.setEmployeeId(1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Overtime overtimeTest = OvertimeLogic.getIrregularWorkingHourSystemOvertime(test);
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
 		OvertimeLogic.getTimeDoubleToString(timeLag);
 
-
+		/*ここまで*/
 
 
 		CalculationWorkingTimeTotal workingTimeTotal = CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year);
