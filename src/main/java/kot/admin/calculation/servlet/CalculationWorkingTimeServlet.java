@@ -49,9 +49,9 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 
 		WorkingDay test = new WorkingDay();
 		test.setAttendanceTime("9:00");
-		test.setLeaveTime("18:45");
+		test.setLeaveTime("18:25");
 		test.setEmployeeId(1);
-		Overtime overtimeTest = OvertimeLogic.getOvertime(test);
+		Overtime overtimeTest = OvertimeLogic.getIrregularWorkingHourSystemOvertime(test);
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
 		OvertimeLogic.getTimeDoubleToString(timeLag);
 

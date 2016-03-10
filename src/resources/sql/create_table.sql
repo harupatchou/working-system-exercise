@@ -92,8 +92,7 @@ CREATE TABLE working_all
   night_time_all text,
   night_overtime_all text,
   late_time_all text,
-  legal_holiday_time_all text,
-  statutory_holiday_time_all text,
+  legal_holiday_flag integer,
   employee_id integer NOT NULL,
   CONSTRAINT working_all_pkc PRIMARY KEY (id),
   FOREIGN KEY (employee_id) REFERENCES employee(id)
