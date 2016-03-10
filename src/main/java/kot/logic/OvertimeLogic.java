@@ -14,11 +14,14 @@ import main.java.kot.entity.WorkingDay;
  **/
 public class OvertimeLogic {
 
-	/*時分を格納したstring型配列からint型の時分オブジェクトを取得*/
-	public static TempTime getTimeInt(String[] strArray){
+
+	/*string型からint型の時分オブジェクトを取得*/
+	public static TempTime getTimeInt(String str){
+
+		String[] timeArray = str.split(":");
 		TempTime temptime = new TempTime();
-		temptime.setHour(Integer.parseInt(strArray[0]));
-		temptime.setMinute(Integer.parseInt(strArray[1]));
+		temptime.setHour(Integer.parseInt(timeArray[0]));
+		temptime.setMinute(Integer.parseInt(timeArray[1]));
 		return temptime;
 	}
 
@@ -78,10 +81,10 @@ public class OvertimeLogic {
 
 		//対象従業員種別の終業時刻
 		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
-		TempTime startOvertime = getTimeInt(DateLogic.timeStr(workingtypeEndtime));
+		TempTime startOvertime = getTimeInt(workingtypeEndtime);
 
 		//退勤時刻
-		TempTime endOvertime = getTimeInt(DateLogic.timeStr(workingday.getLeaveTime()));
+		TempTime endOvertime = getTimeInt(workingday.getLeaveTime());
 
 		String tempOvertime = getWorkingtimeLag(startOvertime, endOvertime);
 
@@ -95,27 +98,42 @@ public class OvertimeLogic {
 
 	//変形労働制残業時間(一ヶ月単位)
 	public static Overtime getIrregularWorkingHourSystemOvertime(WorkingDay workingday){
+		//残業情報格納用
+		Overtime overtime = new Overtime();
 
 		//対象従業員種別の終業時刻
 		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
-		TempTime startOvertime = getTimeInt(DateLogic.timeStr(workingtypeEndtime));
+		TempTime startOvertime = getTimeInt(workingtypeEndtime);
 
 		//退勤時刻
-		TempTime endOvertime = getTimeInt(DateLogic.timeStr(workingday.getLeaveTime()));
+		TempTime endOvertime = getTimeInt(workingday.getLeaveTime());
 
 		//残業時間
-		String tempOvertime = getWorkingtimeLag(startOvertime, endOvertime);
+		String totalOvertime = getWorkingtimeLag(startOvertime, endOvertime);
 
 		//法定労働時間と所定労働時間の差
 		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
 		String timeLagStr = getTimeDoubleToString(timeLag);
 
+		//法定内残業・法定外残業セット
+		TempTime tempTotalOverTime = getTimeInt(totalOvertime);
+		TempTime tempStatutoryLeagalOvertime = getTimeInt(timeLagStr);
+		//残業時間が法定内残時間で収まらない場合
+		if(tempTotalOverTime.getHour() > tempStatutoryLeagalOvertime.getHour() ||
+				(tempTotalOverTime.getHour() == tempStatutoryLeagalOvertime.getHour() && tempTotalOverTime.getMinute() > tempStatutoryLeagalOvertime.getMinute())){
+			String legalOvertime = getWorkingtimeLag(getTimeInt(timeLagStr),getTimeInt(totalOvertime));
+			overtime.setLegalOvertime(legalOvertime);
+			overtime.setStatutoryLeagalOvertime(timeLagStr);
+		//残業時間が法定内残時間で収まる場合
+		}else if(tempTotalOverTime.getHour() == tempStatutoryLeagalOvertime.getHour() &&
+				tempTotalOverTime.getMinute() > 0 && tempTotalOverTime.getMinute() < tempStatutoryLeagalOvertime.getMinute()){
+			overtime.setLegalOvertime(totalOvertime);
+			overtime.setStatutoryLeagalOvertime("0:00");
+		}
 
 
 
-
-
-		return null;
+		return overtime;
 	}
 
 
