@@ -13,6 +13,7 @@ import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.CalculationWorkingTimeLogic;
+import main.java.kot.logic.HolidayLogic;
 
 /**
  *労働時間関連DAO
@@ -24,7 +25,7 @@ public class WorkingTimeDao {
 
 	/*年月・従業員IDから総労働時間取得*/
 	public static CalculationWorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month, Integer year){
-		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE employee_id = " + employeeId;
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all,day_status FROM " + tableName + " WHERE employee_id = " + employeeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);){
 
@@ -37,6 +38,7 @@ public class WorkingTimeDao {
 			List<String> statutoryOverWorkTimeList = new ArrayList<>();
 			List<String> nightTimeList = new ArrayList<>();
 			List<String> overNightTimeList = new ArrayList<>();
+			List<String> dayStatus = new ArrayList<>();
 
 			try(ResultSet rs = pstmt.executeQuery()){
 				while(rs.next()){
@@ -46,6 +48,7 @@ public class WorkingTimeDao {
 						statutoryOverWorkTimeList.add(rs.getString("statutory_overtime_all"));
 						nightTimeList.add(rs.getString("night_time_all"));
 						overNightTimeList.add(rs.getString("night_overtime_all"));
+						dayStatus.add(rs.getString("day_status"));
 					}
 				}
 
@@ -57,6 +60,7 @@ public class WorkingTimeDao {
 					workingTimeTotal.setStatutoryOverWorkingTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(statutoryOverWorkTimeList));
 					workingTimeTotal.setNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(nightTimeList));
 					workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
+					workingTimeTotal.setHolidayTimeTotal(HolidayLogic.getHolidayTime(dayStatus,workTimeList));
 
 					return workingTimeTotal;
 

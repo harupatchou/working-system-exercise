@@ -134,10 +134,10 @@ public class AttendanceServlet extends HttpServlet{
 		if(weekInfo.getHolidayFlag()==1){
 			//法定休日ならば
 			if(workingDay.getLegalFlag()==1){
-				workingAll.setDayStatus("法定休日");;
+				workingAll.setDayStatus("法定");;
 			}else{
 				//TODO 土曜出勤,祝日出勤は何として扱うか
-				workingAll.setDayStatus("所定休日");
+				workingAll.setDayStatus("所定");
 			}
 		}else{
 			workingAll.setDayStatus("通常");

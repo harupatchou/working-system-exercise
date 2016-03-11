@@ -4,34 +4,10 @@
   <input type="hidden" name="employeeId" value="1">
   <ul>
     <li>
-      <input type="submit" value="従業員情報編集" class="sideButton" id="EmployeeEdit">
+      <input type="submit" value="パスワード変更" class="sideButton" id="PasswordEdit">
     </li>
     <li>
-      <input type="submit" value="会社情報編集" class="sideButton" id="CompanyEdit">
-    </li>
-    <li>
-      <input type="submit" value="従業員種別情報編集" class="sideButton" id="WorkingtypeEdit">
-    </li>
-    <li>
-      d
-    </li>
-    <li>
-      e
-    </li>
-    <li>
-      f
-    </li>
-    <li>
-      g
-    </li>
-    <li>
-      h
-    </li>
-    <li>
-      i
-    </li>
-    <li>
-      j
+      <input type="submit" value="月次申請" class="sideButton" id="MonthlyEdit">
     </li>
   </ul>
 </form>

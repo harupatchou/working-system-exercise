@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../js/common/sideMenu.js"></script>
+<script src="../js/employee/employee.js"></script>
 <script src="../js/setup/edit.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/employee/layout.css">
 <link rel="stylesheet" type="text/css" href="../css/employee/contents.css">
@@ -30,11 +31,11 @@
         <c:import url="/jsp/employee/common/sideMenu.jsp"/>
       </div>
     </div>
-    <div id="footer-bk">
+    <%-- <div id="footer-bk">
       <div id="kot-footer">
         <c:import url="/jsp/employee/common/footer.jsp"/>
       </div>
-    </div>
+    </div> --%>
   </div>
 </body>
 </html>
