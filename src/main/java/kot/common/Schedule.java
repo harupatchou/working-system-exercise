@@ -1,5 +1,6 @@
 package main.java.kot.common;
 
+
 public class Schedule {
 
 	//週のintの値
@@ -9,6 +10,9 @@ public class Schedule {
 	//休日フラグ
 	Integer holidayFlag;
 
+	//年月日
+	//TODO Dateの方がいいかな？
+	String monthlyDate;
 
 	public Integer getWeekNum() {
 		return weekNum;
@@ -27,6 +31,12 @@ public class Schedule {
 	}
 	public void setHolidayFlag(Integer holidayFlag) {
 		this.holidayFlag = holidayFlag;
+	}
+	public String getMonthlyDate() {
+		return monthlyDate;
+	}
+	public void setMonthlyDate(String monthlyDate) {
+		this.monthlyDate = monthlyDate;
 	}
 
 }

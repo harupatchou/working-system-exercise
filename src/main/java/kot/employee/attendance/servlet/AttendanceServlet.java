@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -37,8 +38,27 @@ public class AttendanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		String selectDay = "";
+
+		String strDay = req.getParameter("day_num");
+
+		if(strDay != null){
+			selectDay = DateLogic.formatDate(strDay);
+		}else{
+			//サイドバーから遷移した場合は当日の編集
+			Date today = new Date();
+			selectDay = sdf.format(today);
+		}
+
+		//画面から送られてきた「/」区切りの日付を「-」区切りに変換
+		//String serverSideDay =selectDay.replace("/","-");
+
+		req.setAttribute("selectDay", selectDay);
+
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/index.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");
 
 		rd.forward(req, resp);
 	}
@@ -112,6 +132,9 @@ public class AttendanceServlet extends HttpServlet{
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		//String alertMessage = UpperLimitTimeLogic.decisionLimitTime(workingDay);
+		//req.setAttribute("alertMessage",alertMessage);
 
 		AttendanceServise.insertWorkingDay(workingDay);
 

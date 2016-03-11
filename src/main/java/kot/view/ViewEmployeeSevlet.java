@@ -1,8 +1,6 @@
 package main.java.kot.view;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -22,19 +20,8 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Calendar  calendar = Calendar.getInstance();
-		//calendarにsetするために当日のDate型の変数を用意
-		Date today = new Date();
-		calendar.setTime(today);
-
-		int day_count = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-		req.setAttribute("selectYear",calendar.get(Calendar.YEAR));
-		req.setAttribute("selectMonth", calendar.get(Calendar.MONTH)+1);
-		req.setAttribute("day_count", day_count);
-
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/monthly/index.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");
 		rd.forward(req, resp);
 	}
 

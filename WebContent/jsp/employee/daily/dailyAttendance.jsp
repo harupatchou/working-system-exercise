@@ -11,7 +11,7 @@
           <li>
             <label>日付選択：</label>
             <div>
-              <input type="text" placeholder="0000/00/00" class="attendance_day">
+              <input type="text" placeholder="0000/00/00" class="attendance_day" value="${selectDay}">
 <!-- hidden領域  -->
               <input type="hidden" name="year" id="yearHidden">
               <input type="hidden" name="month" id="monthHidden">

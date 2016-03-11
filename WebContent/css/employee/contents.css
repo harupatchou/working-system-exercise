@@ -19,6 +19,11 @@ table,th,td{
     width:60%;
 }
 
+.calendar_table {
+    border:1;
+    width:80%;
+}
+
 .warnA {
     color: #FF0000;
 }

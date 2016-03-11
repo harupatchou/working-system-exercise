@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+.patternB {
+
+}
+
+div.patternB label{
+  margin-left:auto;
+
+}
+
+div.patternB div{
+  margin-left: 200px;
+  margin-top: -60px;
+  padding: 40px 0;
+}
+
+div.patternB ul{
+  list-style:none;
+}
+
+div.patternB li{
+}
+
+div.saveButton{
+    width:200px;
+    padding:0 200px;
+}
+
+div.saveButton input{
+    background: #FF8C00;
+    color:#FFFFFF;
+    width: 140px;
+    padding: 10px 0;
+}
+
+td.day {
+	background: #B0C4DE;
+    color:#000000;
+}

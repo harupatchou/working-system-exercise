@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="../css/employee/layout.css">
 <link rel="stylesheet" type="text/css" href="../css/employee/contents.css">
 <link rel="stylesheet" type="text/css" href="../css/employee/a_pattern.css">
+<link rel="stylesheet" type="text/css" href="../css/employee/b_pattern.css">
 <title>KOT</title>
 </head>
 <body>

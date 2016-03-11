@@ -22,7 +22,7 @@
     <form>
       <h4 class="subTitle">${selectMonth}月の勤怠</h4>
       <div class="a_pattern_table">
-        <table class="normal_table">
+        <table class="calendar_table">
           <thead>
             <tr>
               <th>日付</th>
@@ -36,9 +36,16 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach varStatus="i" begin="1" end="${day_count}" step="1">
+            <c:forEach varStatus="i" items="${scheduleList}" var="schedule">
               <tr>
-                <td class="day">${selectMonth}/${i.index}</td>
+                <td class="day"><a href="/kot/employee/Attendance?day_num=${schedule.monthlyDate}">${schedule.monthlyDate}</a></td>
+                <td class="week">${schedule.weekStr}</td>
+                <td>${schedule.holidayFlag}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </c:forEach>
           </tbody>

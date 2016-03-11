@@ -4,13 +4,13 @@
   <input type="hidden" name="employeeId" value="1">
   <ul>
     <li>
-      <input type="submit" value="パスワード変更" class="sideButton" id="PasswordEdit">
-    </li>
-    <li>
-      <input type="submit" value="月次申請" class="sideButton" id="MonthlyEdit">
+      <input type="submit" value="月次申請" class="sideButton" id="MonthlyAttendance">
     </li>
     <li>
       <input type="submit" value="日次申請" class="sideButton" id="Attendance">
+    </li>
+    <li>
+      <input type="submit" value="パスワード変更" class="sideButton" id="PasswordEdit">
     </li>
   </ul>
 </form>

@@ -1,10 +1,18 @@
 package main.java.kot.logic;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import main.java.kot.common.Schedule;
+import main.java.kot.util.CalendarUtil;
 
 
 public class DateLogic {
+
+	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	/* 入力した時間からhour、minutesを取得 */
 	public static String[] timeStr (String str){
@@ -114,6 +122,55 @@ public class DateLogic {
 
 		return sqlDate;
 	}
+
+	//画面に送信する情報をListに格納していく
+	//TODO 出退勤時間等も入れていく.
+	public static List<Schedule> getMonthlyDate (Integer year,Integer month,Integer day_count){
+
+		//画面表示用に月の情報を格納するList
+		List<Schedule> scheduleList = new ArrayList<Schedule>();
+
+		//年月を固定なのでStringの変数に代入
+		String strYear = String.valueOf(year);
+		String strMonth =  String.valueOf(month);
+
+		for (int i = 0;i < day_count; i++){
+			List<String> addDate = new ArrayList<String>();
+			Schedule tempSchedule = new Schedule();
+
+			addDate.add(strYear);
+			addDate.add(strMonth);
+			addDate.add(String.valueOf(i+1));
+
+			Schedule weekInfo = CalendarUtil.getWeek(year,month,i+1);
+
+			tempSchedule.setMonthlyDate(GeneralLogic.joinString(addDate, "/"));
+			tempSchedule.setWeekStr(weekInfo.getWeekStr());
+			tempSchedule.setWeekNum(weekInfo.getWeekNum());
+			tempSchedule.setHolidayFlag(weekInfo.getHolidayFlag());
+
+			scheduleList.add(tempSchedule);
+		}
+		return scheduleList;
+
+	}
+
+	//0000/0/0形式のDateを0000/00/00の形式に変換
+	public static String formatDate (String oldDate){
+
+		String[] arrayDate = oldDate.split("/");
+		String formatDate = arrayDate[0];
+
+		for (int i=0;i<arrayDate.length-1;i++){
+			if(arrayDate[1].length() == 1){
+				formatDate += "/0" + arrayDate[1];
+			} else {
+				formatDate += "/" + arrayDate[1];
+			}
+		}
+		return formatDate;
+	}
+
 
 
 }
