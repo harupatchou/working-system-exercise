@@ -98,7 +98,6 @@ public class WorkingTimeDao {
 					int tempmonth = rs.getInt("month");
 					int tempday = rs.getInt("day");
 					if(year == tempyear && month == tempmonth && day >= tempday){
-						System.out.println(tempday);
 						workTimeList.add(rs.getString("working_time_all"));
 						legalOverWorkTimeList.add(rs.getString("legal_overtime_all"));
 						statutoryOverWorkTimeList.add(rs.getString("statutory_overtime_all"));
