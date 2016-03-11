@@ -33,7 +33,14 @@ public class AttendanceServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doPost(req, resp);
+
+		//文字形式をUTF-8指定
+		req.setCharacterEncoding("UTF-8");
+
+		ServletContext application = req.getServletContext();
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/index.jsp");
+
+		rd.forward(req, resp);
 	}
 
 	@Override
@@ -51,7 +58,7 @@ public class AttendanceServlet extends HttpServlet{
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 
 		//TODO 決め打ち
-		Integer employeeId = 1;
+		Integer employeeId = 2;
 
 		//insertする日を格納しておく
 		InsertDay insertDay = new InsertDay();

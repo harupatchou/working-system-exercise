@@ -9,5 +9,8 @@
     <li>
       <input type="submit" value="月次申請" class="sideButton" id="MonthlyEdit">
     </li>
+    <li>
+      <input type="submit" value="日次申請" class="sideButton" id="Attendance">
+    </li>
   </ul>
 </form>
