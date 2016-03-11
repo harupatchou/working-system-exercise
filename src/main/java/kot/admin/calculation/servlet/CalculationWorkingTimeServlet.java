@@ -54,11 +54,11 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		WorkingDay test = new WorkingDay();
 		try {
 			test.setAttendanceTime("9:00");
-			test.setLeaveTime("18:25");
-			test.setDate(sdf.parse("2015-12-5"));
-			test.setWeek(7);
+			test.setLeaveTime("19:55");
+			test.setDate(sdf.parse("2016-1-22"));
+			test.setWeek(6);
 			test.setNapTime("1:00");
-			test.setEmployeeId(1);
+			test.setEmployeeId(2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

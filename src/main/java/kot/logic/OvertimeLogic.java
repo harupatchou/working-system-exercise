@@ -34,12 +34,20 @@ public class OvertimeLogic {
 	public static String getTimeDoubleToString(double time){
 		int hour = (int)time;
 		int minute;
+		String strHour = String.valueOf(hour);
+		String strMinute = "";
 		if(hour == 0){
 			minute = (int)(60 * time);
 		}else{
 			minute = (int)(60 * (time - hour));
 		}
-		String timeString = String.valueOf(hour) + ":" + String.valueOf(minute);
+
+		if(minute < 10){
+			strMinute = "0" + String.valueOf(minute);
+		}else{
+			strMinute = String.valueOf(minute);
+		}
+		String timeString = strHour + ":" + strMinute;
 		return timeString;
 	}
 
@@ -114,13 +122,20 @@ public class OvertimeLogic {
 
 		int hour = tempWorkingTime.getHour() - tempLegalWorkingTime.getHour();
 		int minute = tempWorkingTime.getMinute() - tempLegalWorkingTime.getMinute();
+		String tempHour = "";
+		String tempMinute = "";
 
 		if(minute < 0){
-			hour = hour - 1;
-			minute = minute + 60;
+			tempHour = String.valueOf(hour - 1);
+			tempMinute = String.valueOf(minute + 60);
+		}else if(minute > 0 && minute < 10){
+			tempHour = String.valueOf(hour);
+			tempMinute = "0" + String.valueOf(minute);
+		}else {
+			tempHour = String.valueOf(hour);
+			tempMinute = String.valueOf(minute);
 		}
-
-		answerSubtraction = String.valueOf(hour) + ":" + String.valueOf(minute);
+		answerSubtraction = tempHour + ":" + tempMinute;
 
 		return answerSubtraction;
 	}
@@ -146,8 +161,8 @@ public class OvertimeLogic {
 		return monthlyLegalWorkingtime;
 	}
 
-	/*実労働時間を法定外残業にセット(土曜日用処理)*/
-	public static Overtime getOvertimeOnSaturday(WorkingDay workingday){
+	/*実労働時間を法定外残業にセット(土日用処理)*/
+	public static Overtime getOvertimeOnSaturdayAndSunday(WorkingDay workingday){
 
 		Overtime overtime = new Overtime();
 
@@ -171,6 +186,15 @@ public class OvertimeLogic {
 	/*通常残業時間*/
 	public static Overtime getOvertime(WorkingDay workingday){
 
+		/*dailyIDはDBインサート直前でセット*/
+		Overtime overtime = new Overtime();
+
+		//土日用処理
+		if(workingday.getWeek() == 7 || workingday.getWeek() == 1){
+			overtime = getOvertimeOnSaturdayAndSunday(workingday);
+			return overtime;
+		}
+
 		//対象従業員種別の終業時刻
 		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
 		TempTime startOvertime = getTimeInt(workingtypeEndtime);
@@ -180,8 +204,6 @@ public class OvertimeLogic {
 
 		String tempOvertime = getWorkingtimeLag(startOvertime, endOvertime);
 
-		/*dailyIDはDBインサート直前でセット*/
-		Overtime overtime = new Overtime();
 		overtime.setLegalOvertime("0:00");
 		overtime.setStatutoryOvertime(tempOvertime);
 		overtime.setNightOvertime("0:00");
@@ -195,9 +217,9 @@ public class OvertimeLogic {
 		//残業情報格納用(dailyIDはDBインサート直前でセット)
 		Overtime overtime = new Overtime();
 
-		//土曜日用処理
-		if(workingday.getWeek() == 7){
-			overtime = getOvertimeOnSaturday(workingday);
+		//土日用処理
+		if(workingday.getWeek() == 7 || workingday.getWeek() == 1){
+			overtime = getOvertimeOnSaturdayAndSunday(workingday);
 			return overtime;
 		}
 
@@ -252,12 +274,11 @@ public class OvertimeLogic {
 			if(day <= 5){
 				startDay = 1;
 			}else if(day > 5 && day < maxDay){
-				startDay = day - 4;
+				startDay = day - 6;
 			}
-		//金曜日以外で最終日を迎えた場合
-		}else if(workingday.getWeek() != 6 && day == maxDay){
-			int lastWeekPeriod = 6 - workingday.getWeek();//金曜日のnum - 今日のnum
-			startDay = day - lastWeekPeriod;
+		//金曜日以外の場合
+		}else if(workingday.getWeek() != 6){
+			startDay = day - workingday.getWeek() + 2;//土曜から今日までの期間(曜日が1～7までのint型で判定なので金曜日との差を出すために+2)
 		}
 
 		//今週の実労働時間
@@ -291,9 +312,9 @@ public class OvertimeLogic {
 		if(tempTotalOverTime.getHour() > tempStatutoryOvertime.getHour() ||
 				(tempTotalOverTime.getHour() == tempStatutoryOvertime.getHour() &&
 				tempTotalOverTime.getMinute() > tempStatutoryOvertime.getMinute())){
-			String legalOvertime = getWorkingtimeLag(getTimeInt(timeLagStr),getTimeInt(totalOvertime));
-			overtime.setLegalOvertime(legalOvertime);
-			overtime.setStatutoryOvertime(timeLagStr);
+			String statutoryOvertime = getWorkingtimeLag(getTimeInt(timeLagStr),getTimeInt(totalOvertime));
+			overtime.setLegalOvertime(timeLagStr);
+			overtime.setStatutoryOvertime(statutoryOvertime);
 			overtime.setNightOvertime("0:00");
 			overtime.setStatutoryNightOvertime("0:00");
 		//法定内で収まる場合

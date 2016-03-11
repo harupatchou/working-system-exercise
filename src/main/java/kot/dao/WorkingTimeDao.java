@@ -125,7 +125,7 @@ public class WorkingTimeDao {
 
 	}
 
-	/*年月日・曜日・従業員IDから現時点での総労働時間取得*/
+	/*年月日・曜日・従業員IDから指定週での総労働時間取得*/
 	public static CalculationWorkingTimeTotal getCurrentWeeklyWorkingTimeTotal(WorkingDay workingDay, Integer startDay, Integer endDay){
 		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE employee_id = " + workingDay.getEmployeeId();
 		try(Connection con = DBManager.createConnection();
@@ -152,7 +152,7 @@ public class WorkingTimeDao {
 					int tempyear = rs.getInt("year");
 					int tempmonth = rs.getInt("month");
 					int tempday = rs.getInt("day");
-					if(year == tempyear && month == tempmonth && startDay <= tempday && endDay <= tempday){
+					if(year == tempyear && month == tempmonth && startDay <= tempday && endDay >= tempday){
 						workTimeList.add(rs.getString("working_time_all"));
 						legalOverWorkTimeList.add(rs.getString("legal_overtime_all"));
 						statutoryOverWorkTimeList.add(rs.getString("statutory_overtime_all"));
