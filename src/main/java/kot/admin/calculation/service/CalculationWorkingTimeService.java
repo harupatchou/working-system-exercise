@@ -1,6 +1,6 @@
 package main.java.kot.admin.calculation.service;
 
-import main.java.kot.admin.calculation.CalculationWorkingTimeTotal;
+import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.dao.WorkingTimeDao;
 
 public class CalculationWorkingTimeService {

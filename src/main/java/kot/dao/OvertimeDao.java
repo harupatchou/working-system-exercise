@@ -22,7 +22,7 @@ public class OvertimeDao {
 
 			//TODO 微妙
 			pstmt.setString(1,overtime.getLegalOvertime());
-			pstmt.setString(2,overtime.getStatutoryLeagalOvertime());
+			pstmt.setString(2,overtime.getStatutoryOvertime());
 			pstmt.setInt(3, overtime.getDailyId());
 
 			pstmt.executeUpdate();

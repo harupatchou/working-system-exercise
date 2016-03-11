@@ -149,7 +149,7 @@ public class AttendanceServlet extends HttpServlet{
 			//TODO 決め打ち
 			workingAll.setWorkingTimeAll(attendDay);
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
-			workingAll.setSatutoryOverTimeAll(overtime.getStatutoryLeagalOvertime());
+			workingAll.setSatutoryOverTimeAll(overtime.getStatutoryOvertime());
 			workingAll.setNightTimeAll(nightTime);
 			workingAll.setNightOvertimeAll(nightOvertime);
 			workingAll.setLateTimeAll(lateTime);
