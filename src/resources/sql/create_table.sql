@@ -75,7 +75,9 @@ CREATE TABLE overtime
 (
   id serial,
   legal_overtime text,
-  non_legal_overtime text,
+  statutory_overtime text,
+  night_overtime text,
+  statutory_night_overtime text,
   daily_id integer NOT NULL,
   CONSTRAINT overtime_pkc PRIMARY KEY (id),
   FOREIGN KEY (daily_id) REFERENCES working_day(id)
@@ -92,7 +94,7 @@ CREATE TABLE working_all
   night_time_all text,
   night_overtime_all text,
   late_time_all text,
-  legal_holiday_flag integer,
+  day_status text,
   employee_id integer NOT NULL,
   CONSTRAINT working_all_pkc PRIMARY KEY (id),
   FOREIGN KEY (employee_id) REFERENCES employee(id)

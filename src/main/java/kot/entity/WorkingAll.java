@@ -23,7 +23,7 @@ public class WorkingAll {
 	//遅刻時間
 	private String lateTimeAll;
 	//所定外休日時間
-	private Integer legalHolidayFlag;
+	private String dayStatus;
 	//従業員id
 	private Integer employeeId;
 
@@ -82,11 +82,11 @@ public class WorkingAll {
 	public void setLateTimeAll(String lateTimeAll) {
 		this.lateTimeAll = lateTimeAll;
 	}
-	public Integer getLegalHolidayFlag() {
-		return legalHolidayFlag;
+	public String getDayStatus() {
+		return dayStatus;
 	}
-	public void setLegalHolidayFlag(Integer legalHolidayFlag) {
-		this.legalHolidayFlag = legalHolidayFlag;
+	public void setDayStatus(String dayStatus) {
+		this.dayStatus = dayStatus;
 	}
 	public Integer getEmployeeId() {
 		return employeeId;

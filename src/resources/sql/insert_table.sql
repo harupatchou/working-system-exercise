@@ -66,37 +66,37 @@ INSERT INTO working_day VALUES(31,'2015/12/31',5,'0:00','0:00','0:00','0:00',1,0
 
 
 /*残業時間*/
-INSERT INTO overtime VALUES(1,'0:00','2:00',1);
-INSERT INTO overtime VALUES(2,'0:00','1:46',2);
-INSERT INTO overtime VALUES(3,'0:00','1:19',3);
-INSERT INTO overtime VALUES(4,'0:00','1:27',4);
-INSERT INTO overtime VALUES(5,'0:00','0:00',5);
-INSERT INTO overtime VALUES(6,'0:00','0:00',6);
-INSERT INTO overtime VALUES(7,'0:00','3:08',7);
-INSERT INTO overtime VALUES(8,'0:00','0:00',8);
-INSERT INTO overtime VALUES(9,'0:00','2:17',9);
-INSERT INTO overtime VALUES(10,'0:00','3:30',10);
-INSERT INTO overtime VALUES(11,'0:00','2:30',11);
-INSERT INTO overtime VALUES(12,'0:00','0:00',12);
-INSERT INTO overtime VALUES(13,'0:00','0:00',13);
-INSERT INTO overtime VALUES(14,'0:00','2:06',14);
-INSERT INTO overtime VALUES(15,'0:00','3:26',15);
-INSERT INTO overtime VALUES(16,'0:00','3:31',16);
-INSERT INTO overtime VALUES(17,'0:00','0:49',17);
-INSERT INTO overtime VALUES(18,'0:00','0:51',18);
-INSERT INTO overtime VALUES(19,'0:00','0:00',19);
-INSERT INTO overtime VALUES(20,'0:00','0:00',20);
-INSERT INTO overtime VALUES(21,'0:00','2:16',21);
-INSERT INTO overtime VALUES(22,'0:00','1:27',22);
-INSERT INTO overtime VALUES(23,'0:00','0:00',23);
-INSERT INTO overtime VALUES(24,'0:00','0:29',24);
-INSERT INTO overtime VALUES(25,'0:00','0:00',25);
-INSERT INTO overtime VALUES(26,'0:00','0:00',26);
-INSERT INTO overtime VALUES(27,'0:00','0:00',27);
-INSERT INTO overtime VALUES(28,'0:00','0:00',28);
-INSERT INTO overtime VALUES(29,'0:00','0:00',29);
-INSERT INTO overtime VALUES(30,'0:00','0:00',30);
-INSERT INTO overtime VALUES(31,'0:00','0:00',31);
+INSERT INTO overtime VALUES(1,'0:00','2:00','0:00','0:00',1);
+INSERT INTO overtime VALUES(2,'0:00','1:46','0:00','0:00',2);
+INSERT INTO overtime VALUES(3,'0:00','1:19','0:00','0:00',3);
+INSERT INTO overtime VALUES(4,'0:00','1:27','0:00','0:00',4);
+INSERT INTO overtime VALUES(5,'0:00','0:00','0:00','0:00',5);
+INSERT INTO overtime VALUES(6,'0:00','0:00','0:00','0:00',6);
+INSERT INTO overtime VALUES(7,'0:00','3:08','0:00','0:00',7);
+INSERT INTO overtime VALUES(8,'0:00','0:00','0:00','0:00',8);
+INSERT INTO overtime VALUES(9,'0:00','2:17','0:00','0:00',9);
+INSERT INTO overtime VALUES(10,'0:00','3:30','0:00','0:00',10);
+INSERT INTO overtime VALUES(11,'0:00','2:30','0:00','0:00',11);
+INSERT INTO overtime VALUES(12,'0:00','0:00','0:00','0:00',12);
+INSERT INTO overtime VALUES(13,'0:00','0:00','0:00','0:00',13);
+INSERT INTO overtime VALUES(14,'0:00','2:06','0:00','0:00',14);
+INSERT INTO overtime VALUES(15,'0:00','3:26','0:00','0:00',15);
+INSERT INTO overtime VALUES(16,'0:00','3:31','0:00','0:00',16);
+INSERT INTO overtime VALUES(17,'0:00','0:49','0:00','0:00',17);
+INSERT INTO overtime VALUES(18,'0:00','0:51','0:00','0:00',18);
+INSERT INTO overtime VALUES(19,'0:00','0:00','0:00','0:00',19);
+INSERT INTO overtime VALUES(20,'0:00','0:00','0:00','0:00',20);
+INSERT INTO overtime VALUES(21,'0:00','2:16','0:00','0:00',21);
+INSERT INTO overtime VALUES(22,'0:00','1:27','0:00','0:00',22);
+INSERT INTO overtime VALUES(23,'0:00','0:00','0:00','0:00',23);
+INSERT INTO overtime VALUES(24,'0:00','0:29','0:00','0:00',24);
+INSERT INTO overtime VALUES(25,'0:00','0:00','0:00','0:00',25);
+INSERT INTO overtime VALUES(26,'0:00','0:00','0:00','0:00',26);
+INSERT INTO overtime VALUES(27,'0:00','0:00','0:00','0:00',27);
+INSERT INTO overtime VALUES(28,'0:00','0:00','0:00','0:00',28);
+INSERT INTO overtime VALUES(29,'0:00','0:00','0:00','0:00',29);
+INSERT INTO overtime VALUES(30,'0:00','0:00','0:00','0:00',30);
+INSERT INTO overtime VALUES(31,'0:00','0:00','0:00','0:00',31);
 
 /*総労働時間*/
 /*通常労働時間*/

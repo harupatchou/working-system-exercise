@@ -134,13 +134,13 @@ public class AttendanceServlet extends HttpServlet{
 		if(weekInfo.getHolidayFlag()==1){
 			//法定休日ならば
 			if(workingDay.getLegalFlag()==1){
-				workingAll.setLegalHolidayFlag(1);
+				workingAll.setDayStatus("法定休日");;
 			}else{
 				//TODO 土曜出勤,祝日出勤は何として扱うか
-				workingAll.setLegalHolidayFlag(0);
+				workingAll.setDayStatus("所定休日");
 			}
 		}else{
-			workingAll.setLegalHolidayFlag(0);
+			workingAll.setDayStatus("通常");
 		}
 
 		try {
@@ -166,7 +166,6 @@ public class AttendanceServlet extends HttpServlet{
 		OvertimeService.insertWorkingDay(overtime);
 
 		WorkingAllDao.insertWorkingAll(workingAll);
-
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
