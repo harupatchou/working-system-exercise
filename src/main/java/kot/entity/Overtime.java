@@ -8,19 +8,22 @@ public class Overtime {
 	private String legalOvertime;
 	/*法定外残業*/
 	private String statutoryOvertime;
-	/*深夜残業*/
+	/*法定内深夜残業*/
 	private String nightOvertime;
+	/*法定外深夜残業*/
+	private String statutoryNightOvertime;
 	/*日付ID*/
 	private Integer dailyId;
 
 	public Overtime(){
 	}
 
-	public Overtime(Integer overtimeId,String legalOvertime,String statutoryOvertime,String nightOvertime,Integer dailyId){
+	public Overtime(Integer overtimeId,String legalOvertime,String statutoryOvertime,String nightOvertime,String statutoryNightOvertime, Integer dailyId){
 		this.overtimeId = overtimeId;
 		this.legalOvertime = legalOvertime;
 		this.statutoryOvertime = statutoryOvertime;
 		this.nightOvertime = nightOvertime;
+		this.statutoryNightOvertime = statutoryNightOvertime;
 		this.dailyId = dailyId;
 	}
 
@@ -47,6 +50,13 @@ public class Overtime {
 	}
 	public void setNightOvertime(String nightOvertime) {
 		this.nightOvertime = nightOvertime;
+	}
+	public String getStatutoryNightOvertime() {
+		return statutoryNightOvertime;
+	}
+
+	public void setStatutoryNightOvertime(String statutoryNightOvertime) {
+		this.statutoryNightOvertime = statutoryNightOvertime;
 	}
 	public Integer getDailyId() {
 		return dailyId;

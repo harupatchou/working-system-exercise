@@ -14,7 +14,7 @@ public class OvertimeDao {
 
 	/*残業情報のインサート*/
 	public static boolean insertOvertime(Overtime overtime) {
-		String sql = "INSERT INTO " + tableName + " (legal_overtime,non_legal_overtime,daily_id) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " (legal_overtime,statutory_overtime,night_overtime,statutory_night_overtime,daily_id) VALUES (?, ?, ?, ?, ?)";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -23,7 +23,9 @@ public class OvertimeDao {
 			//TODO 微妙
 			pstmt.setString(1,overtime.getLegalOvertime());
 			pstmt.setString(2,overtime.getStatutoryOvertime());
-			pstmt.setInt(3, overtime.getDailyId());
+			pstmt.setString(3, overtime.getNightOvertime());
+			pstmt.setString(4, overtime.getStatutoryNightOvertime());
+			pstmt.setInt(5, overtime.getDailyId());
 
 			pstmt.executeUpdate();
 
