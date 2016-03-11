@@ -33,3 +33,8 @@ div.saveButton input{
     width: 140px;
     padding: 10px 0;
 }
+
+td.day {
+	background: #48D1CC;
+    color:#F21F39;
+}

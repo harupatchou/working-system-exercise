@@ -21,6 +21,8 @@ public class CalculationWorkingTimeTotal {
 	private String nightTimeTotal;
 	/*深夜残業時間*/
 	private String overNightTimeTotal;
+	/*休日出勤時間*/
+	private String holidayTimeTotal;
 
 
 	public CalculationWorkingTimeTotal(){
@@ -78,5 +80,11 @@ public class CalculationWorkingTimeTotal {
 	}
 	public void setOverNightTimeTotal(String overNightTimeTotal) {
 		this.overNightTimeTotal = overNightTimeTotal;
+	}
+	public String getHolidayTimeTotal() {
+		return holidayTimeTotal;
+	}
+	public void setHolidayTimeTotal(String holidayTimeTotal) {
+		this.holidayTimeTotal = holidayTimeTotal;
 	}
 }

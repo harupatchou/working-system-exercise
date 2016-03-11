@@ -1,8 +1,6 @@
-package main.java.kot.view;
+package main.java.kot.employee.attendance.servlet;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -12,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/employee/Top")
-public class ViewEmployeeSevlet extends HttpServlet {
+@WebServlet("/employee/MonthlyAttendance")
+public class MonthlyAttedanceServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -22,25 +20,26 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Calendar  calendar = Calendar.getInstance();
-		//calendarにsetするために当日のDate型の変数を用意
-		Date today = new Date();
-		calendar.setTime(today);
+		String selectMonth =req.getParameter("month");
 
-		int day_count = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-		req.setAttribute("selectYear",calendar.get(Calendar.YEAR));
-		req.setAttribute("selectMonth", calendar.get(Calendar.MONTH)+1);
-		req.setAttribute("day_count", day_count);
+		req.setAttribute("selectMonth", selectMonth);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/monthly/index.jsp");
+
 		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doGet(req, resp);
+
+		//文字形式をUTF-8指定
+		req.setCharacterEncoding("UTF-8");
+
+		ServletContext application = req.getServletContext();
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
+		rd.forward(req, resp);
 	}
+
 }
