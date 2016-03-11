@@ -23,6 +23,8 @@ import main.java.kot.employee.overtime.OvertimeService;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
+import main.java.kot.entity.Workingtype;
+import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GeneralLogic;
 import main.java.kot.logic.OvertimeLogic;
@@ -139,7 +141,16 @@ public class AttendanceServlet extends HttpServlet{
 		AttendanceServise.insertWorkingDay(workingDay);
 
 		//一日の残業時間算出
-		Overtime overtime = OvertimeLogic.getOvertime(workingDay);
+		Overtime overtime = new Overtime();
+		Workingtype workingType = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
+		if(workingType.getId() == 1){
+			overtime = OvertimeLogic.getOvertime(workingDay);
+		}else if(workingType.getId() == 2){
+			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
+		// TODO フレックス用
+		}else if(workingType.getId() == 3){
+			/*ここに実装*/
+		}
 
 		//working_all Tableにinsert
 		//00:00形式に変換
