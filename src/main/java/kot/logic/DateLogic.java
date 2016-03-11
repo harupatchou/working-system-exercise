@@ -162,10 +162,10 @@ public class DateLogic {
 		String formatDate = arrayDate[0];
 
 		for (int i=0;i<arrayDate.length-1;i++){
-			if(arrayDate[1].length() == 1){
-				formatDate += "/0" + arrayDate[1];
+			if(arrayDate[i+1].length() == 1){
+				formatDate += "/0" + arrayDate[i+1];
 			} else {
-				formatDate += "/" + arrayDate[1];
+				formatDate += "/" + arrayDate[i+1];
 			}
 		}
 		return formatDate;
