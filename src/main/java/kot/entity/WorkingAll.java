@@ -1,4 +1,4 @@
-package main.java.kot.common;
+package main.java.kot.entity;
 
 import java.util.Date;
 
@@ -22,10 +22,8 @@ public class WorkingAll {
 	private String nightOvertimeAll;
 	//遅刻時間
 	private String lateTimeAll;
-	//所定内休日時間
-	private String legalHolidayTimeAll;
 	//所定外休日時間
-	private String statutoryHolidayTimeAll;
+	private Integer legalHolidayFlag;
 	//従業員id
 	private Integer employeeId;
 
@@ -84,17 +82,11 @@ public class WorkingAll {
 	public void setLateTimeAll(String lateTimeAll) {
 		this.lateTimeAll = lateTimeAll;
 	}
-	public String getLegalHolidayTimeAll() {
-		return legalHolidayTimeAll;
+	public Integer getLegalHolidayFlag() {
+		return legalHolidayFlag;
 	}
-	public void setLegalHolidayTimeAll(String legalHolidayTimeAll) {
-		this.legalHolidayTimeAll = legalHolidayTimeAll;
-	}
-	public String getStatutoryHolidayTimeAll() {
-		return statutoryHolidayTimeAll;
-	}
-	public void setStatutoryHolidayTimeAll(String statutoryHolidayTimeAll) {
-		this.statutoryHolidayTimeAll = statutoryHolidayTimeAll;
+	public void setLegalHolidayFlag(Integer legalHolidayFlag) {
+		this.legalHolidayFlag = legalHolidayFlag;
 	}
 	public Integer getEmployeeId() {
 		return employeeId;

@@ -1,8 +1,8 @@
 package main.java.kot.employee.attendance.service;
 
-import main.java.kot.common.WorkingAll;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingDayDao;
+import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
 
 

@@ -2,7 +2,7 @@ package main.java.kot.logic;
 
 import java.util.List;
 
-public class GenelalLogic {
+public class GeneralLogic {
 
 	/* 複数のStringを結合する */
 	public static String joinString(List<String> str,String separate){

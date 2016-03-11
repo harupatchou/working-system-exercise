@@ -55,7 +55,7 @@ public class CalendarUtil {
 		}
 
 
-		return null;
+		return weekInfo;
 	}
 
 }
