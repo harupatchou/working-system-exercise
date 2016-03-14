@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/jsp/employee/common/base.jsp">
   <c:param name="content">
+<script src="../js/employee/dailyAttendance.js"></script>
 <%--ここから下にコンテンツを挿入 --%>
     <h4 class="subTitle">出退勤入力</h4>
     <form action="/kot/employee/Attendance" method="POST">

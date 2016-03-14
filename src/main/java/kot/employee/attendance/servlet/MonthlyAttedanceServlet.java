@@ -1,6 +1,9 @@
 package main.java.kot.employee.attendance.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.common.Schedule;
 import main.java.kot.logic.DateLogic;
+import main.java.kot.logic.GeneralLogic;
 
 @WebServlet("/employee/MonthlyAttendance")
 public class MonthlyAttedanceServlet extends HttpServlet{
@@ -26,15 +30,44 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Calendar  calendar = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String strSelectMonth = req.getParameter("month");
+
+		Calendar calendar = Calendar.getInstance();
+
 		//calendarにsetするために当日のDate型の変数を用意
 		Date today = new Date();
 		calendar.setTime(today);
 
 		int day_count = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
+		//selectを選択した場合と分岐
+		if (strSelectMonth  != null){
+			//選択した場合
+			List<String> tempDate = new ArrayList<String>();
+
+			//選択した年月と日付は1日を指定
+			tempDate.add(req.getParameter("year"));
+			tempDate.add(strSelectMonth);
+			tempDate.add("1");
+
+			String selectDate = GeneralLogic.joinString(tempDate, "/");
+
+			try {
+				//calendarにsetするために選択した月のDate型の変数を用意
+				Date selectMonth = sdf.parse(selectDate);
+
+				calendar.setTime(selectMonth);
+
+				day_count = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+		}
+
 		req.setAttribute("selectYear",calendar.get(Calendar.YEAR));
-		req.setAttribute("selectMonth", calendar.get(Calendar.MONTH)+1);
+		req.setAttribute("selectMonth",calendar.get(Calendar.MONTH)+1);
 		req.setAttribute("day_count", day_count);
 
 		//画面表示用に月の情報を格納するList

@@ -1,5 +1,9 @@
-/** 従業員登録 */
 
+$(document).ready(function(){
+  $(".insert_button").prop("disabled",true)
+});
+
+/** 従業員登録 */
 $(function(){
   /* フォーカス */
   $("input").focus(function(){
@@ -20,11 +24,6 @@ $(function(){
   });
 
 /** 出退勤画面 */
-
-$(document).ready(function(){
-  $(".insert_button").prop("disabled",true)
-});
-
   /* 出退勤形式チェック */
   $(".attendance_time").focus(function(){
   }).blur(function(){
@@ -32,7 +31,7 @@ $(document).ready(function(){
     var checkInf = arrayOfStrings.length;
     if(checkInf == 2){
         $(".insert_button").prop("disabled",false)
-        
+
 
         return
     }else{
@@ -67,7 +66,7 @@ $(document).ready(function(){
   });
 
   $(document).on("click",".insert_button",function(){
-	  
+
   });
 
 

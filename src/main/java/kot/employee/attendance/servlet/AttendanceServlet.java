@@ -146,7 +146,7 @@ public class AttendanceServlet extends HttpServlet{
 		if(workingType.getId() == 1){
 			overtime = OvertimeLogic.getOvertime(workingDay);
 		}else if(workingType.getId() == 2){
-			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
+		//	overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
 		// TODO フレックス用
 		}else if(workingType.getId() == 3){
 			/*ここに実装*/
@@ -208,9 +208,8 @@ public class AttendanceServlet extends HttpServlet{
 
 		WorkingAllDao.insertWorkingAll(workingAll);
 
-		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
-		rd.forward(req, resp);
+		resp.sendRedirect("/kot/employee/MonthlyAttendance");
+
 	}
 
 }
