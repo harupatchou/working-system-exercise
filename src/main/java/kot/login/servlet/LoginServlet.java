@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet{
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employeeEdit.jsp");
 
-		DOPOST(req, resp);
+		rd.forward(req, resp);
 
 	}
 
