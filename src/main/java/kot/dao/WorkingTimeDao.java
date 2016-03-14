@@ -10,8 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 import main.java.kot.common.CalculationWorkingTimeTotal;
+import main.java.kot.common.SelectDate;
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.WorkingDay;
+import main.java.kot.logic.ArrayListLogic;
 import main.java.kot.logic.CalculationWorkingTimeLogic;
 import main.java.kot.logic.HolidayLogic;
 
@@ -172,6 +174,35 @@ public class WorkingTimeDao {
 					workingTimeTotal.setOverNightTimeTotal(CalculationWorkingTimeLogic.getWorkTimeTotal(overNightTimeList));
 
 					return workingTimeTotal;
+
+			}
+
+		}catch(SQLException e){
+			System.err.println("SQL = " + sql);
+			throw new RuntimeException("処理に失敗しました", e);
+		}
+		}
+
+	/*年月を取得*/
+	public static SelectDate getYearAndMonth(Integer employeeId){
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month FROM " + tableName + " WHERE employee_id = " + employeeId;
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);){
+
+			SelectDate selectDate = new SelectDate();
+
+			List<Integer> yearList = new ArrayList<>();
+			List<Integer> monthList = new ArrayList<>();
+
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()){
+					yearList.add(rs.getInt("year"));
+					monthList.add(rs.getInt("month"));
+				}
+				//重複削除してセット
+				selectDate.setYearList(ArrayListLogic.duplicateDelete(yearList));
+				selectDate.setMonthList(ArrayListLogic.duplicateDelete(monthList));
+				return selectDate;
 
 			}
 

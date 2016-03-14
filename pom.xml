@@ -24,6 +24,7 @@
         </configuration>
       </plugin>
     </plugins>
+    <finalName>Portal</finalName>
   </build>
     <profiles>
     <profile>

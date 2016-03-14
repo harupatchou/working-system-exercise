@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/master/Top")
-public class ViewWorkingTimeSevlet extends HttpServlet {
+public class ViewMasterSevlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -20,6 +20,9 @@ public class ViewWorkingTimeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		
+		
+		
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/index.jsp");
 		rd.forward(req, resp);
