@@ -24,7 +24,7 @@
         </configuration>
       </plugin>
     </plugins>
-    <finalName>Portal</finalName>
+    <finalName>kot</finalName>
   </build>
     <profiles>
     <profile>
