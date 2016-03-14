@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.kot.common.database.DBManager;
+import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 
 public class EmployeeDao {
@@ -64,5 +65,32 @@ public class EmployeeDao {
 		}
 	}
 
+	//ログイン情報と比較用の取得
+	public static Employee LoginCheckInfo(Integer employeeId) {
+		String sql = "SELECT e.*,c.company_name,c.master_id FROM " + tableName + " e INNER JOIN company c ON e.company_id = c.id WHERE e.id = " + employeeId;
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();){
+
+			Employee employee = new Employee();
+			Company company = new Company();
+			while(rs.next()){
+				employee.setEmployeeId(rs.getInt("id"));
+				employee.setFirstName(rs.getString("first_name"));
+				employee.setLastName(rs.getString("last_name"));
+				employee.setPassword(rs.getString("password"));
+				employee.setCompanyId(rs.getInt("company_id"));
+				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
+				company.setCompanyName(rs.getString("company_name"));
+				company.setMasterId(rs.getInt("master_id"));
+				employee.setCompany(company);
+			}
+			return employee;
+
+		}catch(SQLException e){
+			Employee employee = new Employee();
+			return employee;
+		}
+	}
 
 }

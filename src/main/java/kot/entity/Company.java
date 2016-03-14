@@ -9,6 +9,8 @@ public class Company {
 	private Integer id;
 	//社名
 	private String companyName;
+	//masterID
+	private Integer masterId;
 
 	public Company(Integer id, String companyName, Integer workingtypeId){
 		this.id = id;
@@ -29,6 +31,12 @@ public class Company {
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public Integer getMasterId() {
+		return masterId;
+	}
+	public void setMasterId(Integer masterId) {
+		this.masterId = masterId;
 	}
 
 }

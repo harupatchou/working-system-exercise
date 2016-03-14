@@ -21,6 +21,10 @@ public class ViewLoginServlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		//セッション破棄
+		HttpSession session=req.getSession(true);
+		session.invalidate();
+
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
 		rd.forward(req, resp);
@@ -43,17 +47,10 @@ public class ViewLoginServlet extends HttpServlet {
 
 		String password  =req.getParameter("password");
 
-		String tex = "Hello!";
-
 		/* tex をセッションへ格納します。 */
-		session.setAttribute("sessionKey1",tex);
-
-		Object tex2 = req.getSession(true).getAttribute("sessionKey1");
+		session.setAttribute("loginId",userId);
+		session.setAttribute("password",password);
 
 		resp.sendRedirect("/kot/login/check");
-
-		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
-		rd.forward(req, resp);
 	}
 }

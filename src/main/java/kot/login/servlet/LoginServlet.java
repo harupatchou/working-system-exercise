@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Employee;
+import main.java.kot.login.service.LoginServise;
+import main.java.kot.login.session.LoginSession;
 
 @WebServlet("/login/check")
 public class LoginServlet extends HttpServlet{
@@ -19,15 +21,7 @@ public class LoginServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		//文字形式をUTF-8指定
-		req.setCharacterEncoding("UTF-8");
-
-		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employeeEdit.jsp");
-
-		rd.forward(req, resp);
-
+		doPost(req, resp);
 	}
 
 	@Override
@@ -37,34 +31,43 @@ public class LoginServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Employee employee = new Employee();
+		HttpSession session=req.getSession(false);
 
-		String firstName =req.getParameter("firstName");
-		String lastName =req.getParameter("lastName");
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
-		String stringCompanyId =req.getParameter("companyId");
+		LoginSession sess = new LoginSession();
 
-		if(stringCompanyId != null){
-			Integer companyId = Integer.parseInt(stringCompanyId);
-			employee.setCompanyId(companyId);
+		sess.setLogin_id((Integer) session.getAttribute("loginId"));
+		sess.setPassword((String) session.getAttribute("password"));
+
+		Employee checkInf = LoginServise.LoginCheckInfo((Integer) session.getAttribute("loginId"));
+
+		if(checkInf.getEmployeeId() == null){
+			//入力したidが存在しなければ
+			System.out.println("IDなし！");
+
+			ServletContext application = req.getServletContext();
+			RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
+			rd.forward(req, resp);
 		}else{
-			/* TODO 決め打ち */
-			employee.setCompanyId(1);
+			if(!checkInf.getPassword().equals(sess.getPassword())) {
+				//passが一致していなければ
+				System.out.println("pass不一致！");
+
+				ServletContext application = req.getServletContext();
+				RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
+				rd.forward(req, resp);
+			}else{
+				//一致していれば
+				System.out.println("ok！");
+
+				if(checkInf.getCompany().getMasterId() == sess.getLogin_id()){
+					//employeeIdが紐付いたCompanyのmasterIDと一致していればmaster画面へ
+					//一致していなければemployee画面へ
+					resp.sendRedirect("/kot/master/Top");
+				}else{
+					resp.sendRedirect("/kot/employee/Top");
+				}
+			}
 		}
-
-		String password = req.getParameter("password");
-
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setEmployeeId(employeeId);
-		employee.setPassword(password);
-
-		EmployeeDao.registEmployee(employee);
-
-		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
-		rd.forward(req, resp);
 	}
 
 }
