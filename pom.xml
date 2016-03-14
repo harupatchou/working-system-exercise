@@ -25,7 +25,7 @@
         </configuration>
       </plugin>
     </plugins>
-    <finalName>kot</finalName>
+    <finalName>kot/employee/Top</finalName>
   </build>
     <profiles>
     <profile>
