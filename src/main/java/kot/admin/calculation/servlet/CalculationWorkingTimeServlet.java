@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
 import main.java.kot.common.CalculationWorkingTimeTotal;
-import main.java.kot.common.SelectDate;
 import main.java.kot.dao.EmployeeDao;
-import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
@@ -41,8 +39,6 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		Integer year = Integer.parseInt(stringYear);
 		String stringMonth = req.getParameter("month");
 		Integer month = Integer.parseInt(stringMonth);
-
-		SelectDate aaa = WorkingTimeDao.getYearAndMonth(1);
 
 
 		CalculationWorkingTimeTotal workingTimeTotal = CalculationWorkingTimeService.workingTimeTotal(employeeId, month,year);

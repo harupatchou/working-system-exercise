@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.SelectDate;
+import main.java.kot.dao.WorkingTimeDao;
+
 @WebServlet("/master/Top")
 public class ViewMasterSevlet extends HttpServlet {
 
@@ -20,9 +23,11 @@ public class ViewMasterSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		
-		
-		
+		// TODO 検索IDの値はセッションから取る(現状決め打ち)
+		SelectDate selectDate = WorkingTimeDao.getYearAndMonth(2);
+		req.setAttribute("selectYear", selectDate.getYearList());
+		req.setAttribute("selectMonth", selectDate.getMonthList());
+
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/index.jsp");
 		rd.forward(req, resp);
