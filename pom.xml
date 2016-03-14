@@ -4,6 +4,7 @@
   <artifactId>kot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  <url>http://maven.apache.org</url>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -24,6 +25,7 @@
         </configuration>
       </plugin>
     </plugins>
+    <finalName>kot/employee/Top</finalName>
   </build>
     <profiles>
     <profile>
