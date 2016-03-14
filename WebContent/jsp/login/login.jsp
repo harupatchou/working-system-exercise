@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/jsp/login/common/base.jsp">
+  <c:param name="content">
+<%--ここから下にコンテンツを挿入 --%>
+    <form action="/kot/login" method="POST">
+      <h1>ログインページ</h1>
+      <div class="patternA">
+        <ul>
+          <li>
+            <label>ユーザ名<span class="warnA">*</span>：</label>
+            <div>
+              <input type="text" name="companyName">
+            </div>
+          </li>
+          <li>
+            <label>会社ID<span class="warnA">*</span>：</label>
+            <div>
+              <input type="text" name="companyId">
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="saveButton">
+        <input type="submit" value="登録">
+      </div>
+    </form>
+
+
+
+<%--ここから上にコンテンツを挿入 --%>
+  </c:param>
+</c:import>
