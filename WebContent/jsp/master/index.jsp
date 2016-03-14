@@ -7,10 +7,18 @@
 
     <h4 class="subTitle">労働計算</h4>
     <form action="/kot/master/Calculation" method="POST">
+      <select name="year">
+        <c:forEach var="year" items="${selectYear}">
+          <option value="${year}">${year}</option>
+        </c:forEach>
+      </select>
+      <select name="month">
+        <c:forEach var="month" items="${selectMonth}">
+          <option value="${month}">${month}</option>
+        </c:forEach>
+      </select>
       <input type="submit" value="計算">
       <input type="hidden" name="employeeId" value="1">
-      <input type="hidden" name="year" value="2015">
-      <input type="hidden" name="month" value="12">
     </form>
 
 <%--ここから上にコンテンツを挿入 --%>
