@@ -8,15 +8,15 @@
       <div class="patternA">
         <ul>
           <li>
-            <label>ユーザ名<span class="warnA">*</span>：</label>
+            <label>ID：</label>
             <div>
-              <input type="text" name="companyName">
+              <input type="text" name="userId">
             </div>
           </li>
           <li>
-            <label>会社ID<span class="warnA">*</span>：</label>
+            <label>パスワード：</label>
             <div>
-              <input type="text" name="companyId">
+              <input type="password" name="password">
             </div>
           </li>
         </ul>
@@ -25,9 +25,6 @@
         <input type="submit" value="登録">
       </div>
     </form>
-
-
-
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>
 </c:import>
