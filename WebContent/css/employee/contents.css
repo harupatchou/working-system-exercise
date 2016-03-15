@@ -31,3 +31,15 @@ table,th,td{
 .infomation {
     color: #A9A9A9;
 }
+
+tr.schedule-sunday {
+    background-color: #DA70D6;
+}
+
+tr.schedule-saturday {
+    background-color: #4682B4;
+}
+
+tr.schedule-normal {
+    background-color: #FFFFFF;
+}

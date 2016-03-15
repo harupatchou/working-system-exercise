@@ -24,7 +24,7 @@
           <li>
             <label>出勤：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time" name="startTime">
+              <input type="text" placeholder="00:00" class="attendance_time" name="startTime" value="${workingDay.attendanceTime}">
               <input type="hidden" name="hourStart" class="attendance_time_hidden">
               <input type="hidden" name="minuteStart" class="attendance_time_hidden">
             </div>
@@ -32,7 +32,7 @@
           <li>
             <label>退勤：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time" name="endTime">
+              <input type="text" placeholder="00:00" class="attendance_time" name="endTime" value="${workingDay.leaveTime}">
               <input type="hidden" name="hourEnd" class="attendance_time_hidden">
               <input type="hidden" name="minuteEnd" class="attendance_time_hidden">
             </div>

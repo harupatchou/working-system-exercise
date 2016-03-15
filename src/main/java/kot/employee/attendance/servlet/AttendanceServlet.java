@@ -14,10 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
-import main.java.kot.dao.WorkingAllDao;
+import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.employee.overtime.OvertimeService;
 import main.java.kot.entity.Overtime;
@@ -39,8 +40,13 @@ public class AttendanceServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+		//セッション情報の取得
+		HttpSession session=req.getSession();
+		Integer userId = (Integer) session.getAttribute("loginId");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		WorkingDay workingDay = new WorkingDay();
 
 		String selectDay = "";
 
@@ -55,9 +61,17 @@ public class AttendanceServlet extends HttpServlet{
 		}
 
 		//画面から送られてきた「/」区切りの日付を「-」区切りに変換
-		//String serverSideDay =selectDay.replace("/","-");
+		String serverSideDate = selectDay.replace("/","-");
+
+		workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, userId);
+
+		if(workingDay.getAttendanceTime()!=null){
+			workingDay.setAttendanceTime(DateLogic.formatTime(workingDay.getAttendanceTime()));
+			workingDay.setLeaveTime(DateLogic.formatTime(workingDay.getLeaveTime()));
+		}
 
 		req.setAttribute("selectDay", selectDay);
+		req.setAttribute("workingDay", workingDay);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");
@@ -78,6 +92,7 @@ public class AttendanceServlet extends HttpServlet{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
+		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
 
 		//TODO 決め打ち
 		Integer employeeId = 2;
@@ -206,7 +221,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		OvertimeService.insertWorkingDay(overtime);
 
-		WorkingAllDao.insertWorkingAll(workingAll);
+		AttendanceServise.insertWorkingAll(workingAll);
 
 		resp.sendRedirect("/kot/employee/MonthlyAttendance");
 

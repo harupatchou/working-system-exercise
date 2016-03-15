@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import main.java.kot.common.Schedule;
 import main.java.kot.logic.DateLogic;
@@ -29,6 +30,9 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+
+		HttpSession session=req.getSession();
+		Integer userId = (Integer) session.getAttribute("loginId");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String strSelectMonth = req.getParameter("month");
@@ -71,7 +75,7 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 		req.setAttribute("day_count", day_count);
 
 		//画面表示用に月の情報を格納するList
-		List<Schedule> scheduleList = DateLogic.getMonthlyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, day_count);
+		List<Schedule> scheduleList = DateLogic.getMonthlyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, day_count,userId);
 
 		req.setAttribute("scheduleList", scheduleList);
 

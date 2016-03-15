@@ -51,9 +51,9 @@ public class WorkingDayDao {
 		}
 	}
 
-	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeId) {
+	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId) {
 
-		String sql = "select * from " + tableName + " where date = '" + selectDay +"' AND employee_id = " +employeId;
+		String sql = "select * from " + tableName + " where date = '" + selectDay +"' AND employee_id = " +employeeId;
 
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -75,6 +75,34 @@ public class WorkingDayDao {
 		}catch(SQLException e){
 			System.err.println("SQL = " + sql);
 			throw new RuntimeException("処理に失敗しました", e);
+		}
+	}
+
+	//年月、従業員IDから情報取得
+	public static WorkingDay selectAllByEmployeeId(Integer year, Integer month,Integer day, Integer userId) {
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,id,week,attendance_time,leave_time,break_time,nap_time,legal_flag FROM " + tableName + " WHERE employee_id = " + userId;
+
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();){
+
+		WorkingDay workingDay = new WorkingDay();
+		while(rs.next()){
+			if(year == rs.getInt("year") && month == rs.getInt("month") && day == rs.getInt("day")){
+				workingDay.setId(rs.getInt("id"));
+				workingDay.setWeek(rs.getInt("week"));
+				workingDay.setAttendanceTime(rs.getString("attendance_time"));
+				workingDay.setLeaveTime(rs.getString("leave_time"));
+				workingDay.setBreakTime(rs.getString("break_time"));
+				workingDay.setNapTime(rs.getString("nap_time"));
+				workingDay.setLegalFlag(rs.getInt("legal_flag"));
+			}
+		}
+		return workingDay;
+
+		}catch(SQLException e){
+			WorkingDay workingDay = new WorkingDay();
+			return workingDay;
 		}
 	}
 

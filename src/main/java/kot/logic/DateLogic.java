@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import main.java.kot.common.Schedule;
+import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.entity.WorkingDay;
 import main.java.kot.util.CalendarUtil;
 
 
@@ -125,7 +127,7 @@ public class DateLogic {
 
 	//画面に送信する情報をListに格納していく
 	//TODO 出退勤時間等も入れていく.
-	public static List<Schedule> getMonthlyDate (Integer year,Integer month,Integer day_count){
+	public static List<Schedule> getMonthlyDate (Integer year,Integer month,Integer day_count, Integer userId){
 
 		//画面表示用に月の情報を格納するList
 		List<Schedule> scheduleList = new ArrayList<Schedule>();
@@ -137,6 +139,7 @@ public class DateLogic {
 		for (int i = 0;i < day_count; i++){
 			List<String> addDate = new ArrayList<String>();
 			Schedule tempSchedule = new Schedule();
+			WorkingDay tempWork = new WorkingDay();
 
 			addDate.add(strYear);
 			addDate.add(strMonth);
@@ -148,6 +151,21 @@ public class DateLogic {
 			tempSchedule.setWeekStr(weekInfo.getWeekStr());
 			tempSchedule.setWeekNum(weekInfo.getWeekNum());
 			tempSchedule.setHolidayFlag(weekInfo.getHolidayFlag());
+			if(tempSchedule.getHolidayFlag() == 0){
+				tempSchedule.setStrHoliday("通常");
+			}else{
+				tempSchedule.setStrHoliday("休日");
+			}
+
+			tempWork = AttendanceServise.selectAllByEmployeeId(year, month,i+1, userId);
+
+			if(tempWork.getId() == null){
+				tempSchedule.setEnterStatus("未入力");
+			}else{
+				tempSchedule.setEnterStatus("入力済");
+			}
+
+			tempSchedule.setWorkingDay(tempWork);
 
 			scheduleList.add(tempSchedule);
 		}
@@ -171,6 +189,24 @@ public class DateLogic {
 		return formatDate;
 	}
 
+	//0:00形式のStringを00:00の形式に変換
+	public static String formatTime (String oldTime){
 
+		String[] arrayTime = oldTime.split(":");
+		String formatTime ="";
 
+		if(arrayTime[0].length() == 1){
+			formatTime += "0" + arrayTime[0] + ":";
+		} else {
+			formatTime += arrayTime[0] + ":";
+		}
+
+		if(arrayTime[1].length() == 1){
+			formatTime += "0" + arrayTime[1];
+		} else {
+			formatTime += arrayTime[1];
+		}
+
+		return formatTime;
+	}
 }

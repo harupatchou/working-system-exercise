@@ -10,7 +10,8 @@
     <form name="monthlyAttendance" method="GET">
       <p>年月選択：
       <select name="year">
-        <option value="${selectYear}" class="selectYear">${selectYear}</option>
+        <option value="2015" class="selectYear">2015</option>
+        <option value="2016" class="selectYear" selected>2016</option>
       </select>
       <select name="month" class="changeMonth" >
         <c:forEach var="month" varStatus="i" begin="1" end="12" step="1">
@@ -37,15 +38,19 @@
           </thead>
           <tbody>
             <c:forEach varStatus="i" items="${scheduleList}" var="schedule">
-              <tr>
+              <c:choose>
+                <c:when test="${schedule.weekStr.equals('日')}"><tr class="schedule-sunday"></c:when>
+                <c:when test="${schedule.weekStr.equals('土')}"><tr class="schedule-saturday"></c:when>
+                <c:otherwise><tr class="schedule-normal"></c:otherwise>
+              </c:choose>
                 <td class="day"><a href="/kot/employee/Attendance?day_num=${schedule.monthlyDate}">${schedule.monthlyDate}</a></td>
                 <td class="week">${schedule.weekStr}</td>
-                <td>${schedule.holidayFlag}</td>
+                <td>${schedule.strHoliday}</td>
+                <td>${schedule.enterStatus}</td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>${schedule.workingDay.attendanceTime}</td>
+                <td>${schedule.workingDay.leaveTime}</td>
+                <td>${schedule.workingDay.napTime}</td>
               </tr>
             </c:forEach>
           </tbody>
