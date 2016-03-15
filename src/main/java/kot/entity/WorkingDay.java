@@ -29,7 +29,9 @@ public class WorkingDay {
 	 **/
 	private Integer legalFlag;
 	//出勤常態
-	private String attendanceStatus;
+	private Integer attendanceStatus;
+
+	private AttendanceStatus attendStatus;
 
 	public Integer getId() {
 		return id;
@@ -91,14 +93,20 @@ public class WorkingDay {
 	public void setLegalFlag(int i) {
 		this.legalFlag = i;
 	}
-	public String getAttendanceStatus() {
+	public Integer getAttendanceStatus() {
 		return attendanceStatus;
 	}
-	public void setAttendanceStatus(String attendanceStatus) {
+	public void setAttendanceStatus(Integer attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
 	public void setLegalFlag(Integer legalFlag) {
 		this.legalFlag = legalFlag;
+	}
+	public AttendanceStatus getAttendStatus() {
+		return attendStatus;
+	}
+	public void setAttendStatus(AttendanceStatus attendStatus) {
+		this.attendStatus = attendStatus;
 	}
 
 

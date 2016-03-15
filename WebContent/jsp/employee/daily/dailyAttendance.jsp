@@ -53,6 +53,16 @@
               <input type="hidden" name="minuteBreakEnd" class="attendance_time_hidden">
             </div>
           </li>
+          <li>
+            <label>出欠：</label>
+            <div>
+              <select name="attend_status">
+                <c:forEach items="${attendanceStatus}" var="status" varStatus="i">
+                  <option value="${i.index+1}">${status.statusName}</option>
+                </c:forEach>
+              </select>
+            </div>
+          </li>
         </ul>
         <div class="saveButton">
           <input type="submit" value="登録" class="insert_button">

@@ -2,9 +2,12 @@ package main.java.kot.employee.attendance.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import main.java.kot.dao.AttendanceStatusDao;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingDayDao;
+import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
 
@@ -49,6 +52,11 @@ public class AttendanceServise {
 	//working_day検索(all)
 	public static WorkingDay selectAllByEmployeeId(Integer year,Integer month,Integer day, Integer userId){
 		return WorkingDayDao.selectAllByEmployeeId(year,month,day,userId);
+	}
+
+	//attendance_status内の情報取得
+	public static List<AttendanceStatus> selectAttendStatusAll(){
+		return AttendanceStatusDao.selectAttendStatusAll();
 	}
 
 }

@@ -17,6 +17,11 @@ INSERT INTO workingtype VALUES (3, 'フレックス社員', 3,1);
 INSERT INTO attendance_time VALUES (1,'9:00','18:00','','',1);
 INSERT INTO attendance_time VALUES (2,'9:00','17:30','','',2);
 
+/*勤怠ステータス*/
+INSERT INTO attendance_status VALUES (1,'出勤');
+INSERT INTO attendance_status VALUES (2,'欠勤');
+INSERT INTO attendance_status VALUES (3,'有給');
+
 /*従業員情報*/
 INSERT INTO employee VALUES (1, '通常','従業員','rakus2000',1,1);
 INSERT INTO employee VALUES (2, '変形','従業員','rakus2000',1,2);

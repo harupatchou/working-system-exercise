@@ -49,7 +49,7 @@
                 <td class="week">${schedule.weekStr}</td>
                 <td>${schedule.strHoliday}</td>
                 <td>${schedule.enterStatus}</td>
-                <td></td>
+                <td>${schedule.workingDay.attendanceStatus}</td>
                 <td>${schedule.workingDay.attendanceTime}</td>
                 <td>${schedule.workingDay.leaveTime}</td>
                 <td>${schedule.workingDay.napTime}</td>

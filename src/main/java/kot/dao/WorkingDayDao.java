@@ -17,7 +17,7 @@ public class WorkingDayDao {
 	/*出退勤情報のインサート*/
 	public static boolean insertWorkingDay(WorkingDay workingDay){
 
-		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,employee_id,legal_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,employee_id,legal_flag,attendance_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -41,6 +41,7 @@ public class WorkingDayDao {
 			pstmt.setString(7, workingDay.getNapTime());
 			pstmt.setInt(8, workingDay.getEmployeeId());
 			pstmt.setInt(9, workingDay.getLegalFlag());
+			pstmt.setInt(10, workingDay.getAttendanceStatus());
 
 			pstmt.executeUpdate();
 
@@ -54,7 +55,7 @@ public class WorkingDayDao {
 
 	/*出退勤情報のupdate*/
 	public static boolean updateWorkingDay(WorkingDay workingDay) {
-		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time_start = ?,break_time_end = ?,nap_time = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
+		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time_start = ?,break_time_end = ?,nap_time = ?,attendance_status = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -73,7 +74,8 @@ public class WorkingDayDao {
 			pstmt.setString(3, workingDay.getBreakTimeStart());
 			pstmt.setString(4, workingDay.getBreakTimeEnd());
 			pstmt.setString(5, workingDay.getNapTime());
-			pstmt.setDate(6, sqlDate);
+			pstmt.setInt(6, workingDay.getAttendanceStatus());
+			pstmt.setDate(7, sqlDate);
 
 			pstmt.executeUpdate();
 
@@ -106,6 +108,7 @@ public class WorkingDayDao {
 				workingDay.setNapTime(rs.getString("nap_time"));
 				workingDay.setEmployeeId(rs.getInt("employee_id"));
 				workingDay.setLegalFlag(rs.getInt("legal_flag"));
+				workingDay.setAttendanceStatus(rs.getInt("attendance_status"));
 			}
 			return workingDay;
 
@@ -117,7 +120,7 @@ public class WorkingDayDao {
 
 	//年月、従業員IDから情報取得
 	public static WorkingDay selectAllByEmployeeId(Integer year, Integer month,Integer day, Integer userId) {
-		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,id,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,legal_flag FROM " + tableName + " WHERE employee_id = " + userId;
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,id,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,legal_flag,attendance_status FROM " + tableName + " WHERE employee_id = " + userId;
 
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -134,6 +137,8 @@ public class WorkingDayDao {
 				workingDay.setBreakTimeEnd(rs.getString("break_time_start"));
 				workingDay.setNapTime(rs.getString("nap_time"));
 				workingDay.setLegalFlag(rs.getInt("legal_flag"));
+				workingDay.setAttendanceStatus(rs.getInt("attendance_status"));
+
 			}
 		}
 		return workingDay;

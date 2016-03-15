@@ -4,6 +4,7 @@ DROP TABLE working_day;
 DROP TABLE week;
 DROP TABLE employee;
 DROP TABLE attendance_time;
+DROP TABLE attendance_status;
 DROP TABLE workingtype;
 DROP TABLE labor_system;
 DROP TABLE company;
@@ -49,6 +50,13 @@ CREATE TABLE attendance_time
   FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
 );
 
+CREATE TABLE attendance_status
+(
+  id serial,
+  status_name text NOT NULL,
+  CONSTRAINT attendance_status_pkc PRIMARY KEY (id)
+);
+
 CREATE TABLE employee
 (
   id integer,
@@ -82,9 +90,10 @@ CREATE TABLE working_day
   nap_time text,
   employee_id integer NOT NULL,
   legal_flag integer NOT NULL,
-  attendance_status text,
+  attendance_status integer,
   CONSTRAINT working_day_pkc PRIMARY KEY (id),
-  FOREIGN KEY (employee_id) REFERENCES employee(id)
+  FOREIGN KEY (employee_id) REFERENCES employee(id),
+  FOREIGN KEY (attendance_status) REFERENCES attendance_status(id)
 );
 
 CREATE TABLE overtime

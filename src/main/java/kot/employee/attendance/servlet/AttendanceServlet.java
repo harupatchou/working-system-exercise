@@ -21,6 +21,7 @@ import main.java.kot.common.Schedule;
 import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.employee.attendance.service.OvertimeService;
+import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
@@ -48,6 +49,8 @@ public class AttendanceServlet extends HttpServlet{
 
 		WorkingDay workingDay = new WorkingDay();
 
+		List<AttendanceStatus> attendanceStatus = AttendanceServise.selectAttendStatusAll();
+
 		String selectDay = "";
 
 		String strDay = req.getParameter("day_num");
@@ -72,6 +75,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		req.setAttribute("selectDay", selectDay);
 		req.setAttribute("workingDay", workingDay);
+		req.setAttribute("attendanceStatus", attendanceStatus);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");
@@ -146,6 +150,10 @@ public class AttendanceServlet extends HttpServlet{
 		//一日の休憩時間算出
 		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime2);
 
+		//勤怠ステータス判別
+		String strStatusCode = req.getParameter("attend_status");
+		Integer statusCode = Integer.parseInt(strStatusCode);
+
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
 			workingDay.setWeek(weekInfo.getWeekNum());
@@ -154,6 +162,7 @@ public class AttendanceServlet extends HttpServlet{
 			workingDay.setBreakTimeStart(breakStartTime);
 			workingDay.setBreakTimeEnd(breakEndTime);
 			workingDay.setEmployeeId(employeeId);
+			workingDay.setAttendanceStatus(statusCode);
 			//TODO 決め打ち
 			workingDay.setNapTime(breakTime);
 			// ここまで
