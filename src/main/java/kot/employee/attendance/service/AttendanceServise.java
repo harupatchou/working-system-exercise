@@ -23,13 +23,22 @@ public class AttendanceServise {
 		if(tempWorking.getDate()==null){
 			return WorkingDayDao.insertWorkingDay(workingDay);
 		}else{
-			return WorkingDayDao.insertWorkingDay(workingDay);
+			return WorkingDayDao.updateWorkingDay(workingDay);
 		}
 	}
 
 	//出勤情報のinsert(all)
 	public static boolean insertWorkingAll(WorkingAll workingAll){
-		return WorkingAllDao.insertWorkingAll(workingAll);
+		WorkingAll tempWorking = new WorkingAll();
+		Date tempDate = workingAll.getDate();
+
+		tempWorking = WorkingAllDao.selectByDayAndEmployeeId(sdf.format(tempDate), workingAll.getEmployeeId());
+
+		if(tempWorking.getDate()==null){
+			return WorkingAllDao.insertWorkingAll(workingAll);
+		}else{
+			return WorkingAllDao.updateWorkingAll(workingAll);
+		}
 	}
 
 	//working_day検索

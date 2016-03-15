@@ -51,6 +51,39 @@ public class WorkingDayDao {
 		}
 	}
 
+	/*出退勤情報のupdate*/
+	public static boolean updateWorkingDay(WorkingDay workingDay) {
+		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time = ?,nap_time = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
+
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(workingDay.getDate());
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			java.sql.Date sqlDate = new java.sql.Date(cal.getTimeInMillis());
+
+			pstmt.setString(1,workingDay.getAttendanceTime());
+			pstmt.setString(2, workingDay.getLeaveTime());
+			pstmt.setString(3, workingDay.getBreakTime());
+			pstmt.setString(4, workingDay.getNapTime());
+			pstmt.setDate(5, sqlDate);
+
+			pstmt.executeUpdate();
+
+			return true;
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
+
+	//日付とIDから情報取得
 	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId) {
 
 		String sql = "select * from " + tableName + " where date = '" + selectDay +"' AND employee_id = " +employeeId;
@@ -62,6 +95,7 @@ public class WorkingDayDao {
 			WorkingDay workingDay = new WorkingDay();
 			while(rs.next()){
 				workingDay.setId(rs.getInt("id"));
+				workingDay.setDate(rs.getDate("date"));
 				workingDay.setWeek(rs.getInt("week"));
 				workingDay.setAttendanceTime(rs.getString("attendance_time"));
 				workingDay.setLeaveTime(rs.getString("leave_time"));
@@ -80,7 +114,7 @@ public class WorkingDayDao {
 
 	//年月、従業員IDから情報取得
 	public static WorkingDay selectAllByEmployeeId(Integer year, Integer month,Integer day, Integer userId) {
-		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,id,week,attendance_time,leave_time,break_time,nap_time,legal_flag FROM " + tableName + " WHERE employee_id = " + userId;
+		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,id,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,legal_flag FROM " + tableName + " WHERE employee_id = " + userId;
 
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -93,7 +127,8 @@ public class WorkingDayDao {
 				workingDay.setWeek(rs.getInt("week"));
 				workingDay.setAttendanceTime(rs.getString("attendance_time"));
 				workingDay.setLeaveTime(rs.getString("leave_time"));
-				workingDay.setBreakTime(rs.getString("break_time"));
+				workingDay.setBreakTimeStart(rs.getString("break_time_start"));
+				workingDay.setBreakTimeEnd(rs.getString("break_time_start"));
 				workingDay.setNapTime(rs.getString("nap_time"));
 				workingDay.setLegalFlag(rs.getInt("legal_flag"));
 			}
@@ -105,6 +140,8 @@ public class WorkingDayDao {
 			return workingDay;
 		}
 	}
+
+
 
 
 }

@@ -85,6 +85,9 @@ public class AttendanceServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+		//セッション情報取得
+		HttpSession session=req.getSession();
+		Integer employeeId = (Integer) session.getAttribute("loginId");
 
 		WorkingDay workingDay = new WorkingDay();
 		WorkingAll workingAll = new WorkingAll();
@@ -94,8 +97,6 @@ public class AttendanceServlet extends HttpServlet{
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
 
-		//TODO 決め打ち
-		Integer employeeId = 2;
 
 		//insertする日を格納しておく
 		InsertDay insertDay = new InsertDay();
@@ -190,7 +191,7 @@ public class AttendanceServlet extends HttpServlet{
 		if(weekInfo.getHolidayFlag()==1){
 			//法定休日ならば
 			if(workingDay.getLegalFlag()==1){
-				workingAll.setDayStatus("法定");;
+				workingAll.setDayStatus("法定");
 			}else{
 				//TODO 土曜出勤,祝日出勤は何として扱うか
 				workingAll.setDayStatus("所定");
@@ -205,7 +206,7 @@ public class AttendanceServlet extends HttpServlet{
 			//TODO 決め打ち
 			workingAll.setWorkingTimeAll(attendDay);
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
-			workingAll.setSatutoryOverTimeAll(overtime.getStatutoryOvertime());
+			workingAll.setStatutoryOverTimeAll(overtime.getStatutoryOvertime());
 			workingAll.setNightTimeAll(nightTime);
 			workingAll.setNightOvertimeAll(nightOvertime);
 			workingAll.setLateTimeAll(lateTime);

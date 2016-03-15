@@ -3,8 +3,7 @@ CREATE TABLE company
   id integer,
   company_name text NOT NULL,
   master_id integer NOT NULL,
-  CONSTRAINT company_pkc PRIMARY KEY (id),
-  FOREIGN KEY (master_id) REFERENCES employee(id)
+  CONSTRAINT company_pkc PRIMARY KEY (id)
 );
 
 CREATE TABLE labor_system

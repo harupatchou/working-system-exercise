@@ -15,7 +15,7 @@ public class WorkingAll {
 	//所定内残業時間
 	private String legalOvertimeAll;
 	//所定外残業時間
-	private String satutoryOverTimeAll;
+	private String statutoryOverTimeAll;
 	//深夜労働時間
 	private String nightTimeAll;
 	//深夜残業時間
@@ -58,11 +58,11 @@ public class WorkingAll {
 	public void setLegalOvertimeAll(String legalOvertimeAll) {
 		this.legalOvertimeAll = legalOvertimeAll;
 	}
-	public String getSatutoryOverTimeAll() {
-		return satutoryOverTimeAll;
+	public String getStatutoryOverTimeAll() {
+		return statutoryOverTimeAll;
 	}
-	public void setSatutoryOverTimeAll(String satutoryOverTimeAll) {
-		this.satutoryOverTimeAll = satutoryOverTimeAll;
+	public void setStatutoryOverTimeAll(String statutoryOverTimeAll) {
+		this.statutoryOverTimeAll = statutoryOverTimeAll;
 	}
 	public String getNightTimeAll() {
 		return nightTimeAll;
