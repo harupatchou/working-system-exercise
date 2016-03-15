@@ -224,7 +224,7 @@ public class AttendanceServlet extends HttpServlet{
 		//出勤を押した日のidを残業のdailyIdと紐付け
 		overtime.setDailyId(insertDayInfo.getId());
 
-		OvertimeService.insertWorkingDay(overtime);
+		OvertimeService.insertOvertime(overtime);
 
 		AttendanceServise.insertWorkingAll(workingAll);
 
