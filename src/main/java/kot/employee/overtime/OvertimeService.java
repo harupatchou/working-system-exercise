@@ -6,8 +6,14 @@ import main.java.kot.entity.Overtime;
 public class OvertimeService {
 
 	//残業時間の送信
-		public static boolean insertWorkingDay(Overtime overtime){
-			return OvertimeDao.insertOvertime(overtime);
+		public static boolean insertOvertime(Overtime overtime){
+			boolean overtimeJudge = OvertimeDao.getOvertimeFromDailyId(overtime);
+
+			if(overtimeJudge){
+				return OvertimeDao.updateOvertime(overtime);
+			}else{
+				return OvertimeDao.insertOvertime(overtime);
+			}
 		}
 
 }
