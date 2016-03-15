@@ -17,7 +17,7 @@ public class WorkingDayDao {
 	/*出退勤情報のインサート*/
 	public static boolean insertWorkingDay(WorkingDay workingDay){
 
-		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time,nap_time,employee_id,legal_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,employee_id,legal_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -36,10 +36,11 @@ public class WorkingDayDao {
 			pstmt.setInt(2,workingDay.getWeek());
 			pstmt.setString(3, workingDay.getAttendanceTime());
 			pstmt.setString(4, workingDay.getLeaveTime());
-			pstmt.setString(5, workingDay.getBreakTime());
-			pstmt.setString(6, workingDay.getNapTime());
-			pstmt.setInt(7, workingDay.getEmployeeId());
-			pstmt.setInt(8, workingDay.getLegalFlag());
+			pstmt.setString(5, workingDay.getBreakTimeStart());
+			pstmt.setString(6, workingDay.getBreakTimeEnd());
+			pstmt.setString(7, workingDay.getNapTime());
+			pstmt.setInt(8, workingDay.getEmployeeId());
+			pstmt.setInt(9, workingDay.getLegalFlag());
 
 			pstmt.executeUpdate();
 
@@ -53,7 +54,7 @@ public class WorkingDayDao {
 
 	/*出退勤情報のupdate*/
 	public static boolean updateWorkingDay(WorkingDay workingDay) {
-		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time = ?,nap_time = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
+		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time_start = ?,break_time_end = ?,nap_time = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -69,9 +70,10 @@ public class WorkingDayDao {
 
 			pstmt.setString(1,workingDay.getAttendanceTime());
 			pstmt.setString(2, workingDay.getLeaveTime());
-			pstmt.setString(3, workingDay.getBreakTime());
-			pstmt.setString(4, workingDay.getNapTime());
-			pstmt.setDate(5, sqlDate);
+			pstmt.setString(3, workingDay.getBreakTimeStart());
+			pstmt.setString(4, workingDay.getBreakTimeEnd());
+			pstmt.setString(5, workingDay.getNapTime());
+			pstmt.setDate(6, sqlDate);
 
 			pstmt.executeUpdate();
 
@@ -99,7 +101,8 @@ public class WorkingDayDao {
 				workingDay.setWeek(rs.getInt("week"));
 				workingDay.setAttendanceTime(rs.getString("attendance_time"));
 				workingDay.setLeaveTime(rs.getString("leave_time"));
-				workingDay.setBreakTime(rs.getString("break_time"));
+				workingDay.setBreakTimeStart(rs.getString("break_time_start"));
+				workingDay.setBreakTimeEnd(rs.getString("break_time_end"));
 				workingDay.setNapTime(rs.getString("nap_time"));
 				workingDay.setEmployeeId(rs.getInt("employee_id"));
 				workingDay.setLegalFlag(rs.getInt("legal_flag"));

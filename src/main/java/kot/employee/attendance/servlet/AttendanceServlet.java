@@ -130,22 +130,26 @@ public class AttendanceServlet extends HttpServlet{
 		//working_day Tableにinsert
 		String startTime =req.getParameter("startTime");
 		String endTime =req.getParameter("endTime");
+		String breakStartTime =req.getParameter("breakStartTime");
+		String breakEndTime =req.getParameter("breakEndTime");
 
-		String[] breakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
-		String[] breakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
+		String[] breakStartTime2 = DateLogic.timeStr(req.getParameter("breakStartTime"));
+		String[] breakEndTime2 = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
 		//一日の休憩時間算出
-		String breakTime = DateLogic.getStringTime(breakStartTime, breakEndTime);
+		//TODO テーブル変更で実装
+		String breakTime = DateLogic.getStringTime(breakStartTime2, breakEndTime2);
 
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
 			workingDay.setWeek(weekInfo.getWeekNum());
 			workingDay.setAttendanceTime(startTime);
 			workingDay.setLeaveTime(endTime);
-			workingDay.setBreakTime(breakTime);
+			workingDay.setBreakTimeStart(breakStartTime);
+			workingDay.setBreakTimeEnd(breakEndTime);
+			workingDay.setEmployeeId(employeeId);
 			//TODO 決め打ち
 			workingDay.setNapTime(breakTime);
-			workingDay.setEmployeeId(employeeId);
 			// ここまで
 		} catch (ParseException e) {
 			e.printStackTrace();

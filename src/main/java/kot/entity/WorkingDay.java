@@ -14,15 +14,6 @@ public class WorkingDay {
 	private String attendanceTime;
 	//退社時間
 	private String leaveTime;
-	//休憩時間
-	// TODO DB変更後消す
-	private String breakTime;
-	public String getBreakTime() {
-		return breakTime;
-	}
-	public void setBreakTime(String breakTime) {
-		this.breakTime = breakTime;
-	}
 	//休憩開始時間
 	private String breakTimeStart;
 	//休憩終了時間

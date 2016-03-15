@@ -40,7 +40,7 @@
           <li>
             <label>休憩開始：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time" name="breakStartTime">
+              <input type="text" placeholder="00:00" class="attendance_time" name="breakStartTime" value="${workingDay.breakTimeStart}">
               <input type="hidden" name="hourBreakStart" class="attendance_time_hidden">
               <input type="hidden" name="minuteBreakStart" class="attendance_time_hidden">
             </div>
@@ -48,7 +48,7 @@
           <li>
             <label>休憩終了：</label>
             <div>
-              <input type="text" placeholder="00:00" class="attendance_time" name="breakEndTime">
+              <input type="text" placeholder="00:00" class="attendance_time" name="breakEndTime" value="${workingDay.breakTimeEnd}">
               <input type="hidden" name="hourBreakEnd" class="attendance_time_hidden">
               <input type="hidden" name="minuteBreakEnd" class="attendance_time_hidden">
             </div>
