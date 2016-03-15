@@ -1,5 +1,7 @@
 package main.java.kot.common;
 
+import main.java.kot.entity.Employee;
+
 
 /**
  * 総労働・残業時間
@@ -23,17 +25,18 @@ public class CalculationWorkingTimeTotal {
 	private String overNightTimeTotal;
 	/*休日出勤時間*/
 	private String holidayTimeTotal;
-
+	/*従業員*/
+	private Employee employee;
 
 	public CalculationWorkingTimeTotal(){
 	}
-
-	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String statutoryOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal ){
+	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String statutoryOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal,Employee employee){
 		this.workingTimeTotal = workingTimeTotal;
 		this.legalOverWorkingTimeTotal = legalOverWorkingTimeTotal;
 		this.statutoryOverWorkingTimeTotal = statutoryOverWorkingTimeTotal;
 		this.nightTimeTotal = nightTimeTotal;
 		this.overNightTimeTotal = overNightTimeTotal;
+		this.employee = employee;
 	}
 	public Integer getMonth() {
 		return month;
@@ -86,5 +89,12 @@ public class CalculationWorkingTimeTotal {
 	}
 	public void setHolidayTimeTotal(String holidayTimeTotal) {
 		this.holidayTimeTotal = holidayTimeTotal;
+	}
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }
