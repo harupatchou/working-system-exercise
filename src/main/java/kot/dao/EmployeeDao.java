@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.Company;
@@ -30,6 +32,34 @@ public class EmployeeDao {
 				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
 			}
 			return employee;
+
+		}catch(SQLException e){
+			System.err.println("SQL = " + sql);
+			throw new RuntimeException("処理に失敗しました", e);
+		}
+	}
+
+	/*会社IDから従業員リスト取得*/
+	public static Company getEmployeeFromCompanyId(Integer companyId){
+		String sql = "SELECT * FROM " + tableName + " WHERE company_id = " + companyId;
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();){
+
+			Company company = new Company();
+			List<Employee> employeeList = new ArrayList<>();
+			while(rs.next()){
+				Employee employee = new Employee();
+				employee.setEmployeeId(rs.getInt("id"));
+				employee.setFirstName(rs.getString("first_name"));
+				employee.setLastName(rs.getString("last_name"));
+				employee.setPassword(rs.getString("password"));
+				employee.setCompanyId(rs.getInt("company_id"));
+				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
+				employeeList.add(employee);
+			}
+			company.setEmployeeList(employeeList);
+			return company;
 
 		}catch(SQLException e){
 			System.err.println("SQL = " + sql);

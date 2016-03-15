@@ -5,7 +5,7 @@
     <h4 class="subTitle">計算結果</h4>
       <div class="a_pattern_table">
 
-        表示期間：${workingTimeTotal.year} 年 ${workingTimeTotal.month}月
+        表示期間：${date.year} 年 ${date.month}月
 
         <table class="normal_table">
           <thead>
@@ -21,9 +21,10 @@
             </tr>
           </thead>
           <tbody>
+            <c:forEach var="workingTimeTotal" items="${workingTimeTotalList}">
             <tr>
-              <td>${employee.firstName} ${employee.lastName}</td>
-              <td>${workingtype.workingName}</td>
+              <td>${workingTimeTotal.employee.firstName} ${workingTimeTotal.employee.lastName}</td>
+              <td>1</td>
               <td>${workingTimeTotal.workingTimeTotal}</td>
               <td>${workingTimeTotal.legalOverWorkingTimeTotal}</td>
               <td>${workingTimeTotal.statutoryOverWorkingTimeTotal}</td>
@@ -31,6 +32,7 @@
               <td>${workingTimeTotal.overNightTimeTotal}</td>
               <td>${workingTimeTotal.holidayTimeTotal}</td>
             </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
