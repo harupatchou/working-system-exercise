@@ -1,3 +1,16 @@
+DROP TABLE working_all;
+DROP TABLE overtime;
+DROP TABLE working_day;
+DROP TABLE week;
+DROP TABLE employee;
+DROP TABLE attendance_time;
+DROP TABLE workingtype;
+DROP TABLE labor_system;
+DROP TABLE company;
+
+
+
+
 CREATE TABLE company
 (
   id integer,
