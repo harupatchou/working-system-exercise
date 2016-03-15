@@ -130,15 +130,21 @@ public class AttendanceServlet extends HttpServlet{
 		//working_day Tableにinsert
 		String startTime =req.getParameter("startTime");
 		String endTime =req.getParameter("endTime");
+
+		//00:00形式を0:00形式に
+		DateLogic.formatTime(startTime);
+		DateLogic.formatTime(endTime);
+
+		//working_day.insert用
 		String breakStartTime =req.getParameter("breakStartTime");
 		String breakEndTime =req.getParameter("breakEndTime");
 
-		String[] breakStartTime2 = DateLogic.timeStr(req.getParameter("breakStartTime"));
-		String[] breakEndTime2 = DateLogic.timeStr(req.getParameter("breakEndTime"));
+		//計算用
+		String[] tempBreakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
+		String[] tempBreakEndTime2 = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
 		//一日の休憩時間算出
-		//TODO テーブル変更で実装
-		String breakTime = DateLogic.getStringTime(breakStartTime2, breakEndTime2);
+		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime2);
 
 		try {
 			workingDay.setDate(sdf.parse(insertDate));

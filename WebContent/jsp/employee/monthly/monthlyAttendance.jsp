@@ -10,9 +10,11 @@
     <form name="monthlyAttendance" method="GET">
       <p>年月選択：
       <select name="year">
-        <option value="2015" class="selectYear">2015</option>
-        <option value="2016" class="selectYear" selected>2016</option>
+        <c:forEach items="${yearList}" var="year">
+          <option value="${year}" class="year_val">${year}</option>
+        </c:forEach>
       </select>
+      <input type="hidden" name="selectYear" class="selectYear" value="${selectYear}">
       <select name="month" class="changeMonth" >
         <c:forEach var="month" varStatus="i" begin="1" end="12" step="1">
           <option value="${i.index}" class="month_val">${i.index}</option>

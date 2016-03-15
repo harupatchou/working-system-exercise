@@ -158,7 +158,11 @@ public class DateLogic {
 			if(tempSchedule.getHolidayFlag() == 0){
 				tempSchedule.setStrHoliday("通常");
 			}else{
-				tempSchedule.setStrHoliday("休日");
+				if(tempSchedule.getWeekNum()==1){
+					tempSchedule.setStrHoliday("法定休日");
+				}else{
+					tempSchedule.setStrHoliday("所定休日");
+				}
 			}
 
 			tempWork = AttendanceServise.selectAllByEmployeeId(year, month,i+1, userId);

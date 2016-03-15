@@ -74,10 +74,20 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 		req.setAttribute("selectMonth",calendar.get(Calendar.MONTH)+1);
 		req.setAttribute("day_count", day_count);
 
+		//画面表示用に3年前から2年後までの年を取得
+		Integer tempYear = calendar.get(Calendar.YEAR)-3;
+
+		List<Integer> yearList = new ArrayList<>();
+		for(int i=0;i<6;i++){
+			yearList.add(tempYear);
+			tempYear += 1;
+		}
+
 		//画面表示用に月の情報を格納するList
 		List<Schedule> scheduleList = DateLogic.getMonthlyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, day_count,userId);
 
 		req.setAttribute("scheduleList", scheduleList);
+		req.setAttribute("yearList", yearList);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/monthly/monthlyAttendance.jsp");

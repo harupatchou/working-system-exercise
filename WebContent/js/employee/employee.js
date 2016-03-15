@@ -5,6 +5,12 @@ $(document).ready(function(){
 			$(this).prop("selected",true);
 		}
 	});
+
+	$(".year_val").each(function(){
+		if ($(".selectYear").val() == $(this).val()){
+			$(this).prop("selected",true);
+		}
+	});
 });
 
 $(document).on("change",".changeMonth",function(){
