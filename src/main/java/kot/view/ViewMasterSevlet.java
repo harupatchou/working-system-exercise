@@ -28,6 +28,7 @@ public class ViewMasterSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		//セッション情報取得
 		HttpSession session=req.getSession();
 		int loginId = (Integer) session.getAttribute("loginId");
 

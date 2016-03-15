@@ -15,7 +15,18 @@ public class WorkingDay {
 	//退社時間
 	private String leaveTime;
 	//休憩時間
+	// TODO DB変更後消す
 	private String breakTime;
+	public String getBreakTime() {
+		return breakTime;
+	}
+	public void setBreakTime(String breakTime) {
+		this.breakTime = breakTime;
+	}
+	//休憩開始時間
+	private String breakTimeStart;
+	//休憩終了時間
+	private String breakTimeEnd;
 	//仮眠時間
 	private String napTime;
 	//従業員id
@@ -26,7 +37,8 @@ public class WorkingDay {
 	 * 1 休日出勤
 	 **/
 	private Integer legalFlag;
-
+	//出勤常態
+	private String attendanceStatus;
 
 	public Integer getId() {
 		return id;
@@ -58,11 +70,17 @@ public class WorkingDay {
 	public void setLeaveTime(String leaveTime) {
 		this.leaveTime = leaveTime;
 	}
-	public String getBreakTime() {
-		return breakTime;
+	public String getBreakTimeStart() {
+		return breakTimeStart;
 	}
-	public void setBreakTime(String breakTime) {
-		this.breakTime = breakTime;
+	public void setBreakTimeStart(String breakTimeStart) {
+		this.breakTimeStart = breakTimeStart;
+	}
+	public String getBreakTimeEnd() {
+		return breakTimeEnd;
+	}
+	public void setBreakTimeEnd(String breakTimeEnd) {
+		this.breakTimeEnd = breakTimeEnd;
 	}
 	public String getNapTime() {
 		return napTime;
@@ -82,7 +100,15 @@ public class WorkingDay {
 	public void setLegalFlag(int i) {
 		this.legalFlag = i;
 	}
-
+	public String getAttendanceStatus() {
+		return attendanceStatus;
+	}
+	public void setAttendanceStatus(String attendanceStatus) {
+		this.attendanceStatus = attendanceStatus;
+	}
+	public void setLegalFlag(Integer legalFlag) {
+		this.legalFlag = legalFlag;
+	}
 
 
 

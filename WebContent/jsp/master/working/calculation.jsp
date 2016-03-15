@@ -24,7 +24,7 @@
             <c:forEach var="workingTimeTotal" items="${workingTimeTotalList}">
             <tr>
               <td>${workingTimeTotal.employee.firstName} ${workingTimeTotal.employee.lastName}</td>
-              <td>1</td>
+              <td>${workingTimeTotal.workingtype.workingName}</td>
               <td>${workingTimeTotal.workingTimeTotal}</td>
               <td>${workingTimeTotal.legalOverWorkingTimeTotal}</td>
               <td>${workingTimeTotal.statutoryOverWorkingTimeTotal}</td>

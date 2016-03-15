@@ -64,10 +64,12 @@ CREATE TABLE working_day
   week integer NOT NULL,
   attendance_time text,
   leave_time text,
-  break_time text,
+  break_time_start text,
+  break_time_end text,
   nap_time text,
   employee_id integer NOT NULL,
   legal_flag integer NOT NULL,
+  attendance_status text,
   CONSTRAINT working_day_pkc PRIMARY KEY (id),
   FOREIGN KEY (employee_id) REFERENCES employee(id)
 );

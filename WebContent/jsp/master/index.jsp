@@ -5,7 +5,7 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
 
-    <h4 class="subTitle">労働計算</h4>
+    <h4 class="subTitle">月次勤務情報</h4>
     <form action="/kot/master/Calculation" method="POST">
       <select name="year">
         <c:forEach var="year" items="${selectYear}">
@@ -17,7 +17,7 @@
           <option value="${month}">${month}</option>
         </c:forEach>
       </select>
-      <input type="submit" value="計算">
+      <input type="submit" value="表示">
     </form>
 
 <%--ここから上にコンテンツを挿入 --%>

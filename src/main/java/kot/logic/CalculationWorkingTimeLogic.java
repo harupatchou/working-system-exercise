@@ -57,6 +57,7 @@ public class CalculationWorkingTimeLogic {
 		for(int i = 0; i < employeeList.size(); i++){
 			CalculationWorkingTimeTotal total = WorkingTimeDao.workingTimeTotal(employeeList.get(i).getEmployeeId(), month, year);
 			total.setEmployee(employeeList.get(i));
+			total.setWorkingtype(DataLogic.getWorkingtypeFromEmployeeId(employeeList.get(i).getEmployeeId()));
 			calculationWorkingTimeTotalList.add(total);
 		}
 		return calculationWorkingTimeTotalList;
