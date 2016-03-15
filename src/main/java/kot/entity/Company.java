@@ -1,4 +1,7 @@
 package main.java.kot.entity;
+
+import java.util.List;
+
 /**
  * 会社情報
  * @author kuro
@@ -11,10 +14,15 @@ public class Company {
 	private String companyName;
 	//masterID
 	private Integer masterId;
+	//従業員リスト
+	private List<Employee> employeeList;
 
-	public Company(Integer id, String companyName, Integer workingtypeId){
+
+	public Company(Integer id, String companyName, Integer workingtypeId,Integer masterId,List<Employee> employeeList){
 		this.id = id;
 		this.companyName = companyName;
+		this.masterId = masterId;
+		this.employeeList = employeeList;
 	}
 
 	public Company() {
@@ -37,6 +45,14 @@ public class Company {
 	}
 	public void setMasterId(Integer masterId) {
 		this.masterId = masterId;
+	}
+
+	public List<Employee> getEmployeeList() {
+		return employeeList;
+	}
+
+	public void setEmployeeList(List<Employee> employeeList) {
+		this.employeeList = employeeList;
 	}
 
 }

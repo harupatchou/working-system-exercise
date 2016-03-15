@@ -18,7 +18,6 @@
         </c:forEach>
       </select>
       <input type="submit" value="計算">
-      <input type="hidden" name="employeeId" value="1">
     </form>
 
 <%--ここから上にコンテンツを挿入 --%>

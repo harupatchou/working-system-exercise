@@ -7,7 +7,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import main.java.kot.common.Schedule;
+import main.java.kot.common.SelectDate;
+import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.entity.Company;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.WorkingDay;
 import main.java.kot.util.CalendarUtil;
 
@@ -187,6 +191,33 @@ public class DateLogic {
 			}
 		}
 		return formatDate;
+	}
+	//会社に所属する従業員リストのSelectDateの合算から重複
+	public static SelectDate employeeDateSummary(Company company){
+		List<Employee> employeeList = company.getEmployeeList();
+
+		SelectDate selectDate= new SelectDate();
+		List<Integer> yearList = new ArrayList<>();
+		List<Integer> monthList = new ArrayList<>();
+
+		for(int i = 0;i < employeeList.size(); i++){
+			int employeeId = employeeList.get(i).getEmployeeId();
+			SelectDate tempSelectDate = WorkingTimeDao.getYearAndMonth(employeeId);
+			List<Integer> tempYearList = tempSelectDate.getYearList();
+			List<Integer> tempMonthList = tempSelectDate.getMonthList();
+			for(int j = 0; j < tempYearList.size(); j++){
+				yearList.add(tempYearList.get(j));
+			}
+			for(int k = 0; k < tempMonthList.size(); k++){
+				monthList.add(tempMonthList.get(k));
+			}
+
+		}
+		//重複削除してセット
+		selectDate.setYearList(ArrayListLogic.duplicateDelete(yearList));
+		selectDate.setMonthList(ArrayListLogic.duplicateDelete(monthList));
+
+		return selectDate;
 	}
 
 	//0:00形式のStringを00:00の形式に変換

@@ -3,6 +3,11 @@ package main.java.kot.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.kot.common.CalculationWorkingTimeTotal;
+import main.java.kot.dao.WorkingTimeDao;
+import main.java.kot.entity.Company;
+import main.java.kot.entity.Employee;
+
 
 public class CalculationWorkingTimeLogic {
 
@@ -44,6 +49,17 @@ public class CalculationWorkingTimeLogic {
 		String timeTotal = tempHourTotal + ":" + tempMinuteTotal;
 
 		return timeTotal;
+	}
+	//所属する従業員の月の総労働時間を取得
+	public static List<CalculationWorkingTimeTotal> getCompanyCalculationWorkingTimeTotal(Company company,Integer year, Integer month){
+		List<CalculationWorkingTimeTotal> calculationWorkingTimeTotalList = new ArrayList<>();
+		List<Employee> employeeList = company.getEmployeeList();
+		for(int i = 0; i < employeeList.size(); i++){
+			CalculationWorkingTimeTotal total = WorkingTimeDao.workingTimeTotal(employeeList.get(i).getEmployeeId(), month, year);
+			total.setEmployee(employeeList.get(i));
+			calculationWorkingTimeTotalList.add(total);
+		}
+		return calculationWorkingTimeTotalList;
 	}
 
 
