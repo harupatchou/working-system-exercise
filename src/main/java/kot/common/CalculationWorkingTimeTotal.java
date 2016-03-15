@@ -1,6 +1,7 @@
 package main.java.kot.common;
 
 import main.java.kot.entity.Employee;
+import main.java.kot.entity.Workingtype;
 
 
 /**
@@ -27,16 +28,19 @@ public class CalculationWorkingTimeTotal {
 	private String holidayTimeTotal;
 	/*従業員*/
 	private Employee employee;
+	/*従業員種別*/
+	private Workingtype workingtype;
 
 	public CalculationWorkingTimeTotal(){
 	}
-	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String statutoryOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal,Employee employee){
+	public CalculationWorkingTimeTotal(String workingTimeTotal, String legalOverWorkingTimeTotal,String statutoryOverWorkingTimeTotal,String nightTimeTotal,String overNightTimeTotal,Employee employee,Workingtype workingtype){
 		this.workingTimeTotal = workingTimeTotal;
 		this.legalOverWorkingTimeTotal = legalOverWorkingTimeTotal;
 		this.statutoryOverWorkingTimeTotal = statutoryOverWorkingTimeTotal;
 		this.nightTimeTotal = nightTimeTotal;
 		this.overNightTimeTotal = overNightTimeTotal;
 		this.employee = employee;
+		this.workingtype = workingtype;
 	}
 	public Integer getMonth() {
 		return month;
@@ -96,5 +100,11 @@ public class CalculationWorkingTimeTotal {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	public Workingtype getWorkingtype() {
+		return workingtype;
+	}
+	public void setWorkingtype(Workingtype workingtype) {
+		this.workingtype = workingtype;
 	}
 }
