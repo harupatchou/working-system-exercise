@@ -24,7 +24,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employeeEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
 
 		rd.forward(req, resp);
 

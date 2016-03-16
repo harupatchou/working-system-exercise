@@ -5,12 +5,10 @@ DROP TABLE week;
 DROP TABLE employee;
 DROP TABLE attendance_time;
 DROP TABLE attendance_status;
-DROP TABLE workingtype;
+DROP TABLE working_time;
+DROP TABLE working_type;
 DROP TABLE labor_system;
 DROP TABLE company;
-
-
-
 
 CREATE TABLE company
 (
@@ -27,15 +25,25 @@ CREATE TABLE labor_system
   CONSTRAINT labor_system_pkc PRIMARY KEY (id)
 );
 
-CREATE TABLE workingtype
+CREATE TABLE working_type
 (
   id integer,
   working_name text NOT NULL,
   labor_system_id integer NOT NULL,
   company_id integer NOT NULL,
-  CONSTRAINT workingtype_pkc PRIMARY KEY (id),
-  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id),
-  FOREIGN KEY (company_id) REFERENCES company(id)
+  CONSTRAINT working_type_pkc PRIMARY KEY (id),
+  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id) ON UPDATE CASCADE,
+  FOREIGN KEY (company_id) REFERENCES company(id) ON UPDATE CASCADE
+);
+
+CREATE TABLE working_time
+(
+  id integer,
+  working_time real,
+  carryover_time text,
+  working_type_id integer NOT NULL,
+  CONSTRAINT working_time_pkc PRIMARY KEY (id),
+  FOREIGN KEY (working_type_id) REFERENCES working_type(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE attendance_time
@@ -45,9 +53,11 @@ CREATE TABLE attendance_time
   end_time text NOT NULL,
   core_time_start text,
   core_time_end text,
-  workingtype_id integer NOT NULL,
+  working_type_id integer NOT NULL,
+  company_id integer NOT NULL,
   CONSTRAINT attendance_time_pkc PRIMARY KEY (id),
-  FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
+  FOREIGN KEY (working_type_id) REFERENCES working_type(id) ON UPDATE CASCADE,
+  FOREIGN KEY (company_id) REFERENCES company(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE attendance_status
@@ -64,10 +74,10 @@ CREATE TABLE employee
   last_name text NOT NULL,
   password text NOT NULL,
   company_id integer,
-  workingtype_id integer,
+  working_type_id integer,
   CONSTRAINT employee_pkc PRIMARY KEY (id),
-  FOREIGN KEY (company_id) REFERENCES company(id),
-  FOREIGN KEY (workingtype_id) REFERENCES workingtype(id)
+  FOREIGN KEY (company_id) REFERENCES company(id) ON UPDATE CASCADE,
+  FOREIGN KEY (working_type_id) REFERENCES working_type(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE week
@@ -92,8 +102,8 @@ CREATE TABLE working_day
   legal_flag integer NOT NULL,
   attendance_status integer,
   CONSTRAINT working_day_pkc PRIMARY KEY (id),
-  FOREIGN KEY (employee_id) REFERENCES employee(id),
-  FOREIGN KEY (attendance_status) REFERENCES attendance_status(id)
+  FOREIGN KEY (employee_id) REFERENCES employee(id) ON UPDATE CASCADE,
+  FOREIGN KEY (attendance_status) REFERENCES attendance_status(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE overtime
@@ -105,7 +115,7 @@ CREATE TABLE overtime
   statutory_night_overtime text,
   daily_id integer NOT NULL,
   CONSTRAINT overtime_pkc PRIMARY KEY (id),
-  FOREIGN KEY (daily_id) REFERENCES working_day(id)
+  FOREIGN KEY (daily_id) REFERENCES working_day(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE working_all
@@ -122,5 +132,5 @@ CREATE TABLE working_all
   day_status text,
   employee_id integer NOT NULL,
   CONSTRAINT working_all_pkc PRIMARY KEY (id),
-  FOREIGN KEY (employee_id) REFERENCES employee(id)
+  FOREIGN KEY (employee_id) REFERENCES employee(id) ON UPDATE CASCADE
 );

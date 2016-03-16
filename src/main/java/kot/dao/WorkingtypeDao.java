@@ -10,7 +10,7 @@ import main.java.kot.entity.Workingtype;
 
 public class WorkingtypeDao {
 
-	private static String tableName = "workingtype";
+	private static String tableName = "working_type";
 
 
 	/*従業員種別情報のインサート*/

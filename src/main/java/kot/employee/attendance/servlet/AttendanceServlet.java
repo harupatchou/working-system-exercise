@@ -101,6 +101,8 @@ public class AttendanceServlet extends HttpServlet{
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
 		//TODO 欠勤、有給の扱い
+		//TODO 出社時間超えたら遅刻
+		//TODO 退社時間超えたら早退
 
 
 		//insertする日を格納しておく

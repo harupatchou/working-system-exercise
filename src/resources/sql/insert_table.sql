@@ -9,18 +9,24 @@ INSERT INTO labor_system VALUES (2, '変形労働制');
 INSERT INTO labor_system VALUES (3, 'フレックス制');
 
 /*従業員種別*/
-INSERT INTO workingtype VALUES (1, '正社員', 1,1);
-INSERT INTO workingtype VALUES (2, 'パート/アルバイト', 2,1);
-INSERT INTO workingtype VALUES (3, 'フレックス社員', 3,1);
+INSERT INTO working_type VALUES (1, '正社員', 1,1);
+INSERT INTO working_type VALUES (2, 'パート/アルバイト', 2,1);
+INSERT INTO working_type VALUES (3, 'フレックス社員', 3,1);
+
+/*種別時間*/
+INSERT INTO working_time VALUES (1,8.0,'0:00',1);
+INSERT INTO working_time VALUES (2,7.5,'0:00',2);
 
 /*出退勤時間*/
-INSERT INTO attendance_time VALUES (1,'9:00','18:00','','',1);
-INSERT INTO attendance_time VALUES (2,'9:00','17:30','','',2);
+INSERT INTO attendance_time VALUES (1,'9:00','18:00','0:00','0:00',1,1);
+INSERT INTO attendance_time VALUES (2,'9:00','17:30','0:00','0:00',2,1);
+
 
 /*勤怠ステータス*/
 INSERT INTO attendance_status VALUES (1,'出勤');
 INSERT INTO attendance_status VALUES (2,'欠勤');
 INSERT INTO attendance_status VALUES (3,'有給');
+INSERT INTO attendance_status VALUES (4,'未入力');
 
 /*従業員情報*/
 INSERT INTO employee VALUES (1, '通常','従業員','rakus2000',1,1);

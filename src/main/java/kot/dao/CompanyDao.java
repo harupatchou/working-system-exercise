@@ -15,9 +15,6 @@ public class CompanyDao {
 
 	/*会社情報のインサート*/
 	public static boolean registCompany(Company company){
-
-
-
 		String sql = "INSERT INTO " + tableName + " (id, company_name) VALUES (?,?)";
 
 		try {
@@ -38,10 +35,50 @@ public class CompanyDao {
 		}
 	}
 
+	/*会社情報のアップデート*/
+	public static boolean editCompany(Company company, Company userCompany){
+		String sql = "UPDATE " + tableName + " SET id = ?,company_name = ? WHERE id = " + userCompany.getId();
+
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, company.getId());
+			pstmt.setString(2, company.getCompanyName());
+
+			pstmt.executeUpdate();
+
+			return true;
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
+
+	//companyIdから情報取得
 	public static Company getCompany(Integer companyId){
-
 		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + companyId;
+		try(Connection con = DBManager.createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery();){
 
+				Company company = new Company();
+				while(rs.next()){
+					company.setId(rs.getInt("id"));
+					company.setCompanyName(rs.getString("company_name"));
+				}
+				return company;
+
+			}catch(SQLException e){
+				System.err.println("SQL = " + sql);
+				throw new RuntimeException("処理に失敗しました", e);
+			}
+	}
+
+	//companyIdから情報取得(紐付いている情報全て)
+	public static Company getCompanyAll(Integer companyId) {
+		String sql = "SELECT * FROM company WHERE id = " + companyId;
 		try(Connection con = DBManager.createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 					ResultSet rs = pstmt.executeQuery();){

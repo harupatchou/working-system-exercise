@@ -29,7 +29,7 @@ public class EmployeeDao {
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
+				employee.setWorkingTypeId(rs.getInt("working_type_id"));
 			}
 			return employee;
 
@@ -55,7 +55,7 @@ public class EmployeeDao {
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
+				employee.setWorkingTypeId(rs.getInt("working_type_id"));
 				employeeList.add(employee);
 			}
 			company.setEmployeeList(employeeList);
@@ -110,7 +110,7 @@ public class EmployeeDao {
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("workingtype_id"));
+				employee.setWorkingTypeId(rs.getInt("working_type_id"));
 				company.setCompanyName(rs.getString("company_name"));
 				company.setMasterId(rs.getInt("master_id"));
 				employee.setCompany(company);

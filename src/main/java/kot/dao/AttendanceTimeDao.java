@@ -14,7 +14,7 @@ public class AttendanceTimeDao {
 
 	/*従業員種別IDから種別ごとの労働時間を取得*/
 	public static AttendanceTime getAttendanceTimeFromWrokingtypeId(Integer workingtypeId){
-		String sql = "SELECT * FROM " + tableName + " WHERE workingtype_id = " + workingtypeId;
+		String sql = "SELECT * FROM " + tableName + " WHERE working_type_id = " + workingtypeId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
@@ -26,7 +26,7 @@ public class AttendanceTimeDao {
 				attendanceTime.setEnd_time(rs.getString("end_time"));
 				attendanceTime.setCore_time_strat(rs.getString("core_time_start"));
 				attendanceTime.setCore_time_end(rs.getString("core_time_end"));
-				attendanceTime.setWorkingtype_id(rs.getInt("workingtype_id"));
+				attendanceTime.setWorkingtype_id(rs.getInt("working_type_id"));
 			}
 
 			return attendanceTime;

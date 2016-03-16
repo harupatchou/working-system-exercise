@@ -2,7 +2,9 @@ package main.java.kot.login.service;
 
 import javax.servlet.http.HttpServlet;
 
+import main.java.kot.dao.CompanyDao;
 import main.java.kot.dao.EmployeeDao;
+import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 
 public class LoginServise extends HttpServlet{
@@ -12,9 +14,14 @@ public class LoginServise extends HttpServlet{
 		return EmployeeDao.LoginCheckInfo(employeeId);
 	}
 
-	//employee_idから情報取得
-		public static Employee getSessionInfo(Integer employeeId){
-			return EmployeeDao.getEmployee(employeeId);
-		}
+	//employee_idからemployee情報取得
+	public static Employee getSessionEmployee(Integer employeeId){
+		return EmployeeDao.getEmployee(employeeId);
+	}
+
+	//company_idからcompany情報取得（紐付いている情報全て）
+	public static Company getSessionCompany(Integer companyId) {
+		return CompanyDao.getCompany(companyId);
+	}
 
 }

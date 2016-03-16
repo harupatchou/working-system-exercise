@@ -16,7 +16,8 @@ public class Company {
 	private Integer masterId;
 	//従業員リスト
 	private List<Employee> employeeList;
-
+	//勤怠時間リスト
+	private List<AttendanceTime> attendanceTime;
 
 	public Company(Integer id, String companyName, Integer workingtypeId,Integer masterId,List<Employee> employeeList){
 		this.id = id;
@@ -53,6 +54,14 @@ public class Company {
 
 	public void setEmployeeList(List<Employee> employeeList) {
 		this.employeeList = employeeList;
+	}
+
+	public List<AttendanceTime> getAttendanceTime() {
+		return attendanceTime;
+	}
+
+	public void setAttendanceTime(List<AttendanceTime> attendanceTime) {
+		this.attendanceTime = attendanceTime;
 	}
 
 }
