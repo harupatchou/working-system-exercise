@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import main.java.kot.common.TempTime;
+import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.MonthlyLegalWorkingTime;
 
 /**
@@ -203,5 +204,21 @@ public class WorkingTimeLogic {
 		String monthlyLegalWorkingtime = getTimeDoubleToString(tempMonthlyLegalWorkingtime);
 
 		return monthlyLegalWorkingtime;
+	}
+
+	/*従業員種別ごとの日の基準労働時間取得*/
+	public static String getStandardsWorkingTimeFromWorkingtype(Integer workingytpeId){
+
+		double standardWorkingTime = 0;
+
+		if(workingytpeId == 1){
+			standardWorkingTime = ConstantWorkingTime.WORKINGTIME;
+		}else if(workingytpeId == 2){
+			standardWorkingTime = ConstantWorkingTime.IRREGULARWORKINGTIME;
+		}else if(workingytpeId == 3){
+			standardWorkingTime = ConstantWorkingTime.FREXWORKINGTIME;
+		}
+		String workingTime = getTimeDoubleToString(standardWorkingTime);
+		return workingTime;
 	}
 }

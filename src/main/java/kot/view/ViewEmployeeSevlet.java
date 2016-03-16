@@ -9,6 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import main.java.kot.entity.Employee;
+import main.java.kot.logic.DataLogic;
+import main.java.kot.logic.OvertimeLogic;
 
 @WebServlet("/employee/Top")
 public class ViewEmployeeSevlet extends HttpServlet {
@@ -19,6 +24,15 @@ public class ViewEmployeeSevlet extends HttpServlet {
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+
+		//セッション情報取得
+		HttpSession session=req.getSession();
+		int loginId = (Integer) session.getAttribute("loginId");
+
+		Employee employee = DataLogic.getEmployee(loginId);
+		String overtimeMessage = OvertimeLogic.getPossibleOvertime(employee);
+
+		req.setAttribute("overtimeMessage", overtimeMessage);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");
