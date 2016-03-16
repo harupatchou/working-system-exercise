@@ -4,6 +4,9 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
 
+    <h4 class="subTitle">可能残業時間</h4>
+    <p>${overtimeMessage}</p>
+
 
 <%--ここから上にコンテンツを挿入 --%>
   </c:param>

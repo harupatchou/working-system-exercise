@@ -1,12 +1,14 @@
 package main.java.kot.logic;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.WeeklyLegalWorkingTime;
 import main.java.kot.dao.WorkingTimeDao;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingDay;
 
@@ -29,6 +31,69 @@ public class OvertimeLogic {
 		String attendDay= DateLogic.getCalculateTime(attendDayAll,workingday.getNapTime());
 
 		return attendDay;
+	}
+
+	//可能残業時間算出
+	public static String getPossibleOvertime(Employee employee){
+
+		//現在の総労働時間
+		Date date = new Date();
+		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
+		String currentWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
+
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		//月の法定労働時間
+		String monthlyLegalWorkingTime = WorkingTimeLogic.getMonthlyLegalWorkingtime(date);
+
+		//日の労働時間
+		String workingTime = WorkingTimeLogic.getStandardsWorkingTimeFromWorkingtype(employee.getWorkingTypeId());
+
+		//
+		String considersLabor = "";
+		for(int i = 0;i <= maxDay -day;i++){
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			if(cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 7){
+				if(considersLabor.equals("")){
+					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, currentWorkingTimeTotal);
+				}else{
+					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, considersLabor);
+				}
+			}
+		}
+
+		//可能残業時間算出
+		String possibleOvertime = "";
+		TempTime tempPossibleOvertime = new TempTime();
+		String largeWorkingTime = WorkingTimeLogic.compareWorkingTime(monthlyLegalWorkingTime, considersLabor);
+
+		if(largeWorkingTime.equals(monthlyLegalWorkingTime)){
+			tempPossibleOvertime = WorkingTimeLogic.subtractionWorkingTimeTempTime(monthlyLegalWorkingTime, considersLabor);
+		}else{
+			tempPossibleOvertime = null;
+		}
+
+		if(tempPossibleOvertime != null){
+
+			String tempHour = String.valueOf(tempPossibleOvertime.getHour());
+			String tempMinute = "";
+
+			if(tempPossibleOvertime.getMinute() < 10){
+				tempMinute = "0" + String.valueOf(tempPossibleOvertime.getMinute());
+			}else{
+				tempMinute = String.valueOf(tempPossibleOvertime.getMinute());
+			}
+
+			possibleOvertime = "今月の残業可能時間は" + tempHour + "時間" + tempMinute + "分です";
+		}else{
+			possibleOvertime = "今月は残業時間の上限に達しています。これ以上は残業できません。";
+		}
+
+		return possibleOvertime;
 	}
 
 
@@ -211,6 +276,15 @@ public class OvertimeLogic {
 				/*日の残業計算 ここまで*/
 
 		return overtime;
+	}
+
+
+	/*フレックスタイム制残業計算*/
+	public static Overtime getFlexTimeOvertime(WorkingDay workinfday){
+
+
+
+		return null;
 	}
 
 	/* TODO 早出残業用メソッド(現在は考慮しないで良い) */
