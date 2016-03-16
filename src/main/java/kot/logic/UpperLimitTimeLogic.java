@@ -40,9 +40,22 @@ public class UpperLimitTimeLogic{
 
 		String alertMessage = "";
 
+		//入力日の実労働時間
+		String workingTime = OvertimeLogic.getWorkingTime(workingday);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(workingday.getDate());
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+
 		//現時点での月の実労働時間
-		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
-		String currentWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
+
+		String currentWorkingTimeTotal;
+		if(day == 1){
+			currentWorkingTimeTotal = workingTime;
+		}else{
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
+		}
 
 		//月の労働上限時間
 		String uuperLimitTime = getUpperLimitTime(workingday.getDate());

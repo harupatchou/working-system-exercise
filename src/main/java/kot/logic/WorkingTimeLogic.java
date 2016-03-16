@@ -135,6 +135,34 @@ public class WorkingTimeLogic {
 		return answerSubtraction;
 	}
 
+	/*String型の時刻「0:00」同士の加算*/
+	public static String additionWorkingTimeString(String workingTime, String currentWorkingTime){
+		String answerAddition = "";
+
+		TempTime tempWorkingTime = getTimeInt(workingTime);
+		TempTime tempCurrentWorkingTime = getTimeInt(currentWorkingTime);
+
+		int hour = tempWorkingTime.getHour() + tempCurrentWorkingTime.getHour();
+		int minute = tempWorkingTime.getMinute() + tempCurrentWorkingTime.getMinute();
+		String tempHour = "";
+		String tempMinute = "";
+
+		if(minute >= 60){
+			tempHour = String.valueOf(hour + 1);
+			tempMinute = String.valueOf(minute - 60);
+		}else if(minute < 10){
+			tempHour = String.valueOf(hour);
+			tempMinute = "0" + String.valueOf(minute);
+		}else{
+			tempHour = String.valueOf(hour);
+			tempMinute = String.valueOf(minute);
+		}
+
+		answerAddition = tempHour + ":" + tempMinute;
+
+		return answerAddition;
+	}
+
 	/*実労働時間と法定労働時間の差を取得してTempTimeオブジェクトを返す*/
 	public static TempTime subtractionWorkingTimeTempTime(String workingTime , String legalWorkingTime){
 
