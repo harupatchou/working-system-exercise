@@ -105,6 +105,40 @@ INSERT INTO working_day VALUES(60,'2016/1/29',6,'8:55','18:35','13:00','14:00','
 INSERT INTO working_day VALUES(61,'2016/1/30',7,'0:00','0:00','0:00','0:00','0:00',2,0,null);
 INSERT INTO working_day VALUES(62,'2016/1/31',1,'0:00','0:00','0:00','0:00','0:00',2,0,null);
 
+
+/* TODO ここ途中*/
+INSERT INTO working_day VALUES(63,'2015/12/1',3,'8:06','23:32','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(64,'2015/12/2',4,'8:58','19:46','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(65,'2015/12/3',5,'8:48','19:19','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(66,'2015/12/4',6,'8:52','19:27','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(67,'2015/12/5',7,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(68,'2015/12/6',1,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(69,'2015/12/7',2,'8:52','21:08','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(70,'2015/12/8',3,'8:50','0:00','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(71,'2015/12/9',4,'8:56','20:17','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(72,'2015/12/10',5,'8:41','21:30','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(73,'2015/12/11',6,'8:49','21:25','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(74,'2015/12/12',7,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(75,'2015/12/13',1,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(76,'2015/12/14',2,'8:54','20:06','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(77,'2015/12/15',3,'8:53','21:26','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(78,'2015/12/16',4,'8:48','21:31','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(79,'2015/12/17',5,'8:55','18:49','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(80,'2015/12/18',6,'8:53','18:51','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(81,'2015/12/19',7,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(82,'2015/12/20',1,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(83,'2015/12/21',2,'8:56','20:16','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(84,'2015/12/22',3,'8:53','19:27','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(85,'2015/12/23',4,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(86,'2015/12/24',5,'8:52','18:29','13:00','14:00','0:00',1,0,'出勤');
+INSERT INTO working_day VALUES(87,'2015/12/25',6,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(88,'2015/12/26',7,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(89,'2015/12/27',1,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(90,'2015/12/28',2,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(91,'2015/12/29',3,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(92,'2015/12/30',4,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+INSERT INTO working_day VALUES(93,'2015/12/31',5,'0:00','0:00','0:00','0:00','0:00',1,0,null);
+
 /*残業時間*/
 INSERT INTO overtime VALUES(1,'0:00','2:00','0:00','0:00',1);
 INSERT INTO overtime VALUES(2,'0:00','1:46','0:00','0:00',2);
@@ -238,6 +272,6 @@ INSERT INTO working_all VALUES(60,'2016/1/29',6,'8:35','0:30','0:35','0:00','0:0
 INSERT INTO working_all VALUES(61,'2016/1/30',7,'0:00','0:00','0:00','0:00','0:00','0:00','通常',2);
 INSERT INTO working_all VALUES(62,'2016/1/31',1,'0:00','0:00','0:00','0:00','0:00','0:00','通常',2);
 
-ALTER SEQUENCE overtime_id_seq RESTART WITH 62;
-ALTER SEQUENCE working_all_id_seq RESTART WITH 62;
-ALTER SEQUENCE working_day_id_seq RESTART WITH 62;
+ALTER SEQUENCE overtime_id_seq RESTART WITH 93;
+ALTER SEQUENCE working_all_id_seq RESTART WITH 93;
+ALTER SEQUENCE working_day_id_seq RESTART WITH 93;
