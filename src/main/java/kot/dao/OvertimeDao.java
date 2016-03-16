@@ -39,7 +39,7 @@ public class OvertimeDao {
 
 	/*残業情報のアップデート*/
 	public static boolean updateOvertime(Overtime overtime) {
-		String sql = "UPDATE " + tableName + " SET legal_overtime = ?,statutory_overtime = ? ,night_overtime = ?,statutory_night_overtime = ?,daily_id = ? WHERE id = " + overtime.getOvertimeId();
+		String sql = "UPDATE " + tableName + " SET legal_overtime = ?,statutory_overtime = ? ,night_overtime = ?,statutory_night_overtime = ?,daily_id = ? WHERE id = " + overtime.getDailyId();
 
 		try {
 			Connection con = DBManager.createConnection();

@@ -123,4 +123,23 @@ public class EmployeeDao {
 		}
 	}
 
+	/*パスワードの変更*/
+	public static boolean changePassword(Employee employee) {
+		String sql = "UPDATE " + tableName + " SET password = ? WHERE id = " + employee.getEmployeeId();
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1,employee.getNewPassword());
+
+			pstmt.executeUpdate();
+
+			return true;
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
+
 }
