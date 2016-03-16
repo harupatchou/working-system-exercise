@@ -136,8 +136,8 @@ public class AttendanceServlet extends HttpServlet{
 		String endTime =req.getParameter("endTime");
 
 		//00:00形式を0:00形式に
-		DateLogic.formatTime(startTime);
-		DateLogic.formatTime(endTime);
+		startTime = DateLogic.formatTimeForServerSide(startTime);
+		endTime = DateLogic.formatTimeForServerSide(endTime);
 
 		//working_day.insert用
 		String breakStartTime =req.getParameter("breakStartTime");
@@ -162,7 +162,7 @@ public class AttendanceServlet extends HttpServlet{
 			workingDay.setBreakTimeStart(breakStartTime);
 			workingDay.setBreakTimeEnd(breakEndTime);
 			workingDay.setEmployeeId(employeeId);
-			workingDay.setAttendanceStatus(statusCode);
+			workingDay.setStatusCode(statusCode);
 			//TODO 決め打ち
 			workingDay.setNapTime(breakTime);
 			// ここまで

@@ -29,9 +29,9 @@ public class WorkingDay {
 	 **/
 	private Integer legalFlag;
 	//出勤常態
-	private Integer attendanceStatus;
+	private Integer statusCode;
 
-	private AttendanceStatus attendStatus;
+	private AttendanceStatus attendanceStatus;
 
 	public Integer getId() {
 		return id;
@@ -93,20 +93,20 @@ public class WorkingDay {
 	public void setLegalFlag(int i) {
 		this.legalFlag = i;
 	}
-	public Integer getAttendanceStatus() {
-		return attendanceStatus;
+	public Integer getStatusCode() {
+		return statusCode;
 	}
-	public void setAttendanceStatus(Integer attendanceStatus) {
-		this.attendanceStatus = attendanceStatus;
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
 	}
 	public void setLegalFlag(Integer legalFlag) {
 		this.legalFlag = legalFlag;
 	}
-	public AttendanceStatus getAttendStatus() {
-		return attendStatus;
+	public AttendanceStatus getAttendanceStatus() {
+		return attendanceStatus;
 	}
-	public void setAttendStatus(AttendanceStatus attendStatus) {
-		this.attendStatus = attendStatus;
+	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+		this.attendanceStatus = attendanceStatus;
 	}
 
 

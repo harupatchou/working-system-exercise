@@ -244,4 +244,21 @@ public class DateLogic {
 
 		return formatTime;
 	}
+
+	//00:00形式のStringを0:00の形式に変換
+		public static String formatTimeForServerSide (String oldTime){
+
+			String[] arrayTime = oldTime.split(":");
+
+			String firstChar = arrayTime[0].substring(0, 1);
+
+			//時の先頭が0のときは0以降の文字列を取得(「00:00」→「0:00」)
+			if(firstChar.equals("0")){
+				arrayTime[0] = arrayTime[0].substring(1);
+			}
+
+			String formatTime = arrayTime[0] + ":" + arrayTime[1];
+
+			return formatTime;
+		}
 }
