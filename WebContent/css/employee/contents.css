@@ -43,3 +43,7 @@ tr.schedule-saturday {
 tr.schedule-normal {
     background-color: #FFFFFF;
 }
+
+td.check {
+    background-color: #FFFFFF;
+}

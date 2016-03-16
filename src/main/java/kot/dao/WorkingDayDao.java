@@ -138,7 +138,7 @@ public class WorkingDayDao {
 				workingDay.setAttendanceTime(rs.getString("attendance_time"));
 				workingDay.setLeaveTime(rs.getString("leave_time"));
 				workingDay.setBreakTimeStart(rs.getString("break_time_start"));
-				workingDay.setBreakTimeEnd(rs.getString("break_time_start"));
+				workingDay.setBreakTimeEnd(rs.getString("break_time_end"));
 				workingDay.setNapTime(rs.getString("nap_time"));
 				workingDay.setLegalFlag(rs.getInt("legal_flag"));
 				workingDay.setStatusCode(rs.getInt("attendance_status"));

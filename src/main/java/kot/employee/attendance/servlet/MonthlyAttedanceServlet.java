@@ -33,6 +33,9 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 
 		HttpSession session=req.getSession();
 		Integer userId = (Integer) session.getAttribute("loginId");
+		String userName = (String) session.getAttribute("userName");
+
+		req.setAttribute("userName", userName);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String strSelectMonth = req.getParameter("month");

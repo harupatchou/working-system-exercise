@@ -8,7 +8,7 @@ public class LoginSession {
 
 	//ID
 	private Integer login_id;
-	//コアタイム開始時間
+	//パスワード
 	private String password;
 
 	public Integer getLogin_id() {

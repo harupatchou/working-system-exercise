@@ -12,4 +12,9 @@ public class LoginServise extends HttpServlet{
 		return EmployeeDao.LoginCheckInfo(employeeId);
 	}
 
+	//employee_idから情報取得
+		public static Employee getSessionInfo(Integer employeeId){
+			return EmployeeDao.getEmployee(employeeId);
+		}
+
 }

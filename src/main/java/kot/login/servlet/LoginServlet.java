@@ -2,8 +2,6 @@ package main.java.kot.login.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Employee;
 import main.java.kot.login.service.LoginServise;
 import main.java.kot.login.session.LoginSession;
@@ -44,20 +43,20 @@ public class LoginServlet extends HttpServlet{
 			//入力したidが存在しなければ
 			System.out.println("IDなし！");
 
-			ServletContext application = req.getServletContext();
-			RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
-			rd.forward(req, resp);
+			resp.sendRedirect("/kot/login");
 		}else{
 			if(!checkInf.getPassword().equals(sess.getPassword())) {
 				//passが一致していなければ
 				System.out.println("pass不一致！");
 
-				ServletContext application = req.getServletContext();
-				RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
-				rd.forward(req, resp);
+				resp.sendRedirect("/kot/login");
 			}else{
 				//一致していれば
 				System.out.println("ok！");
+
+				String userName = EmployeeDao.getEmployee(sess.getLogin_id()).getFirstName();
+
+				session.setAttribute("userName", userName);
 
 				if(checkInf.getCompany().getMasterId() == sess.getLogin_id()){
 					//employeeIdが紐付いたCompanyのmasterIDと一致していればmaster画面へ

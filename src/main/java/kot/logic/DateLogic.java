@@ -10,6 +10,7 @@ import main.java.kot.common.Schedule;
 import main.java.kot.common.SelectDate;
 import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.WorkingDay;
@@ -143,11 +144,37 @@ public class DateLogic {
 		for (int i = 0;i < day_count; i++){
 			List<String> addDate = new ArrayList<String>();
 			Schedule tempSchedule = new Schedule();
-			WorkingDay tempWork = new WorkingDay();
 
 			addDate.add(strYear);
 			addDate.add(strMonth);
 			addDate.add(String.valueOf(i+1));
+
+			//当日のWorkingDayを取得
+			WorkingDay tempWork = new WorkingDay();
+
+			tempWork = AttendanceServise.selectAllByEmployeeId(year, month,i+1, userId);
+
+			if(tempWork.getId() == null){
+				tempSchedule.setEnterStatus("未入力");
+				tempWork.setStatusCode(4);
+			}else{
+				tempSchedule.setEnterStatus("入力済");
+
+				//もし欠勤ならば初期化して画面に表示する際に0:00を表示しない
+				if(tempWork.getStatusCode() == 2){
+					tempWork = new WorkingDay();
+					AttendanceStatus tempAttend = new AttendanceStatus();
+
+					tempWork.setStatusCode(2);
+					//欠勤情報のみ表示
+					tempAttend.setId(2);
+					tempAttend.setStatusName("欠勤");
+
+					tempWork.setAttendanceStatus(tempAttend);
+				}
+			}
+
+			tempSchedule.setWorkingDay(tempWork);
 
 			Schedule weekInfo = CalendarUtil.getWeek(year,month,i+1);
 
@@ -165,15 +192,16 @@ public class DateLogic {
 				}
 			}
 
-			tempWork = AttendanceServise.selectAllByEmployeeId(year, month,i+1, userId);
+			//休憩時間算出
+			if(tempWork.getStatusCode() == 1){
+				//計算用
+				String[] tempBreakStartTime = DateLogic.timeStr(tempWork.getBreakTimeStart());
+				String[] tempBreakEndTime = DateLogic.timeStr(tempWork.getBreakTimeEnd());
 
-			if(tempWork.getId() == null){
-				tempSchedule.setEnterStatus("未入力");
-			}else{
-				tempSchedule.setEnterStatus("入力済");
+				tempSchedule.setBreakTime(DateLogic.getStringTime(tempBreakStartTime,tempBreakEndTime));
 			}
 
-			tempSchedule.setWorkingDay(tempWork);
+
 
 			scheduleList.add(tempSchedule);
 		}

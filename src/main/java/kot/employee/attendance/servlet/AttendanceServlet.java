@@ -100,6 +100,7 @@ public class AttendanceServlet extends HttpServlet{
 
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
+		//TODO 欠勤、有給の扱い
 
 
 		//insertする日を格納しておく
@@ -145,10 +146,10 @@ public class AttendanceServlet extends HttpServlet{
 
 		//計算用
 		String[] tempBreakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
-		String[] tempBreakEndTime2 = DateLogic.timeStr(req.getParameter("breakEndTime"));
+		String[] tempBreakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
 
 		//一日の休憩時間算出
-		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime2);
+		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime);
 
 		//勤怠ステータス判別
 		String strStatusCode = req.getParameter("attend_status");
@@ -157,14 +158,27 @@ public class AttendanceServlet extends HttpServlet{
 		try {
 			workingDay.setDate(sdf.parse(insertDate));
 			workingDay.setWeek(weekInfo.getWeekNum());
-			workingDay.setAttendanceTime(startTime);
-			workingDay.setLeaveTime(endTime);
-			workingDay.setBreakTimeStart(breakStartTime);
-			workingDay.setBreakTimeEnd(breakEndTime);
 			workingDay.setEmployeeId(employeeId);
 			workingDay.setStatusCode(statusCode);
-			//TODO 決め打ち
-			workingDay.setNapTime(breakTime);
+			//ステータスで場合分け
+			if(statusCode == 1){
+				//もし出勤ならば
+				workingDay.setAttendanceTime(startTime);
+				workingDay.setLeaveTime(endTime);
+				workingDay.setBreakTimeStart(breakStartTime);
+				workingDay.setBreakTimeEnd(breakEndTime);
+				//TODO 決め打ち
+				workingDay.setNapTime("0:00");
+			//TODO 欠勤有給の場合
+			}else{
+				workingDay.setAttendanceTime("0:00");
+				workingDay.setLeaveTime("0:00");
+				workingDay.setBreakTimeStart("0:00");
+				workingDay.setBreakTimeEnd("0:00");
+
+				//TODO 決め打ち
+				workingDay.setNapTime("0:00");
+			}
 			// ここまで
 		} catch (ParseException e) {
 			e.printStackTrace();

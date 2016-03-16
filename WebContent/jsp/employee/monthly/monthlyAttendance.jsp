@@ -6,7 +6,7 @@
 <%--ここから下にコンテンツを挿入 --%>
     <h2 class="subTitle">月次勤怠</h2>
     <!-- TODO 後ほど修正 -->
-    <p class="emp_info">従業員名：test</p>
+    <p class="emp_info">従業員名：${userName}</p>
     <form name="monthlyAttendance" method="GET">
       <p>年月選択：
       <select name="year">
@@ -23,15 +23,21 @@
       <input type="hidden" name="selectMonth" class="selectMonth" value="${selectMonth}">
     </form>
     <form>
+      <h4 class="subTitle">承認依頼</h4>
+      <select name="approval_status">
+        <option value="1">承認申請</option>
+      </select>
+      <input type="submit" value="承認申請">
       <h4 class="subTitle">${selectMonth}月の勤怠</h4>
       <div class="a_pattern_table">
         <table class="calendar_table">
           <thead>
             <tr>
+              <th>承認</th>
+              <th>状態</th>
               <th>日付</th>
               <th>曜日</th>
               <th>種別</th>
-              <th>状態</th>
               <th>出欠</th>
               <th>開始</th>
               <th>終了</th>
@@ -45,14 +51,17 @@
                 <c:when test="${schedule.weekStr.equals('土')}"><tr class="schedule-saturday"></c:when>
                 <c:otherwise><tr class="schedule-normal"></c:otherwise>
               </c:choose>
+                <td class="check">
+                  <input type="checkbox" name="approval">
+                </td>
+                <td class="check">${schedule.enterStatus}</td>
                 <td class="day"><a href="/kot/employee/Attendance?day_num=${schedule.monthlyDate}">${schedule.monthlyDate}</a></td>
                 <td class="week">${schedule.weekStr}</td>
                 <td>${schedule.strHoliday}</td>
-                <td>${schedule.enterStatus}</td>
                 <td>${schedule.workingDay.attendanceStatus.statusName}</td>
                 <td>${schedule.workingDay.attendanceTime}</td>
                 <td>${schedule.workingDay.leaveTime}</td>
-                <td>${schedule.workingDay.napTime}</td>
+                <td>${schedule.breakTime}</td>
               </tr>
             </c:forEach>
           </tbody>

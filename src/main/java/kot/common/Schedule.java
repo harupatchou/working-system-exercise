@@ -15,6 +15,8 @@ public class Schedule {
 	String strHoliday;
 	//未入力ステータス
 	String enterStatus;
+	//休憩時間
+	String breakTime;
 	//working_day
 	WorkingDay workingDay;
 	//年月日
@@ -62,6 +64,12 @@ public class Schedule {
 	}
 	public void setEnterStatus(String enterStatus) {
 		this.enterStatus = enterStatus;
+	}
+	public String getBreakTime() {
+		return breakTime;
+	}
+	public void setBreakTime(String breakTime) {
+		this.breakTime = breakTime;
 	}
 
 }
