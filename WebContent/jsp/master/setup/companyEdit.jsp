@@ -59,15 +59,17 @@
           <li><br><hr><br></li>
         </ul>
         <c:if test="${count != 0}">
+        <section id="irregularArea" style="display:none">
         <h2>変形労働情報</h2>
         <ul>
           <li>
             <label>所定時間編集：</label>
             <div>
-             <input type="text" name="legalTime" value="">
+             <input type="text" name="regularTime" value="${workingTime.getWorkingTime()}" size="2">時間
             </div>
           </li>
         </ul>
+        </section>
         </c:if>
       </div>
       <div class="saveButton">

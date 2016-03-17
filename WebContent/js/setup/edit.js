@@ -68,8 +68,32 @@ $(function(){
   		var strStartTime = $("#selectStart_"+selectNum).val();
   		var strEndTime = $("#selectEnd_"+selectNum).val();
 
+  		$("#hiddenStartTime").val(strStartTime);
+  		$("#hiddenEndTime").val(strEndTime);
+
   		$("#startTime").text(strStartTime);
   		$("#endTime").text(strEndTime);
+
+  		if($(this).val() == 2){
+  			$("#irregularArea").show();
+  		}else{
+  			$("#irregularArea").hide();
+  		}
   	});
   })
+
+  $(document).ready(function(){
+	var selectNum = $("#laborSystem").val();
+
+	var strStartTime = $("#selectStart_"+selectNum).val();
+	var strEndTime = $("#selectEnd_"+selectNum).val();
+
+	$("#hiddenStartTime").val(strStartTime);
+	$("#hiddenEndTime").val(strEndTime);
+
+	$("#startTime").text(strStartTime);
+	$("#endTime").text(strEndTime);
+  });
+
+
 });

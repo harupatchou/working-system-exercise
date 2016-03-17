@@ -41,9 +41,9 @@ CREATE TABLE working_time
   id integer,
   working_time real,
   carryover_time text,
-  working_type_id integer NOT NULL,
+  labor_system_id integer NOT NULL,
   CONSTRAINT working_time_pkc PRIMARY KEY (id),
-  FOREIGN KEY (working_type_id) REFERENCES working_type(id) ON UPDATE CASCADE
+  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE attendance_time

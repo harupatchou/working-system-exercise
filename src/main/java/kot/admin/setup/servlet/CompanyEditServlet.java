@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import main.java.kot.admin.setup.service.SetupService;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
+import main.java.kot.entity.WorkingTime;
 
 @WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
@@ -36,15 +37,23 @@ public class CompanyEditServlet extends HttpServlet{
 
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
 
+		WorkingTime workingTime = new WorkingTime();
+
 		//変形労働があるかどうか判別
 		Integer count = 0;
 		for(int i=0;i<attendanceTimeList.size();i++){
 			if(attendanceTimeList.get(i).getLaborSystemId() == 2){
 				count += 1;
+				Integer irregularId = attendanceTimeList.get(i).getLaborSystemId();
+				req.setAttribute("irregular", irregularId);
+				//workingTimeを取得
+				workingTime = SetupService.getWorkingTime(attendanceTimeList.get(i).getLaborSystemId());
 			}
 		}
 
 		req.setAttribute("count", count);
+		req.setAttribute("workingTime", workingTime);
+
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
@@ -82,15 +91,29 @@ public class CompanyEditServlet extends HttpServlet{
 		String attendanceTime  =req.getParameter("attendanceTime");
 		String leaveTime =req.getParameter("leaveTime");
 
+		//勤怠時間の登録
 		AttendanceTime insertTime = new AttendanceTime();
 
 		insertTime.setLaborSystemId(laborSystemId);
 		insertTime.setStartTime(attendanceTime);
 		insertTime.setEndTime(leaveTime);
 		insertTime.setCompany(userCompany);
-		
+
 		SetupService.registAttendTime(insertTime);
 
+		//もし変形労働ならば
+		if(laborSystemId == 2){
+			String strRegularTime =req.getParameter("regularTime");
+			Double regularTime = Double.parseDouble(strRegularTime);
+
+			//所定時間の登録
+			WorkingTime insertWorkingTime = new WorkingTime();
+
+			insertWorkingTime.setLaborSystemId(laborSystemId);
+			insertWorkingTime.setWorkingTime(regularTime);
+
+			SetupService.registWorkingTime(insertWorkingTime);
+		}
 		resp.sendRedirect("/kot/login");
 	}
 

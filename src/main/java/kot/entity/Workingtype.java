@@ -9,7 +9,7 @@ public class Workingtype {
 	private Integer id;
 	//種別名
 	private String workingName;
-	//労働制（フレックスの場合はfが入る）
+	//労働制
 	private Integer labor_system_id;
 	//会社コード
 	private Integer company_id;

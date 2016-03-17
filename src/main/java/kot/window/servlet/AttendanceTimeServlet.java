@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import main.java.kot.admin.setup.service.SetupService;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
+import main.java.kot.entity.WorkingTime;
 
 
 @WebServlet("/window/attendanceTime")
@@ -47,6 +48,10 @@ public class AttendanceTimeServlet extends HttpServlet {
 
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
 
+		//workingTimeを取得
+		WorkingTime workingTime = SetupService.getWorkingTime(laborSystemId);
+
+		req.setAttribute("workingTime", workingTime);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/window/attendanceTime.jsp");

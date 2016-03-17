@@ -4,8 +4,10 @@ import java.util.List;
 
 import main.java.kot.dao.AttendanceTimeDao;
 import main.java.kot.dao.CompanyDao;
+import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
+import main.java.kot.entity.WorkingTime;
 
 public class SetupService {
 
@@ -24,10 +26,22 @@ public class SetupService {
 		return AttendanceTimeDao.getAttendanceTime(id);
 	}
 
-	//attendance_timeにinsert
-	public static void registAttendTime(AttendanceTime insertTime) {
-		AttendanceTimeDao.editAttendanceTime(insertTime);
+	//working_type_idからworking_time情報取得
+	public static WorkingTime getWorkingTime(Integer id) {
+		return WorkingTimeDao.getWorkingTime(id);
 	}
+
+	//attendance_timeにinsert
+	public static void registAttendTime(AttendanceTime attendanceTime) {
+		AttendanceTimeDao.editAttendanceTime(attendanceTime);
+	}
+
+	//working_timeにinsert
+	public static void registWorkingTime(WorkingTime workingTime) {
+		WorkingTimeDao.editWorkingTime(workingTime);
+	}
+
+
 
 
 }

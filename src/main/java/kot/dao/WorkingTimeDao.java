@@ -54,4 +54,22 @@ public class WorkingTimeDao {
 			throw new RuntimeException();
 		}
 	}
+
+	//update
+	public static void editWorkingTime(WorkingTime workingTime) {
+		String sql = "UPDATE " + tableName + " SET working_time = ? WHERE labor_system_id = " + workingTime.getLaborSystemId();
+
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setDouble(1,workingTime.getWorkingTime());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
 }
