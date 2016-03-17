@@ -1,14 +1,15 @@
 package main.java.kot.logic;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import main.java.kot.common.Schedule;
 import main.java.kot.common.SelectDate;
-import main.java.kot.dao.WorkingTimeDao;
+import main.java.kot.common.TempDate;
+import main.java.kot.dao.CalculationWorkingTimeDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.Company;
@@ -20,6 +21,30 @@ import main.java.kot.util.CalendarUtil;
 public class DateLogic {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	/*当日の日付取得*/
+	public static TempDate getDate(Date date){
+
+		TempDate tempDate = new TempDate();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		tempDate.setYear(cal.get(Calendar.YEAR));
+		tempDate.setMonth(cal.get(Calendar.MONTH) + 1);
+		tempDate.setDay(cal.get(Calendar.DAY_OF_MONTH));
+		return tempDate;
+	}
+
+	/*月の日数取得*/
+	public static Integer getMaxDay(Date date){
+
+		int maxDay = 0;
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		return maxDay;
+	}
+
 
 	/* 入力した時間からhour、minutesを取得 */
 	public static String[] timeStr (String str){
@@ -234,7 +259,7 @@ public class DateLogic {
 
 		for(int i = 0;i < employeeList.size(); i++){
 			int employeeId = employeeList.get(i).getEmployeeId();
-			SelectDate tempSelectDate = WorkingTimeDao.getYearAndMonth(employeeId);
+			SelectDate tempSelectDate = CalculationWorkingTimeDao.getYearAndMonth(employeeId);
 			List<Integer> tempYearList = tempSelectDate.getYearList();
 			List<Integer> tempMonthList = tempSelectDate.getMonthList();
 			for(int j = 0; j < tempYearList.size(); j++){

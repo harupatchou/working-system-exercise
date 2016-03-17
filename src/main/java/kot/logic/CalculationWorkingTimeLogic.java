@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.kot.common.CalculationWorkingTimeTotal;
-import main.java.kot.dao.WorkingTimeDao;
+import main.java.kot.dao.CalculationWorkingTimeDao;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 
@@ -55,7 +55,7 @@ public class CalculationWorkingTimeLogic {
 		List<CalculationWorkingTimeTotal> calculationWorkingTimeTotalList = new ArrayList<>();
 		List<Employee> employeeList = company.getEmployeeList();
 		for(int i = 0; i < employeeList.size(); i++){
-			CalculationWorkingTimeTotal total = WorkingTimeDao.workingTimeTotal(employeeList.get(i).getEmployeeId(), month, year);
+			CalculationWorkingTimeTotal total = CalculationWorkingTimeDao.workingTimeTotal(employeeList.get(i).getEmployeeId(), month, year);
 			total.setEmployee(employeeList.get(i));
 			total.setWorkingtype(DataLogic.getWorkingtypeFromEmployeeId(employeeList.get(i).getEmployeeId()));
 			calculationWorkingTimeTotalList.add(total);

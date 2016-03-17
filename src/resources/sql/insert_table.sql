@@ -16,6 +16,7 @@ INSERT INTO working_type VALUES (3, 'フレックス社員', 3,1);
 /*種別時間*/
 INSERT INTO working_time VALUES (1,8.0,'0:00',1);
 INSERT INTO working_time VALUES (2,7.5,'0:00',2);
+INSERT INTO working_time VALUES (3,null,'0:00',3);
 
 /*出退勤時間*/
 INSERT INTO attendance_time VALUES (1,'9:00','18:00','0:00','0:00',1,1);

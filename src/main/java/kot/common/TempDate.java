@@ -7,13 +7,15 @@ public class TempDate {
 
 	private int year;
 	private int month;
+	private int day;
+
 
 	public TempDate() {
 	}
-	public TempDate(int year, int month) {
-		super();
+	public TempDate(int year, int month,int day) {
 		this.year = year;
 		this.month = month;
+		this.day = day;
 	}
 	public int getYear() {
 		return year;
@@ -26,6 +28,12 @@ public class TempDate {
 	}
 	public void setMonth(int month) {
 		this.month = month;
+	}
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
 	}
 
 }

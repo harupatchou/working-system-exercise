@@ -1,6 +1,5 @@
 package main.java.kot.logic;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import main.java.kot.common.CalculationWorkingTimeTotal;
@@ -8,10 +7,13 @@ import main.java.kot.common.LimitWorkingTime;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.WeeklyLegalWorkingTime;
+import main.java.kot.dao.CalculationWorkingTimeDao;
 import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingDay;
+import main.java.kot.entity.WorkingTime;
+import main.java.kot.entity.Workingtype;
 
 /**
  * 残業関連ロジッククラス
@@ -37,19 +39,11 @@ public class OvertimeLogic {
 	//月の可能残業時間算出
 	public static LimitWorkingTime getPossibleOvertime(Employee employee){
 
-
 		//現在の総労働時間
 		Date date = new Date();
-		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
+		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
 		String currentWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
 		String currentOvertimeTotal = currentCalculationWorkingTimeTotal.getStatutoryOverWorkingTimeTotal();
-
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int day = cal.get(Calendar.DAY_OF_MONTH);
-		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
 
 		//法定労働時間
 		String monthlyLegalWorkingTime = WorkingTimeLogic.getMonthlyLegalWorkingtime(date);
@@ -126,7 +120,6 @@ public class OvertimeLogic {
 		limitWorkingTime.setOvertimeMessage(possibleOvertimeMessage);
 		limitWorkingTime.setMonthlyLegalMessage(legalWorkingTimeLimitMessage);
 
-
 		return limitWorkingTime;
 	}
 
@@ -202,20 +195,21 @@ public class OvertimeLogic {
 
 
 		//日付
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(workingday.getDate());
-		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int day = DateLogic.getDate(workingday.getDate()).getDay();
 
 				/*月の残業計算 ここから*/
 
 		// TODO 特例措置企業については考慮していない
 		//現時点での今月の総労働時間
-		String currentWorkingTimeTotal;
+		String currentWorkingTimeTotal;//今日も含む
+		String untilYesterdayWorkingTimeTotal;//昨日まで
 		if(day == 1){
 			currentWorkingTimeTotal = workingTime;
+			untilYesterdayWorkingTimeTotal = "0:00";
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
 			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
+			untilYesterdayWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
 		}
 
 		//月の最大日数から月の法定労働時間をセット
@@ -237,7 +231,7 @@ public class OvertimeLogic {
 
 				/*週の残業計算 ここから*/
 
-		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int maxDay = DateLogic.getMaxDay(workingday.getDate());
 
 		int startDay = 0;
 		int endDay = day;
@@ -260,7 +254,7 @@ public class OvertimeLogic {
 		if(day == 1){
 			currentWeeklyWorkingTimeTotal = workingTime;
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWeeklyWorkingTimeTotal = WorkingTimeDao.getCurrentWeeklyWorkingTimeTotal(workingday, startDay, endDay);
+			CalculationWorkingTimeTotal currentCalculationWeeklyWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWeeklyWorkingTimeTotal(workingday, startDay, endDay);
 			currentWeeklyWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWeeklyWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
 		}
 
@@ -305,6 +299,12 @@ public class OvertimeLogic {
 			overtime.setStatutoryOvertime("0:00");
 			overtime.setNightOvertime("0:00");
 			overtime.setStatutoryNightOvertime("0:00");
+		//残業なし
+		}else{
+			overtime.setLegalOvertime("0:00");
+			overtime.setStatutoryOvertime("0:00");
+			overtime.setNightOvertime("0:00");
+			overtime.setStatutoryNightOvertime("0:00");
 		}
 
 				/*日の残業計算 ここまで*/
@@ -314,11 +314,69 @@ public class OvertimeLogic {
 
 
 	/*フレックスタイム制残業計算*/
-	public static Overtime getFlexTimeOvertime(WorkingDay workinfday){
+	public static Overtime getFlexTimeOvertime(WorkingDay workingday){
 
+		//残業情報格納用(dailyIDはDBインサート直前でセット)
+		Overtime overtime = new Overtime();
 
+		//入力日の実労働時間
+		String todayWorkingTime = getWorkingTime(workingday);
 
-		return null;
+		//日付
+		int day = DateLogic.getDate(workingday.getDate()).getDay();
+		int maxDay = DateLogic.getMaxDay(workingday.getDate());
+
+		//今月の総労働時間
+		String currentWorkingTimeTotal;//今日も含む
+		String untilYesterdayWorkingTimeTotal;//昨日まで
+		if(day == 1){
+			currentWorkingTimeTotal = todayWorkingTime;
+			untilYesterdayWorkingTimeTotal = "0:00";
+		}else{
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), todayWorkingTime);
+			untilYesterdayWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
+		}
+
+		//月の最大日数から月の法定労働時間をセット
+		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(workingday.getEmployeeId());
+		WorkingTime workingTime = WorkingTimeDao.getWorkingTime(workingtype.getId());
+		String monthlyLegalWorkingtime;
+		if(workingTime.getCarryoverTime().equals("0:00")){
+			monthlyLegalWorkingtime = WorkingTimeLogic.getMonthlyLegalWorkingtime(workingday.getDate());
+		}else{
+			monthlyLegalWorkingtime = WorkingTimeLogic.additionWorkingTimeString(WorkingTimeLogic.getMonthlyLegalWorkingtime(workingday.getDate()), workingTime.getCarryoverTime());
+		}
+
+		//残業時間をセット
+		String currentLargeWorkingTime = WorkingTimeLogic.compareWorkingTime(currentWorkingTimeTotal, monthlyLegalWorkingtime);
+		String untilYesterdayLargeWorkingTime = WorkingTimeLogic.compareWorkingTime(untilYesterdayWorkingTimeTotal, monthlyLegalWorkingtime);
+		//法定労働時間を超えていない場合
+		if(currentLargeWorkingTime.equals(monthlyLegalWorkingtime)){
+			//最終日に法定時間に達しなかった場合、翌月に持越し
+			if(day == maxDay){
+				String carryoverWorkingTime = WorkingTimeLogic.subtractionWorkingTimeString(monthlyLegalWorkingtime, currentWorkingTimeTotal);
+				WorkingTimeDao.updateCarryOverTime(workingTime.getWorkingTimeId(), carryoverWorkingTime);
+			}
+			overtime.setLegalOvertime("0:00");
+			overtime.setStatutoryOvertime("0:00");
+			overtime.setNightOvertime("0:00");
+			overtime.setStatutoryNightOvertime("0:00");
+		//昨日までの総労働時間が法定労働時間を超えていない場合
+		}else if(currentLargeWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeWorkingTime.equals(monthlyLegalWorkingtime)){
+			String statutoryOvertime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
+			overtime.setLegalOvertime("0:00");
+			overtime.setStatutoryOvertime(statutoryOvertime);
+			overtime.setNightOvertime("0:00");
+			overtime.setStatutoryNightOvertime("0:00");
+		//昨日の段階で法定労働時間を超えている場合
+		}else{
+			overtime.setLegalOvertime("0:00");
+			overtime.setStatutoryOvertime(todayWorkingTime);
+			overtime.setNightOvertime("0:00");
+			overtime.setStatutoryNightOvertime("0:00");
+		}
+		return overtime;
 	}
 
 	/* TODO 早出残業用メソッド(現在は考慮しないで良い) */
