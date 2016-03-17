@@ -1,4 +1,4 @@
-package main.java.kot.admin.setup.servlet;
+package main.java.kot.window.servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,8 +16,9 @@ import main.java.kot.admin.setup.service.SetupService;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 
-@WebServlet("/master/CompanyEdit")
-public class CompanyEditServlet extends HttpServlet{
+
+@WebServlet("/window/attendanceTime")
+public class AttendanceTimeServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -25,22 +26,23 @@ public class CompanyEditServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+
 		//セッション情報取得
 		HttpSession session=req.getSession();
 		Company userCompany = (Company) session.getAttribute("sesCompany");
 
-		req.setAttribute("userCompany", userCompany);
-
 		//勤怠時間関連取得
 		List<AttendanceTime> attendanceTimeList = SetupService.getAttendanceTime(userCompany.getId());
+
+		String aa = req.getParameter("laborSystemId");
+
+		Integer laborSystemId = Integer.parseInt(aa);
 
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
-
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/window/attendanceTime.jsp");
 		rd.forward(req, resp);
-
 	}
 
 	@Override
@@ -49,23 +51,13 @@ public class CompanyEditServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+
 		//セッション情報取得
 		HttpSession session=req.getSession();
-		Company userCompany = (Company) session.getAttribute("sesCompany");
 
-		Company company = new Company();
-
-		String stringCompanyId =req.getParameter("companyId");
-		Integer companyId = Integer.parseInt(stringCompanyId);
-
-		String companyName  =req.getParameter("companyName");
-
-		company.setId(companyId);
-		company.setCompanyName(companyName);
-
-		SetupService.registCompany(company,userCompany);
-
-		resp.sendRedirect("/kot/login");
+		ServletContext application = req.getServletContext();
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/setup/passwordEdit.jsp");
+		rd.forward(req, resp);
 	}
 
 }

@@ -1,6 +1,6 @@
 package main.java.kot.entity;
 /**
- * 従業員種別情報
+ * 勤怠時間等情報
  * @author kuro
  **/
 public class AttendanceTime {
@@ -8,15 +8,17 @@ public class AttendanceTime {
 	//ID
 	private Integer id;
 	//出勤時間
-	private String start_time;
+	private String startTime;
 	//退勤時間
-	private String end_time;
+	private String endTime;
 	//コアタイム開始時間
-	private String core_time_strat;
+	private String coreTimeStrat;
 	//コアタイム終了時間
-	private String core_time_end;
+	private String coreTimeEnd;
 	//従業員種別コード
-	private Integer workingtype_id;
+	private Integer laborSystemId;
+	//従業員種別
+	private LaborSystem laborSystem;
 
 	public Integer getId() {
 		return id;
@@ -27,47 +29,55 @@ public class AttendanceTime {
 	}
 
 
-	public String getStart_time() {
-		return start_time;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
-	public String getEnd_time() {
-		return end_time;
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setEnd_time(String end_time) {
-		this.end_time = end_time;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
-	public String getCore_time_strat() {
-		return core_time_strat;
+	public String getCoreTimeStrat() {
+		return coreTimeStrat;
 	}
 
-	public void setCore_time_strat(String core_time_strat) {
-		this.core_time_strat = core_time_strat;
+	public void setCoreTimeStrat(String coreTimeStrat) {
+		this.coreTimeStrat = coreTimeStrat;
 	}
 
-	public String getCore_time_end() {
-		return core_time_end;
+	public String getCoreTimeEnd() {
+		return coreTimeEnd;
 	}
 
-	public void setCore_time_end(String core_time_end) {
-		this.core_time_end = core_time_end;
+	public void setCoreTimeEnd(String coreTimeEnd) {
+		this.coreTimeEnd = coreTimeEnd;
 	}
 
-	public Integer getWorkingtype_id() {
-		return workingtype_id;
+	public Integer getLaborSystemId() {
+		return laborSystemId;
 	}
 
-	public void setWorkingtype_id(Integer workingtype_id) {
-		this.workingtype_id = workingtype_id;
+	public void setLaborSystemId(Integer workingtypeId) {
+		this.laborSystemId = workingtypeId;
 	}
 
 	public AttendanceTime(){
+	}
+
+	public LaborSystem getLaborSystem() {
+		return laborSystem;
+	}
+
+	public void setLaborSystem(LaborSystem laborSystem) {
+		this.laborSystem = laborSystem;
 	}
 
 }

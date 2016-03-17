@@ -53,10 +53,10 @@ CREATE TABLE attendance_time
   end_time text NOT NULL,
   core_time_start text,
   core_time_end text,
-  working_type_id integer NOT NULL,
+  labor_system_id integer NOT NULL,
   company_id integer NOT NULL,
   CONSTRAINT attendance_time_pkc PRIMARY KEY (id),
-  FOREIGN KEY (working_type_id) REFERENCES working_type(id) ON UPDATE CASCADE,
+  FOREIGN KEY (labor_system_id) REFERENCES labor_system(id) ON UPDATE CASCADE,
   FOREIGN KEY (company_id) REFERENCES company(id) ON UPDATE CASCADE
 );
 

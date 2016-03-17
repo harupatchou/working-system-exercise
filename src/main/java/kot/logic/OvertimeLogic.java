@@ -61,7 +61,7 @@ public class OvertimeLogic {
 		}
 
 		//対象従業員種別の終業時刻
-		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
+		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEndTime();
 		TempTime startOvertime = WorkingTimeLogic.getTimeInt(workingtypeEndtime);
 
 		//退勤時刻
@@ -92,7 +92,7 @@ public class OvertimeLogic {
 		String workingTime = getWorkingTime(workingday);
 
 		//対象従業員種別の終業時刻
-		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEnd_time();
+		String workingtypeEndtime = DataLogic.getAttendanceTimeFromEmployeeId(workingday.getEmployeeId()).getEndTime();
 		TempTime startOvertime = WorkingTimeLogic.getTimeInt(workingtypeEndtime);
 
 		//退勤時刻

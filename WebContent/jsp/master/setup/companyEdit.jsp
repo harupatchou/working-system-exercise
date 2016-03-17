@@ -26,15 +26,14 @@
         <h2>勤怠情報</h2>
         <ul>
           <li>
-            <label>出社時間：</label>
+            <label>勤務時間編集：</label>
             <div>
-              <input type="text" name="attendanceTime">
-            </div>
-          </li>
-          <li>
-            <label>退社時間：</label>
-            <div>
-              <input type="text" name="leaveTime">
+              <select name="laborSystemId">
+                <c:forEach items="${attendanceTimeList}" var="attend">
+                  <option value="${attend.laborSystemId}">${attend.laborSystem.laborSystemName}</option>
+                </c:forEach>
+              </select>
+              <input type="button" value="編集" onClick="return openWin('/kot/window/attendanceTime')">
             </div>
           </li>
         </ul>

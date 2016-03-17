@@ -3,6 +3,17 @@ $(document).ready(function(){
   $(".insert_button").prop("disabled",true)
 });
 
+//小窓
+var w = window;
+function openWin(url) {
+	if ((w == window) || w.closed) {
+		w = open(url, "_blank", "width=1200,height=600");
+	} else {
+		w.focus();
+	}
+	return(false);
+}
+
 /** 従業員登録 */
 $(function(){
   /* フォーカス */
@@ -68,6 +79,4 @@ $(function(){
   $(document).on("click",".insert_button",function(){
 
   });
-
-
 });
