@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import main.java.kot.common.LimitWorkingTime;
 import main.java.kot.entity.Employee;
 import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.OvertimeLogic;
@@ -30,9 +31,9 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		int loginId = (Integer) session.getAttribute("loginId");
 
 		Employee employee = DataLogic.getEmployee(loginId);
-		String overtimeMessage = OvertimeLogic.getPossibleOvertime(employee);
+		LimitWorkingTime limitWorkingtime = OvertimeLogic.getPossibleOvertime(employee);
 
-		req.setAttribute("overtimeMessage", overtimeMessage);
+		req.setAttribute("limitWorkingtime", limitWorkingtime);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");

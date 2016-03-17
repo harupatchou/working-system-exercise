@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import main.java.kot.common.CalculationWorkingTimeTotal;
+import main.java.kot.common.LimitWorkingTime;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.WeeklyLegalWorkingTime;
@@ -33,13 +34,15 @@ public class OvertimeLogic {
 		return attendDay;
 	}
 
-	//可能残業時間算出
-	public static String getPossibleOvertime(Employee employee){
+	//月の可能残業時間算出
+	public static LimitWorkingTime getPossibleOvertime(Employee employee){
+
 
 		//現在の総労働時間
 		Date date = new Date();
 		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
 		String currentWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
+		String currentOvertimeTotal = currentCalculationWorkingTimeTotal.getStatutoryOverWorkingTimeTotal();
 
 
 		Calendar cal = Calendar.getInstance();
@@ -47,32 +50,55 @@ public class OvertimeLogic {
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-		//月の法定労働時間
+
+		//法定労働時間
 		String monthlyLegalWorkingTime = WorkingTimeLogic.getMonthlyLegalWorkingtime(date);
 
-		//日の労働時間
-		String workingTime = WorkingTimeLogic.getStandardsWorkingTimeFromWorkingtype(employee.getWorkingTypeId());
+		TempTime tempMonthlyLegalWorkingTime = WorkingTimeLogic.getTimeInt(monthlyLegalWorkingTime);
+		String monthlyLegalWorkingTimeMessage = tempMonthlyLegalWorkingTime.getHour() + "時間" + tempMonthlyLegalWorkingTime.getMinute() + "分";
 
-		//
-		String considersLabor = "";
-		for(int i = 0;i <= maxDay -day;i++){
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			if(cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 7){
-				if(considersLabor.equals("")){
-					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, currentWorkingTimeTotal);
-				}else{
-					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, considersLabor);
-				}
-			}
+		//法定労働時間までの残り時間算出
+		String legalWorkingTimeLimitMessage = "";
+		TempTime tempLegalWorkingTimeLimit = new TempTime();
+		String largeLegalWorkingTime = WorkingTimeLogic.compareWorkingTime(monthlyLegalWorkingTime, currentWorkingTimeTotal);
+		if(largeLegalWorkingTime.equals(monthlyLegalWorkingTime)){
+			tempLegalWorkingTimeLimit = WorkingTimeLogic.subtractionWorkingTimeTempTime(monthlyLegalWorkingTime, currentWorkingTimeTotal);
+		}else{
+			tempLegalWorkingTimeLimit = null;
 		}
 
-		//可能残業時間算出
-		String possibleOvertime = "";
-		TempTime tempPossibleOvertime = new TempTime();
-		String largeWorkingTime = WorkingTimeLogic.compareWorkingTime(monthlyLegalWorkingTime, considersLabor);
+		if(tempLegalWorkingTimeLimit != null){
 
-		if(largeWorkingTime.equals(monthlyLegalWorkingTime)){
-			tempPossibleOvertime = WorkingTimeLogic.subtractionWorkingTimeTempTime(monthlyLegalWorkingTime, considersLabor);
+			String tempHour = String.valueOf(tempLegalWorkingTimeLimit.getHour());
+			String tempMinute = "";
+
+			if(tempLegalWorkingTimeLimit.getMinute() < 10){
+				tempMinute = "0" + String.valueOf(tempLegalWorkingTimeLimit.getMinute());
+			}else{
+				tempMinute = String.valueOf(tempLegalWorkingTimeLimit.getMinute());
+			}
+
+			legalWorkingTimeLimitMessage = tempHour + "時間" + tempMinute + "分";
+		}else{
+			legalWorkingTimeLimitMessage = "法定労働時間を超えています";
+		}
+
+		//労働上限時間
+		String monthlyUpperLimitTime = UpperLimitTimeLogic.getUpperLimitTime(date);
+		TempTime tempMonthlyUpperLimitTime =  WorkingTimeLogic.getTimeInt(monthlyUpperLimitTime);
+		String monthlyUpperLimitTimeMessage = tempMonthlyUpperLimitTime.getHour() + "時間" + tempMonthlyUpperLimitTime.getMinute() + "分";
+
+
+		//残業上限時間
+		String overtimeLimit = WorkingTimeLogic.subtractionWorkingTimeString(monthlyUpperLimitTime, monthlyLegalWorkingTime);
+
+		//可能残業時間算出
+		String possibleOvertimeMessage = "";
+		TempTime tempPossibleOvertime = new TempTime();
+		String largeWorkingTime = WorkingTimeLogic.compareWorkingTime(overtimeLimit, currentOvertimeTotal);
+
+		if(largeWorkingTime.equals(overtimeLimit)){
+			tempPossibleOvertime = WorkingTimeLogic.subtractionWorkingTimeTempTime(overtimeLimit, currentOvertimeTotal);
 		}else{
 			tempPossibleOvertime = null;
 		}
@@ -88,12 +114,20 @@ public class OvertimeLogic {
 				tempMinute = String.valueOf(tempPossibleOvertime.getMinute());
 			}
 
-			possibleOvertime = "今月の残業可能時間は" + tempHour + "時間" + tempMinute + "分です";
+			possibleOvertimeMessage = tempHour + "時間" + tempMinute + "分";
 		}else{
-			possibleOvertime = "今月は残業時間の上限に達しています。これ以上は残業できません。";
+			possibleOvertimeMessage = "残業時間の上限に達しています。これ以上は残業できません。";
 		}
 
-		return possibleOvertime;
+		//労働情報格納用
+		LimitWorkingTime limitWorkingTime = new LimitWorkingTime();
+		limitWorkingTime.setUpperLimitTime(monthlyUpperLimitTimeMessage);
+		limitWorkingTime.setMonthlyLegalWorkingTime(monthlyLegalWorkingTimeMessage);
+		limitWorkingTime.setOvertimeMessage(possibleOvertimeMessage);
+		limitWorkingTime.setMonthlyLegalMessage(legalWorkingTimeLimitMessage);
+
+
+		return limitWorkingTime;
 	}
 
 
@@ -289,6 +323,30 @@ public class OvertimeLogic {
 
 	/* TODO 早出残業用メソッド(現在は考慮しないで良い) */
 	public static String getEarlyAttendanceOvertime(){
+		return null;
+	}
+
+	/* TODO みなし労働時間制用メソッド*/
+	public static String discretionaryWorkingHourSystemOvertime(){
+		/*
+		//現在まで総労働時間にみなし労働時間を加算
+
+
+		//労働時間
+		String workingTime = WorkingTimeLogic.getStandardsWorkingTimeFromWorkingtype(employee.getWorkingTypeId());
+
+		String considersLabor = "";
+		for(int i = 0;i <= maxDay -day;i++){
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			int week = cal.get(Calendar.DAY_OF_WEEK);
+			if(cal.get(Calendar.DAY_OF_WEEK) != 1 && cal.get(Calendar.DAY_OF_WEEK) != 7){
+				if(considersLabor.equals("")){
+					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, currentWorkingTimeTotal);
+				}else{
+					considersLabor = WorkingTimeLogic.additionWorkingTimeString(workingTime, considersLabor);
+				}
+			}
+		}*/
 		return null;
 	}
 }
