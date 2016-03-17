@@ -6,7 +6,7 @@ import java.util.Date;
 import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.UpperLimitTime;
-import main.java.kot.dao.WorkingTimeDao;
+import main.java.kot.dao.CalculationWorkingTimeDao;
 import main.java.kot.entity.WorkingDay;
 
 /**
@@ -53,7 +53,7 @@ public class UpperLimitTimeLogic{
 		if(day == 1){
 			currentWorkingTimeTotal = workingTime;
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
 			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
 		}
 

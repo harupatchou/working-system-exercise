@@ -48,7 +48,9 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		String stringMonth = req.getParameter("month");
 		Integer month = Integer.parseInt(stringMonth);
 
-		TempDate date = new TempDate(year,month);
+		TempDate date = new TempDate();
+		date.setYear(year);
+		date.setMonth(month);
 		//企業に所属する各従業員の対象月の労働時間
 		List<CalculationWorkingTimeTotal> CalculationWorkingTimeTotalList = CalculationWorkingTimeLogic.getCompanyCalculationWorkingTimeTotal(company, year, month);
 

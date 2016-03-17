@@ -200,7 +200,7 @@ public class AttendanceServlet extends HttpServlet{
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
 		// TODO フレックス用
 		}else if(workingType.getId() == 3){
-			/*ここに実装*/
+			overtime = OvertimeLogic.getFlexTimeOvertime(workingDay);
 		}
 
 		//working_all Tableにinsert
