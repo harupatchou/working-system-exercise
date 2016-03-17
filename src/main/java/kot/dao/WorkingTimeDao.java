@@ -13,8 +13,8 @@ public class WorkingTimeDao {
 	private static String tableName = "working_time";
 
 	/*従業員種別IDから労働時間情報取得*/
-	public static WorkingTime getWorkingTime(Integer workingTypeId){
-		String sql = "SELECT * FROM " + tableName + " WHERE working_type_id = " + workingTypeId;
+	public static WorkingTime getWorkingTime(Integer laborSystemId){
+		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId;
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
@@ -24,7 +24,7 @@ public class WorkingTimeDao {
 				workingTime.setWorkingTimeId(rs.getInt("id"));
 				workingTime.setWorkingTime(rs.getDouble("working_time"));
 				workingTime.setCarryoverTime(rs.getString("carryover_time"));
-				workingTime.setWorkingtypeId(rs.getInt("working_type_id"));
+				workingTime.setLaborSystemId(rs.getInt("labor_system_id"));
 			}
 			return workingTime;
 

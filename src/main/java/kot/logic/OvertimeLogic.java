@@ -340,7 +340,8 @@ public class OvertimeLogic {
 
 		//月の最大日数から月の法定労働時間をセット
 		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(workingday.getEmployeeId());
-		WorkingTime workingTime = WorkingTimeDao.getWorkingTime(workingtype.getId());
+		WorkingTime workingTime = WorkingTimeDao.getWorkingTime(workingtype.getLaborSystemId());
+
 		String monthlyLegalWorkingtime;
 		if(workingTime.getCarryoverTime().equals("0:00")){
 			monthlyLegalWorkingtime = WorkingTimeLogic.getMonthlyLegalWorkingtime(workingday.getDate());
