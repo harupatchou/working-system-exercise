@@ -4,17 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../js/setup/window.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-<label>勤怠時間編集：</label>
+<h1>勤務時間編集</h1>
 <div>
-  <input type="text" name="attendanceTime">
+<label>出勤時間：</label>
+  <input type="text" id="startTime" name="attendanceTime" value="${startTime}">
 </div>
+<div>
 <label>退社時間：</label>
-<div>
-  <input type="text" name="leaveTime">
+  <input type="text" id="endTime" name="leaveTime" value="${endTime}">
 </div>
-
+<input type="button" value="保存" onclick="closeWindow()">
 </body>
 </html>

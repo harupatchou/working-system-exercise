@@ -19,6 +19,8 @@ public class AttendanceTime {
 	private Integer laborSystemId;
 	//従業員種別
 	private LaborSystem laborSystem;
+	//カンパニー
+	private Company company;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +80,14 @@ public class AttendanceTime {
 
 	public void setLaborSystem(LaborSystem laborSystem) {
 		this.laborSystem = laborSystem;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 }

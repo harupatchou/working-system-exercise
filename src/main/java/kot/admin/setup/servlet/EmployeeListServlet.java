@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Employee;
 
-@WebServlet("/master/EmployeeEdit")
-public class EmployeeEditServlet extends HttpServlet{
+@WebServlet("/master/EmployeeList")
+public class EmployeeListServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

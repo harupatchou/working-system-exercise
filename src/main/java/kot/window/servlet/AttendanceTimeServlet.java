@@ -34,11 +34,19 @@ public class AttendanceTimeServlet extends HttpServlet {
 		//勤怠時間関連取得
 		List<AttendanceTime> attendanceTimeList = SetupService.getAttendanceTime(userCompany.getId());
 
-		String aa = req.getParameter("laborSystemId");
+		Integer laborSystemId = Integer.parseInt(req.getParameter("laborSystemId"));
 
-		Integer laborSystemId = Integer.parseInt(aa);
+		//通常の場合、出勤時間と退勤時間を編集する画面
+		if(laborSystemId == 1 || laborSystemId == 2){
+			String startTime = attendanceTimeList.get(laborSystemId-1).getStartTime();
+			String endTime = attendanceTimeList.get(laborSystemId-1).getEndTime();
+
+			req.setAttribute("startTime", startTime);
+			req.setAttribute("endTime", endTime);
+		}
 
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
+
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/window/attendanceTime.jsp");

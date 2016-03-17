@@ -36,6 +36,16 @@ public class CompanyEditServlet extends HttpServlet{
 
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
 
+		//変形労働があるかどうか判別
+		Integer count = 0;
+		for(int i=0;i<attendanceTimeList.size();i++){
+			if(attendanceTimeList.get(i).getLaborSystemId() == 2){
+				count += 1;
+			}
+		}
+
+		req.setAttribute("count", count);
+
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
 
@@ -63,7 +73,23 @@ public class CompanyEditServlet extends HttpServlet{
 		company.setId(companyId);
 		company.setCompanyName(companyName);
 
+		//companyの登録
 		SetupService.registCompany(company,userCompany);
+
+		String strLaborSystemId =req.getParameter("laborSystemId");
+		Integer laborSystemId = Integer.parseInt(strLaborSystemId);
+
+		String attendanceTime  =req.getParameter("attendanceTime");
+		String leaveTime =req.getParameter("leaveTime");
+
+		AttendanceTime insertTime = new AttendanceTime();
+
+		insertTime.setLaborSystemId(laborSystemId);
+		insertTime.setStartTime(attendanceTime);
+		insertTime.setEndTime(leaveTime);
+		insertTime.setCompany(userCompany);
+		
+		SetupService.registAttendTime(insertTime);
 
 		resp.sendRedirect("/kot/login");
 	}

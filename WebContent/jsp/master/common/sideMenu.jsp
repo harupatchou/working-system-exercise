@@ -4,13 +4,13 @@
   <div>
     <ul>
       <li>
-        <input type="submit" value="従業員一覧" class="sideButton" id="EmployeeEdit">
+        <input type="submit" value="従業員一覧" class="sideButton" id="EmployeeList">
+      </li>
+      <li>
+        <input type="submit" value="従業員種別一覧" class="sideButton" id="WorkingtypeList">
       </li>
       <li>
         <input type="submit" value="会社情報編集" class="sideButton" id="CompanyEdit">
-      </li>
-      <li>
-        <input type="submit" value="従業員種別情報編集" class="sideButton" id="WorkingtypeEdit">
       </li>
     </ul>
   </div>

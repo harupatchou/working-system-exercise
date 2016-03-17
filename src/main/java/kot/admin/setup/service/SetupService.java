@@ -24,5 +24,10 @@ public class SetupService {
 		return AttendanceTimeDao.getAttendanceTime(id);
 	}
 
+	//attendance_timeにinsert
+	public static void registAttendTime(AttendanceTime insertTime) {
+		AttendanceTimeDao.editAttendanceTime(insertTime);
+	}
+
 
 }

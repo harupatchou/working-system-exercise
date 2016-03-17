@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.Workingtype;
 
-@WebServlet("/master/WorkingtypeEdit")
-public class WorkingtypeEditServlet extends HttpServlet{
+@WebServlet("/master/WorkingtypeList")
+public class WorkingtypeListServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +24,7 @@ public class WorkingtypeEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/workingtypeEdit.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/working_type/workingTypeList.jsp");
 
 		rd.forward(req, resp);
 

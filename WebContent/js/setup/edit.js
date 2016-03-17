@@ -1,19 +1,3 @@
-
-$(document).ready(function(){
-  $(".insert_button").prop("disabled",true)
-});
-
-//小窓
-var w = window;
-function openWin(url) {
-	if ((w == window) || w.closed) {
-		w = open(url, "_blank", "width=1200,height=600");
-	} else {
-		w.focus();
-	}
-	return(false);
-}
-
 /** 従業員登録 */
 $(function(){
   /* フォーカス */
@@ -76,7 +60,16 @@ $(function(){
     }
   });
 
-  $(document).on("click",".insert_button",function(){
+  //セレクト変更時、表示する内容を変更する
+  $(function(){
+  	$(document).on("change","#laborSystem",function(){
+  		var selectNum = $(this).val();
 
-  });
+  		var strStartTime = $("#selectStart_"+selectNum).val();
+  		var strEndTime = $("#selectEnd_"+selectNum).val();
+
+  		$("#startTime").text(strStartTime);
+  		$("#endTime").text(strEndTime);
+  	});
+  })
 });

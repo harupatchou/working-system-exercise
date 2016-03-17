@@ -43,7 +43,8 @@ public class AttendanceTimeDao {
 
 	/*カンパニーIDから労働時間を取得*/
 	public static List<AttendanceTime> getAttendanceTime(Integer id) {
-		String sql = "SELECT at.*,ls.* FROM attendance_time at INNER JOIN labor_system ls ON at.labor_system_id = ls.id WHERE at.company_id = " + id;
+		String sql = "SELECT at.*,ls.* FROM attendance_time at INNER JOIN labor_system ls ON at.labor_system_id = ls.id "
+				+ "WHERE at.company_id = " + id + " ORDER BY at.labor_system_id";
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
@@ -73,6 +74,26 @@ public class AttendanceTimeDao {
 		}catch(SQLException e){
 			System.err.println("SQL = " + sql);
 			throw new RuntimeException("処理に失敗しました", e);
+		}
+	}
+
+	//update
+	public static void editAttendanceTime(AttendanceTime insertTime) {
+		String sql = "UPDATE " + tableName + " SET start_time = ?,end_time = ? "
+				+ "WHERE labor_system_id = " + insertTime.getLaborSystemId() +" AND company_id = " + insertTime.getCompany().getId();
+
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, insertTime.getStartTime());
+			pstmt.setString(2, insertTime.getEndTime());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
 		}
 	}
 
