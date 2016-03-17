@@ -10,25 +10,25 @@
        <li>
          <label>法定労働時間：</label>
          <div>
-           <p>${limitWorkingtime.monthlyLegalWorkingTime}</p>
+           ${limitWorkingtime.monthlyLegalWorkingTime}
          </div>
        </li>
        <li>
          <label>労働上限時間：</label>
          <div>
-           <p>${limitWorkingtime.upperLimitTime}<p>
+           ${limitWorkingtime.upperLimitTime}
          </div>
        </li>
        <li>
          <label>法定労働時間までの残時間：</label>
          <div>
-           <p><p>${limitWorkingtime.monthlyLegalMessage}</p></p>
+           ${limitWorkingtime.monthlyLegalMessage}
          </div>
        </li>
        <li>
          <label>残業可能時間：</label>
          <div>
-           <p>${limitWorkingtime.overtimeMessage}</p>
+           ${limitWorkingtime.overtimeMessage}
          </div>
        </li>
      </ul>
