@@ -32,7 +32,6 @@ import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GeneralLogic;
 import main.java.kot.logic.OvertimeLogic;
-import main.java.kot.logic.UpperLimitTimeLogic;
 import main.java.kot.util.CalendarUtil;
 
 @WebServlet("/employee/Attendance")
@@ -194,10 +193,6 @@ public class AttendanceServlet extends HttpServlet{
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
-		//労働上限時間チェック
-		String alertMessage = UpperLimitTimeLogic.decisionLimitTime(workingDay);
-		req.setAttribute("alertMessage",alertMessage);
 
 		AttendanceServise.insertWorkingDay(workingDay);
 

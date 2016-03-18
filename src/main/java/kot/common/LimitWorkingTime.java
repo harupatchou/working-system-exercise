@@ -14,17 +14,21 @@ public class LimitWorkingTime {
 	private String overtimeMessage;
 	/*法定労働時間メッセージ*/
 	private String monthlyLegalMessage;
+	/*警告メッセージ*/
+	private String workingLimitMessage;
 
 	public LimitWorkingTime() {
 	}
 
 	public LimitWorkingTime(String upperLimitTime,
 			String monthlyLegalWorkingTime, String overtimeMessage,
-			String monthlyLegalMessage) {
+			String monthlyLegalMessage,
+			String workingLimitMessage) {
 		this.upperLimitTime = upperLimitTime;
 		this.monthlyLegalWorkingTime = monthlyLegalWorkingTime;
 		this.overtimeMessage = overtimeMessage;
 		this.monthlyLegalMessage = monthlyLegalMessage;
+		this.workingLimitMessage = workingLimitMessage;
 	}
 
 	public String getUpperLimitTime() {
@@ -51,5 +55,12 @@ public class LimitWorkingTime {
 	public void setMonthlyLegalMessage(String monthlyLegalMessage) {
 		this.monthlyLegalMessage = monthlyLegalMessage;
 	}
+	public String getWorkingLimitMessage() {
+		return workingLimitMessage;
+	}
+	public void setWorkingLimitMessage(String workingLimitMessage) {
+		this.workingLimitMessage = workingLimitMessage;
+	}
+
 
 }

@@ -5,6 +5,7 @@
 <%--ここから下にコンテンツを挿入 --%>
 
     <h4 class="subTitle">月次労働時間</h4>
+   <span class="warnA">${limitWorkingtime.workingLimitMessage}</span>
     <div class="patternA">
      <ul>
        <li>
