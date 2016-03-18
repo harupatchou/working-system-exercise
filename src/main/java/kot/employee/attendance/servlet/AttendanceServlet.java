@@ -32,6 +32,7 @@ import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GeneralLogic;
 import main.java.kot.logic.OvertimeLogic;
+import main.java.kot.logic.UpperLimitTimeLogic;
 import main.java.kot.util.CalendarUtil;
 
 @WebServlet("/employee/Attendance")
@@ -194,20 +195,21 @@ public class AttendanceServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 
-		//String alertMessage = UpperLimitTimeLogic.decisionLimitTime(workingDay);
-		//req.setAttribute("alertMessage",alertMessage);
+		//労働上限時間チェック
+		String alertMessage = UpperLimitTimeLogic.decisionLimitTime(workingDay);
+		req.setAttribute("alertMessage",alertMessage);
 
 		AttendanceServise.insertWorkingDay(workingDay);
 
 		//一日の残業時間算出
 		Overtime overtime = new Overtime();
 		Workingtype workingType = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
-		if(workingType.getId() == 1){
+		if(workingType.getLaborSystemId() == 1){
 			overtime = OvertimeLogic.getOvertime(workingDay);
-		}else if(workingType.getId() == 2){
+		}else if(workingType.getLaborSystemId() == 2){
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
-		// TODO フレックス用
-		}else if(workingType.getId() == 3){
+		//フレックス用
+		}else if(workingType.getLaborSystemId() == 3){
 			overtime = OvertimeLogic.getFlexTimeOvertime(workingDay);
 		}
 
