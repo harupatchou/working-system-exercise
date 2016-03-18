@@ -4,6 +4,9 @@
 <c:import url="/jsp/employee/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
+
+	<p>${alertMessage}</p>
+
     <h2 class="subTitle">月次勤怠</h2>
     <!-- TODO 後ほど修正 -->
     <p class="emp_info">従業員名：${userName}</p>
