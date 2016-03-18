@@ -9,6 +9,7 @@ import java.util.List;
 
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.LaborSystem;
 
 public class AttendanceTimeDao {
@@ -16,8 +17,8 @@ public class AttendanceTimeDao {
 	private static String tableName = "attendance_time";
 
 	/*従業員種別IDから種別ごとの労働時間を取得*/
-	public static AttendanceTime getAttendanceTimeFromWrokingtypeId(Integer labor_system_id){
-		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + labor_system_id;
+	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee ,Integer labor_system_id){
+		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + labor_system_id + " AND company_id = " + employee.getCompanyId();
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
