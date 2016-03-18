@@ -59,4 +59,9 @@ public class AttendanceServise {
 		return AttendanceStatusDao.selectAttendStatusAll();
 	}
 
+	//attendance_time内の情報取得
+	public static void selectAttendTime() {
+	}
+
+
 }

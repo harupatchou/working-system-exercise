@@ -10,6 +10,7 @@ import java.util.List;
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
+import main.java.kot.entity.Workingtype;
 
 public class EmployeeDao {
 
@@ -30,6 +31,41 @@ public class EmployeeDao {
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
 				employee.setWorkingTypeId(rs.getInt("working_type_id"));
+			}
+			return employee;
+
+		}catch(SQLException e){
+			System.err.println("SQL = " + sql);
+			throw new RuntimeException("処理に失敗しました", e);
+		}
+	}
+
+	/*従業員IDから取得したIDでCompanyとWorkingType取得*/
+	public static Employee getEmployeeWithCompany(Integer employeeId){
+		String sql = "SELECT emp.*,com.*,work.* FROM employee emp INNER JOIN company com ON emp.company_id = com.id "
+				+ "INNER JOIN working_type work ON emp.working_type_id = work.id  WHERE emp.id = "+ employeeId;
+		try(Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();){
+
+			Employee employee = new Employee();
+			while(rs.next()){
+				employee.setEmployeeId(rs.getInt("id"));
+				employee.setFirstName(rs.getString("first_name"));
+				employee.setLastName(rs.getString("last_name"));
+				employee.setPassword(rs.getString("password"));
+				employee.setCompanyId(rs.getInt("company_id"));
+				employee.setWorkingTypeId(rs.getInt("working_type_id"));
+
+				Company tempCom = new Company();
+				tempCom.setCompanyName(rs.getString("company_name"));
+				employee.setCompany(tempCom);
+
+				Workingtype tempWork = new Workingtype();
+				tempWork.setLaborSystemId(rs.getInt("labor_system_id"));
+				tempWork.setWorkingName(rs.getString("working_name"));
+				employee.setWorkingType(tempWork);
+
 			}
 			return employee;
 

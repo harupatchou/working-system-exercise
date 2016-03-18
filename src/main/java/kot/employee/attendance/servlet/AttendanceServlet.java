@@ -22,6 +22,8 @@ import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.employee.attendance.service.OvertimeService;
 import main.java.kot.entity.AttendanceStatus;
+import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
@@ -44,6 +46,7 @@ public class AttendanceServlet extends HttpServlet{
 		//セッション情報の取得
 		HttpSession session=req.getSession();
 		Integer userId = (Integer) session.getAttribute("loginId");
+		Employee userInfo = (Employee) session.getAttribute("sesEmployee");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -76,6 +79,12 @@ public class AttendanceServlet extends HttpServlet{
 		req.setAttribute("selectDay", selectDay);
 		req.setAttribute("workingDay", workingDay);
 		req.setAttribute("attendanceStatus", attendanceStatus);
+
+		//従業員の種別を取得
+
+		//従業員の出社時間と退社時間を算出
+		AttendanceTime attendanceTime = null;
+
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");

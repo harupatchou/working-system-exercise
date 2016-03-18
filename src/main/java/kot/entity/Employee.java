@@ -21,6 +21,8 @@ public class Employee {
 	private Integer workingTypeId;
 	//company情報
 	private Company company;
+	//従業員種別
+	private Workingtype workingType;
 
 	public Employee(Integer employeeId, String firstName, String lastName,String password,String newPassword,Integer companyId){
 		this.employeeId = employeeId;
@@ -94,6 +96,14 @@ public class Employee {
 	}
 
 	public Employee(){
+	}
+
+	public Workingtype getWorkingType() {
+		return workingType;
+	}
+
+	public void setWorkingType(Workingtype workingType) {
+		this.workingType = workingType;
 	}
 
 }
