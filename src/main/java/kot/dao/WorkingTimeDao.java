@@ -12,7 +12,7 @@ public class WorkingTimeDao {
 
 	private static String tableName = "working_time";
 
-	/*従業員種別IDから労働時間情報取得*/
+	/*労働制IDから労働時間情報取得*/
 	public static WorkingTime getWorkingTime(Integer laborSystemId){
 		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId;
 		try(Connection con = DBManager.createConnection();

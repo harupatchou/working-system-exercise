@@ -298,7 +298,8 @@ public class OvertimeLogic {
 				/*日の残業計算 ここから*/
 
 		//法定労働時間と所定労働時間の差
-		double timeLag = ConstantWorkingTime.WORKINGTIME - ConstantWorkingTime.IRREGULARWORKINGTIME;
+		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(workingday.getEmployeeId());
+		double timeLag = ConstantWorkingTime.WORKINGTIME - WorkingTimeDao.getWorkingTime(workingtype.getLaborSystemId()).getWorkingTime();
 		String timeLagStr = WorkingTimeLogic.getTimeDoubleToString(timeLag);
 
 		//法定内残業・法定外残業セット

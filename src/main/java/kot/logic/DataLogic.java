@@ -23,8 +23,8 @@ public class DataLogic {
 	}
 	/*従業員IDから対応従業員種別の勤務時間を取得*/
 	public static AttendanceTime getAttendanceTimeFromEmployeeId(Integer employeeId){
-		int workingtypeId = getWorkingtypeFromEmployeeId(employeeId).getId();
-		return getAttendanceTimeFromWorkingtypeId(workingtypeId);
+		Employee employee = getEmployee(employeeId);
+		return getAttendanceTimeFromLaborSystemId(employee);
 	}
 	/*会社IDから会社情報を取得*/
 	public static Company getCompany(Integer companyId){
@@ -37,7 +37,8 @@ public class DataLogic {
 	}
 
 	/*従業員種別IDから従業員種別の勤務情報を取得*/
-	public static AttendanceTime getAttendanceTimeFromWorkingtypeId(Integer workingtypeId){
-		return AttendanceTimeDao.getAttendanceTimeFromWrokingtypeId(workingtypeId);
+	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee){
+		Workingtype workingtype = getWorkingtypeFromEmployeeId(employee.getEmployeeId());
+		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee,workingtype.getLaborSystemId());
 	}
 }
