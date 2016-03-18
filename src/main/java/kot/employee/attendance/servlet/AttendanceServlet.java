@@ -146,17 +146,25 @@ public class AttendanceServlet extends HttpServlet{
 		String startTime =req.getParameter("startTime");
 		String endTime =req.getParameter("endTime");
 
-		//00:00形式を0:00形式に
-		startTime = DateLogic.formatTimeForServerSide(startTime);
-		endTime = DateLogic.formatTimeForServerSide(endTime);
-
 		//working_day.insert用
 		String breakStartTime =req.getParameter("breakStartTime");
 		String breakEndTime =req.getParameter("breakEndTime");
 
+		//入力がなければ00:00を入れる
+		if(startTime.equals("")){
+			startTime = "00:00";
+			endTime = "00:00";
+			breakStartTime = "00:00";
+			breakEndTime = "00:00";
+		}
+
+		//00:00形式を0:00形式に
+		startTime = DateLogic.formatTimeForServerSide(startTime);
+		endTime = DateLogic.formatTimeForServerSide(endTime);
+
 		//計算用
-		String[] tempBreakStartTime = DateLogic.timeStr(req.getParameter("breakStartTime"));
-		String[] tempBreakEndTime = DateLogic.timeStr(req.getParameter("breakEndTime"));
+		String[] tempBreakStartTime = DateLogic.timeStr(breakStartTime);
+		String[] tempBreakEndTime = DateLogic.timeStr(breakEndTime);
 
 		//一日の休憩時間算出
 		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime);
@@ -202,6 +210,7 @@ public class AttendanceServlet extends HttpServlet{
 		//一日の残業時間算出
 		Overtime overtime = new Overtime();
 		Workingtype workingType = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
+
 		if(workingType.getId() == 1){
 			overtime = OvertimeLogic.getOvertime(workingDay);
 		}else if(workingType.getId() == 2){
