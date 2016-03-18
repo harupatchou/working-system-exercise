@@ -22,6 +22,13 @@
           </li>
           <li><hr><br></li>
           <li>
+            <label>規定出社時間：</label>
+            <div>
+              <label>出勤：</label>${attendanceTime.getStartTime()}
+              <label>退勤：</label>${attendanceTime.getEndTime()}
+            </div>
+          </li>
+          <li>
             <label>出勤：</label>
             <div>
               <input type="text" placeholder="00:00" class="attendance_time" name="startTime" value="${workingDay.attendanceTime}">

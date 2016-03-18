@@ -80,11 +80,10 @@ public class AttendanceServlet extends HttpServlet{
 		req.setAttribute("workingDay", workingDay);
 		req.setAttribute("attendanceStatus", attendanceStatus);
 
-		//従業員の種別を取得
-
 		//従業員の出社時間と退社時間を算出
-		AttendanceTime attendanceTime = null;
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(userInfo,userInfo.getWorkingType().getLaborSystemId());
 
+		req.setAttribute("attendanceTime", attendanceTime);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");

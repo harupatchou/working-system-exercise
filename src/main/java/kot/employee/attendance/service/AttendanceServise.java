@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import main.java.kot.dao.AttendanceStatusDao;
+import main.java.kot.dao.AttendanceTimeDao;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.entity.AttendanceStatus;
+import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
 
@@ -60,7 +63,8 @@ public class AttendanceServise {
 	}
 
 	//attendance_time内の情報取得
-	public static void selectAttendTime() {
+	public static AttendanceTime selectAttendTime(Employee employee ,Integer labor_system_id) {
+		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee,labor_system_id);
 	}
 
 
