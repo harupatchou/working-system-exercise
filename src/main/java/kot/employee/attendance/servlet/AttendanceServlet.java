@@ -31,8 +31,8 @@ import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GeneralLogic;
+import main.java.kot.logic.LateLogic;
 import main.java.kot.logic.OvertimeLogic;
-import main.java.kot.logic.UpperLimitTimeLogic;
 import main.java.kot.util.CalendarUtil;
 
 @WebServlet("/employee/Attendance")
@@ -101,6 +101,7 @@ public class AttendanceServlet extends HttpServlet{
 		//セッション情報取得
 		HttpSession session=req.getSession();
 		Integer employeeId = (Integer) session.getAttribute("loginId");
+		Employee employee =  (Employee) session.getAttribute("sesEmployee");
 
 		WorkingDay workingDay = new WorkingDay();
 		WorkingAll workingAll = new WorkingAll();
@@ -110,9 +111,7 @@ public class AttendanceServlet extends HttpServlet{
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
 		//TODO 欠勤、有給の扱い
-		//TODO 出社時間超えたら遅刻
 		//TODO 退社時間超えたら早退
-
 
 		//insertする日を格納しておく
 		InsertDay insertDay = new InsertDay();
@@ -203,19 +202,34 @@ public class AttendanceServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 
-		//労働上限時間チェック
-		String alertMessage = UpperLimitTimeLogic.decisionLimitTime(workingDay);
-		req.setAttribute("alertMessage",alertMessage);
-
 		AttendanceServise.insertWorkingDay(workingDay);
+
+		//勤怠時間関連取得
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(employee,employee.getWorkingType().getLaborSystemId());
+
+		//規定出勤時間
+		String provisionAttendTime = attendanceTime.getStartTime();
+		//規定退勤時間
+		String provisionLeaveTime = attendanceTime.getEndTime();
 
 		//一日の残業時間算出
 		Overtime overtime = new Overtime();
 		Workingtype workingType = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
 
+		//遅刻時間
+		String lateTime = "0:00";
+
+		//種別毎に必要な処理
 		if(workingType.getLaborSystemId() == 1){
+			/* 通常労働制ならば */
+			//遅刻計算
+			lateTime = LateLogic.lateCheckForNormal(provisionAttendTime,startTime);
+
 			overtime = OvertimeLogic.getOvertime(workingDay);
 		}else if(workingType.getLaborSystemId() == 2){
+			//遅刻計算
+			lateTime = LateLogic.lateCheckForNormal(provisionAttendTime,startTime);
+
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
 		//フレックス用
 		}else if(workingType.getLaborSystemId() == 3){
@@ -237,9 +251,6 @@ public class AttendanceServlet extends HttpServlet{
 		String nightTime = "0:00";
 		String nightOvertime = "0:00";
 
-		//TODO 遅刻 今は決め打ち
-		String lateTime = "0:00";
-
 		//TODO 休日出勤
 		//休日ならば
 		if(weekInfo.getHolidayFlag()==1){
@@ -257,14 +268,14 @@ public class AttendanceServlet extends HttpServlet{
 		try {
 			workingAll.setDate(sdf.parse(insertDate));
 			workingAll.setWeek(weekInfo.getWeekNum());
-			//TODO 決め打ち
 			workingAll.setWorkingTimeAll(attendDay);
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
 			workingAll.setStatutoryOverTimeAll(overtime.getStatutoryOvertime());
-			workingAll.setNightTimeAll(nightTime);
-			workingAll.setNightOvertimeAll(nightOvertime);
 			workingAll.setLateTimeAll(lateTime);
 			workingAll.setEmployeeId(employeeId);
+			//TODO 決め打ち
+			workingAll.setNightTimeAll(nightTime);
+			workingAll.setNightOvertimeAll(nightOvertime);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
