@@ -19,7 +19,10 @@
           <tbody>
             <c:forEach var="employee" items="${employeeList}">
             <tr>
-              <td></td>
+              <td>
+                <input type="button" value="編集">
+                <input type="button" value="削除">
+              </td>
               <td>${employee.employeeId}</td>
               <td>${employee.firstName} ${employee.lastName}</td>
               <td>${employee.workingType.workingName}</td>

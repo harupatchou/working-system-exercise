@@ -19,7 +19,10 @@
           <tbody>
             <c:forEach var="workingtype" items="${workingtypeList}">
             <tr>
-              <td></td>
+              <td>
+                <input type="button" value="編集">
+                <input type="button" value="削除">
+              </td>
               <td>${workingtype.id}</td>
               <td>${workingtype.workingName}</td>
               <td>${workingtype.laborSystem.laborSystemName}</td>
