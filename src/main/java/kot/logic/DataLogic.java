@@ -1,5 +1,8 @@
 package main.java.kot.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.java.kot.dao.AttendanceTimeDao;
 import main.java.kot.dao.CompanyDao;
 import main.java.kot.dao.EmployeeDao;
@@ -29,6 +32,17 @@ public class DataLogic {
 	/*会社IDから会社情報を取得*/
 	public static Company getCompany(Integer companyId){
 		return CompanyDao.getCompany(companyId);
+	}
+	/*会社の従業員種別を取得*/
+	public static Company getWorkingTypeOfCompany(Company company){
+		List<Employee> employeeList = company.getEmployeeList();
+		List<Workingtype> workingtypeList = new ArrayList<>();
+
+		for(int i = 0; i < employeeList.size(); i++){
+			workingtypeList.add(getWorkingtypeFromEmployeeId(employeeList.get(i).getEmployeeId()));
+		}
+		company.setWorkingtypeList(ArrayListLogic.workingtypeUnipue(workingtypeList));
+		return company;
 	}
 
 	/*従業員種別IDから従業員種別情報を取得*/

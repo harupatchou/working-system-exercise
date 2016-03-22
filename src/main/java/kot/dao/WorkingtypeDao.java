@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.Workingtype;
@@ -55,8 +57,36 @@ public class WorkingtypeDao {
 					workingtype.setWorkingName(rs.getString("working_name"));
 					workingtype.setLaborSystemId(rs.getInt("labor_system_id"));
 					workingtype.setCompanyId(rs.getInt("company_id"));
+					workingtype.setLaborSystem(LaborSystemDao.getLaborSystem(workingtype.getLaborSystemId()));
 				}
 				return workingtype;
+
+			}catch(SQLException e){
+				System.err.println("SQL = " + sql);
+				throw new RuntimeException("処理に失敗しました", e);
+			}
+	}
+
+	/*会社IDから従業員種別情報を取得*/
+	public static List<Workingtype>  getWorkingtypeFromCompanyId(Integer companyId){
+
+		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + companyId;
+
+		try(Connection con = DBManager.createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery();){
+
+			List<Workingtype> workingytpeList = new ArrayList<>();
+				while(rs.next()){
+					Workingtype workingtype = new Workingtype();
+					workingtype.setId(rs.getInt("id"));
+					workingtype.setWorkingName(rs.getString("working_name"));
+					workingtype.setLaborSystemId(rs.getInt("labor_system_id"));
+					workingtype.setCompanyId(rs.getInt("company_id"));
+					workingtype.setLaborSystem(LaborSystemDao.getLaborSystem(workingtype.getLaborSystemId()));
+					workingytpeList.add(workingtype);
+				}
+				return workingytpeList;
 
 			}catch(SQLException e){
 				System.err.println("SQL = " + sql);

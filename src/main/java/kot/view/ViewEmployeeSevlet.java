@@ -30,7 +30,7 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		HttpSession session=req.getSession();
 		int loginId = (Integer) session.getAttribute("loginId");
 
-		//
+		//月次労働時間情報
 		Employee employee = DataLogic.getEmployee(loginId);
 		LimitWorkingTime limitWorkingtime = OvertimeLogic.getPossibleOvertime(employee);
 

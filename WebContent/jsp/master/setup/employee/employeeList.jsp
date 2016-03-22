@@ -16,13 +16,15 @@
               <th>従業員種別</th>
             </tr>
           </thead>
+          <tbody>
+            <c:forEach var="employee" items="${employeeList}">
             <tr>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>${employee.employeeId}</td>
+              <td>${employee.firstName} ${employee.lastName}</td>
+              <td>${employee.workingType.workingName}</td>
             </tr>
-          <tbody>
+            </c:forEach>
           </tbody>
         </table>
       </div>

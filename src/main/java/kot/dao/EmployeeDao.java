@@ -11,6 +11,7 @@ import main.java.kot.common.database.DBManager;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.Workingtype;
+import main.java.kot.logic.DataLogic;
 
 public class EmployeeDao {
 
@@ -31,6 +32,7 @@ public class EmployeeDao {
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
 				employee.setWorkingTypeId(rs.getInt("working_type_id"));
+				employee.setWorkingType(DataLogic.getWorkingtype(employee.getWorkingTypeId()));
 			}
 			return employee;
 
@@ -92,6 +94,7 @@ public class EmployeeDao {
 				employee.setPassword(rs.getString("password"));
 				employee.setCompanyId(rs.getInt("company_id"));
 				employee.setWorkingTypeId(rs.getInt("working_type_id"));
+				employee.setWorkingType(DataLogic.getWorkingtype(employee.getWorkingTypeId()));
 				employeeList.add(employee);
 			}
 			company.setEmployeeList(employeeList);

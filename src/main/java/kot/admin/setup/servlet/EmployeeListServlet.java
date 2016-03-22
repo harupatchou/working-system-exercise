@@ -9,9 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import main.java.kot.dao.EmployeeDao;
+import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
+import main.java.kot.logic.DataLogic;
 
 @WebServlet("/master/EmployeeList")
 public class EmployeeListServlet extends HttpServlet{
@@ -22,6 +25,16 @@ public class EmployeeListServlet extends HttpServlet{
 
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
+
+		//セッション情報取得
+		HttpSession session=req.getSession();
+		int loginId = (Integer) session.getAttribute("loginId");
+
+		//従業員情報
+		Employee employee = DataLogic.getEmployee(loginId);
+		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+
+		req.setAttribute("employeeList", company.getEmployeeList());
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
