@@ -19,7 +19,7 @@ public class EmployeeDao {
 
 	/*従業員IDから従業員情報取得*/
 	public static Employee getEmployee(Integer employeeId){
-		String sql = "SELECT * FROM " + tableName + " WHERE id = " + employeeId;
+		String sql = "SELECT * FROM " + tableName + " WHERE id = " + employeeId + "ORDER BY id";
 		try(Connection con = DBManager.createConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
@@ -111,7 +111,7 @@ public class EmployeeDao {
 
 
 
-		String sql = "INSERT INTO " + tableName + " (id, first_name, last_name, password, company_id) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " (id, first_name, last_name, password, company_id, working_type_id) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection con = DBManager.createConnection();
@@ -122,7 +122,30 @@ public class EmployeeDao {
 			pstmt.setString(3, employee.getLastName());
 			pstmt.setString(4, employee.getPassword());
 			pstmt.setInt(5, employee.getCompanyId());
+			pstmt.setInt(6, employee.getWorkingTypeId());
 
+			pstmt.executeUpdate();
+
+			return true;
+
+		} catch (SQLException ex) {
+			System.err.println(ex);
+			throw new RuntimeException();
+		}
+	}
+
+	/*従業員情報のアップデート*/
+	public static boolean updateEmployee(Employee employee) {
+		String sql = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, password = ?, company_id = ?, working_type_id = ? WHERE id = " + employee.getEmployeeId();
+		try {
+			Connection con = DBManager.createConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, employee.getFirstName());
+			pstmt.setString(2, employee.getLastName());
+			pstmt.setString(3, employee.getPassword());
+			pstmt.setInt(4, employee.getCompanyId());
+			pstmt.setInt(5, employee.getWorkingTypeId());
 
 			pstmt.executeUpdate();
 

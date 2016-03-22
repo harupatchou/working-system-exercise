@@ -12,26 +12,37 @@
           <li>
             <label>姓・名<span class="warnA">*</span>：</label>
             <div>
-              <input type="text" name="lastName">
-              <input type="text" name="firstName">
+              <input type="text" name="lastName" value="${employee.lastName}">
+              <input type="text" name="firstName" value="${employee.firstName}">
             </div>
           </li>
           <li>
             <label>従業員ID<span class="warnA">*</span>：</label>
             <div>
-              <input type="text" name="employeeId">
+              <input type="text" name="employeeId" value="${employee.employeeId}">
             </div>
           </li>
-          <li>
+<!--           <li>
             <label>所属会社：</label>
             <div>
               <input type="button" value="編集">
             </div>
-          </li>
+          </li> -->
           <li>
             <label>従業員種別：</label>
             <div>
-              <input type="button" value="編集">
+              <select name="workingtypeId">
+                <c:forEach var="workingtype" items="${workingtypeList}">
+                <c:choose>
+                  <c:when test="${workingtype.id == employee.employeeId}">
+                    <option value="${workingtype.id}" selected="selected">${workingtype.workingName}</option>
+                  </c:when>
+                  <c:otherwise>
+                    <option value="${workingtype.id}">${workingtype.workingName}</option>
+                  </c:otherwise>
+                 </c:choose>
+                </c:forEach>
+              </select>
             </div>
           </li>
           <li><hr><br></li>
