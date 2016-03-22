@@ -5,24 +5,29 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
     <form action="/kot/master/EmployeeEdit" method="POST">
-      <h1>従業員一覧</h1>
+      <h1>従業員種別一覧</h1>
       <div class="a_pattern_table">
         <table class="normal_table">
           <thead>
             <tr>
               <th>編集</th>
-              <th>従業員ID</th>
-              <th>従業員名</th>
-              <th>従業員種別</th>
+              <th>従業員種別ID</th>
+              <th>従業員種別名</th>
+              <th>労働制</th>
             </tr>
           </thead>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
           <tbody>
+            <c:forEach var="workingtype" items="${workingtypeList}">
+            <tr>
+              <td>
+                <input type="button" value="編集">
+                <input type="button" value="削除">
+              </td>
+              <td>${workingtype.id}</td>
+              <td>${workingtype.workingName}</td>
+              <td>${workingtype.laborSystem.laborSystemName}</td>
+            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>

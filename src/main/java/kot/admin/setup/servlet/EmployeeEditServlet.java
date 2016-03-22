@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import main.java.kot.admin.setup.service.SetupService;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.logic.DataLogic;
 
-@WebServlet("/master/EmployeeList")
-public class EmployeeListServlet extends HttpServlet{
+@WebServlet("/master/EmployeeEdit")
+public class EmployeeEditServlet extends HttpServlet{
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -30,17 +32,29 @@ public class EmployeeListServlet extends HttpServlet{
 		HttpSession session=req.getSession();
 		int loginId = (Integer) session.getAttribute("loginId");
 
-		//従業員情報
+		//従業員種別リスト
 		Employee employee = DataLogic.getEmployee(loginId);
 		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+		company = DataLogic.getWorkingTypeOfCompany(company);
 
-		req.setAttribute("employeeList", company.getEmployeeList());
+		req.setAttribute("workingtypeList", company.getWorkingtypeList());
+
+		//従業員情報
+		Employee tempEmployee = new Employee();
+
+		String strEmployeeId =req.getParameter("employeeId");
+		if(strEmployeeId != null){
+			Integer employeeId = Integer.parseInt(strEmployeeId);
+			tempEmployee = DataLogic.getEmployee(employeeId);
+		}
+
+		req.setAttribute("employee", tempEmployee);
+
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeEdit.jsp");
 
 		rd.forward(req, resp);
-
 	}
 
 	@Override
@@ -50,34 +64,34 @@ public class EmployeeListServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
+		//セッション情報取得
+		HttpSession session=req.getSession();
+		int loginId = (Integer) session.getAttribute("loginId");
+
+		//従業員種別リスト
+		Employee sessEmployee = DataLogic.getEmployee(loginId);
+
 		Employee employee = new Employee();
 
 		String firstName =req.getParameter("firstName");
 		String lastName =req.getParameter("lastName");
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
-		String stringCompanyId =req.getParameter("companyId");
-
-		if(stringCompanyId != null){
-			Integer companyId = Integer.parseInt(stringCompanyId);
-			employee.setCompanyId(companyId);
-		}else{
-			/* TODO 決め打ち */
-			employee.setCompanyId(1);
-		}
-
+		String strEmployeeId = req.getParameter("employeeId");
+		Integer employeeId = Integer.parseInt(strEmployeeId);
+		String strWorkingtypeId = req.getParameter("workingtypeId");
+		Integer workingtypeId = Integer.parseInt(strWorkingtypeId);
 		String password = req.getParameter("password");
 
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
 		employee.setEmployeeId(employeeId);
+		employee.setWorkingTypeId(workingtypeId);
 		employee.setPassword(password);
+		employee.setCompanyId(sessEmployee.getCompanyId());
 
-		EmployeeDao.registEmployee(employee);
+		//従業員登録
+		SetupService.registEmployee(employee);
 
-		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
-		rd.forward(req, resp);
+
+		resp.sendRedirect("/kot/master/EmployeeList");
 	}
-
 }

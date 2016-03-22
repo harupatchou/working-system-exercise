@@ -18,12 +18,15 @@ public class Company {
 	private List<Employee> employeeList;
 	//勤怠時間リスト
 	private List<AttendanceTime> attendanceTime;
+	//従業員種別リスト
+	private List<Workingtype> workingtypeList;
 
-	public Company(Integer id, String companyName, Integer workingtypeId,Integer masterId,List<Employee> employeeList){
+	public Company(Integer id, String companyName, Integer workingtypeId,Integer masterId,List<Employee> employeeList,List<Workingtype> workingtypeList){
 		this.id = id;
 		this.companyName = companyName;
 		this.masterId = masterId;
 		this.employeeList = employeeList;
+		this.workingtypeList = workingtypeList;
 	}
 
 	public Company() {
@@ -62,6 +65,13 @@ public class Company {
 
 	public void setAttendanceTime(List<AttendanceTime> attendanceTime) {
 		this.attendanceTime = attendanceTime;
+	}
+	public List<Workingtype> getWorkingtypeList() {
+		return workingtypeList;
+	}
+
+	public void setWorkingtypeList(List<Workingtype> workingtypeList) {
+		this.workingtypeList = workingtypeList;
 	}
 
 }

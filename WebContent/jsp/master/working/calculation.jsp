@@ -10,6 +10,7 @@
         <table class="normal_table">
           <thead>
             <tr>
+              <th>従業員ID</th>
               <th>従業員名</th>
               <th>労働種別</th>
               <th>総労働時間</th>
@@ -23,6 +24,7 @@
           <tbody>
             <c:forEach var="workingTimeTotal" items="${workingTimeTotalList}">
             <tr>
+              <td>${workingTimeTotal.employee.employeeId}</td>
               <td>${workingTimeTotal.employee.firstName} ${workingTimeTotal.employee.lastName}</td>
               <td>${workingTimeTotal.workingtype.workingName}</td>
               <td>${workingTimeTotal.workingTimeTotal}</td>

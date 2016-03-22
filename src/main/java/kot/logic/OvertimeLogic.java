@@ -82,6 +82,8 @@ public class OvertimeLogic {
 		TempTime tempMonthlyUpperLimitTime =  WorkingTimeLogic.getTimeInt(monthlyUpperLimitTime);
 		String monthlyUpperLimitTimeMessage = tempMonthlyUpperLimitTime.getHour() + "時間" + tempMonthlyUpperLimitTime.getMinute() + "分";
 
+		//労働上限チェック
+		String workingTimeLimitMessage = UpperLimitTimeLogic.decisionLimitTime(currentWorkingTimeTotal, monthlyUpperLimitTime);
 
 		//残業上限時間
 		String overtimeLimit = WorkingTimeLogic.subtractionWorkingTimeString(monthlyUpperLimitTime, monthlyLegalWorkingTime);
@@ -119,6 +121,7 @@ public class OvertimeLogic {
 		limitWorkingTime.setMonthlyLegalWorkingTime(monthlyLegalWorkingTimeMessage);
 		limitWorkingTime.setOvertimeMessage(possibleOvertimeMessage);
 		limitWorkingTime.setMonthlyLegalMessage(legalWorkingTimeLimitMessage);
+		limitWorkingTime.setWorkingLimitMessage(workingTimeLimitMessage);
 
 		return limitWorkingTime;
 	}

@@ -6,6 +6,9 @@
 <%--ここから下にコンテンツを挿入 --%>
     <form action="/kot/master/EmployeeEdit" method="POST">
       <h1>従業員一覧</h1>
+      <p>
+        <input type="button" value="新規登録" onclick="location.href='/kot/master/EmployeeEdit'">
+      </p>
       <div class="a_pattern_table">
         <table class="normal_table">
           <thead>
@@ -16,13 +19,18 @@
               <th>従業員種別</th>
             </tr>
           </thead>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
           <tbody>
+            <c:forEach var="employee" items="${employeeList}">
+            <tr>
+              <td>
+                <input type="button" value="編集" onclick="location.href='/kot/master/EmployeeEdit?employeeId=${employee.employeeId}'">
+                <input type="button" value="削除" >
+              </td>
+              <td>${employee.employeeId}</td>
+              <td>${employee.firstName} ${employee.lastName}</td>
+              <td>${employee.workingType.workingName}</td>
+            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
