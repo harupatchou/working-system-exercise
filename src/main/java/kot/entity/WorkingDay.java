@@ -3,6 +3,14 @@ package main.java.kot.entity;
 import java.util.Date;
 
 public class WorkingDay {
+	//所定フラグ
+	/**
+	 * 0 通常出勤
+	 * 1 休日出勤
+	 **/
+	public final static int WEEKDAY_WORK = 0;
+	public final static int HOLIDAY_WORK = 1;
+
 
 	//id
 	private Integer id;
@@ -23,10 +31,6 @@ public class WorkingDay {
 	//従業員id
 	private Integer employeeId;
 	//所定フラグ
-	/**
-	 * 0 通常出勤
-	 * 1 休日出勤
-	 **/
 	private Integer legalFlag;
 	//出勤常態
 	private Integer statusCode;

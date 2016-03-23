@@ -5,6 +5,11 @@ import main.java.kot.entity.WorkingDay;
 
 public class Schedule {
 
+	//平日
+	public final static int WEEKDAY = 0;
+	//休暇
+	public final static int HOLIDAY = 1;
+
 	//週のintの値
 	Integer weekNum;
 	//週のStringでの値

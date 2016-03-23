@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import main.java.kot.common.AttendanceData;
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
+import main.java.kot.common.StrTime;
 import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.employee.attendance.service.OvertimeService;
@@ -27,7 +29,6 @@ import main.java.kot.entity.Employee;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
-import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.GeneralLogic;
@@ -38,6 +39,8 @@ import main.java.kot.util.CalendarUtil;
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
 
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -46,10 +49,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		//セッション情報の取得
 		HttpSession session=req.getSession();
-		Integer userId = (Integer) session.getAttribute("loginId");
-		Employee userInfo = (Employee) session.getAttribute("sesEmployee");
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Employee employee = (Employee) session.getAttribute("sesEmployee");
 
 		WorkingDay workingDay = new WorkingDay();
 
@@ -70,7 +70,7 @@ public class AttendanceServlet extends HttpServlet{
 		//画面から送られてきた「/」区切りの日付を「-」区切りに変換
 		String serverSideDate = selectDay.replace("/","-");
 
-		workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, userId);
+		workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, employee.getEmployeeId());
 
 		if(workingDay.getAttendanceTime()!=null){
 			workingDay.setAttendanceTime(DateLogic.formatTime(workingDay.getAttendanceTime()));
@@ -82,7 +82,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setAttribute("attendanceStatus", attendanceStatus);
 
 		//従業員の出社時間と退社時間を算出
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(userInfo,userInfo.getWorkingType().getLaborSystemId());
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(employee,employee.getWorkingType().getLaborSystemId());
 
 		req.setAttribute("attendanceTime", attendanceTime);
 
@@ -96,95 +96,69 @@ public class AttendanceServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		//文字形式をUTF-8指定
-		req.setCharacterEncoding("UTF-8");
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		Integer employeeId = (Integer) session.getAttribute("loginId");
-		Employee employee =  (Employee) session.getAttribute("sesEmployee");
-
-		WorkingDay workingDay = new WorkingDay();
-		WorkingAll workingAll = new WorkingAll();
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 		//TODO 法定休日決め打ちなので設定できるようにした方が？
 		//TODO 現状画面側でユーザに00:00形式での入力必須だが、0:00形式でもokに変更すべき
 		//TODO 欠勤、有給の扱い
 		//TODO 退社時間超えたら早退
 
-		//insertする日を格納しておく
-		InsertDay insertDay = new InsertDay();
+		//文字形式をUTF-8指定
+		req.setCharacterEncoding("UTF-8");
+		//セッション情報取得
+		HttpSession session=req.getSession();
+		Employee employee =  (Employee) session.getAttribute("sesEmployee");
 
-		insertDay.setDay(Integer.parseInt(req.getParameter("day")));
-		insertDay.setDayStr(req.getParameter("day"));
-		insertDay.setMonth(Integer.parseInt(req.getParameter("month")));
-		insertDay.setMonthStr(req.getParameter("month"));
-		insertDay.setYear(Integer.parseInt(req.getParameter("year")));
-		insertDay.setYearStr(req.getParameter("year"));
+		AttendanceData attendanceData = new AttendanceData();
 
-		//年月日から曜日の値取得
-		Schedule weekInfo = CalendarUtil.getWeek(insertDay.getYear(),insertDay.getMonth(),insertDay.getDay());
+		attendanceData.setEmployee(employee);
+		attendanceData.setWorkingtype(DataLogic.getWorkingtypeFromEmployeeId(employee.getEmployeeId()));
 
-		List<String> attendDate = new ArrayList<String>();
+		//insertする日付を設定
+		setInsertDay(req,attendanceData);
 
-		//string型のinsertする形式にするために使用
-		attendDate.add(insertDay.getYearStr());
-		attendDate.add(insertDay.getMonthStr());
-		attendDate.add(insertDay.getDayStr());
+		//週毎の情報を設定
+		Schedule weekInfo = CalendarUtil.getWeek(attendanceData.getInsertDay().getYear(),attendanceData.getInsertDay().getMonth(),attendanceData.getInsertDay().getDay());
 
-		String insertDate = GeneralLogic.joinString(attendDate, "-");
+		attendanceData.setSchedule(weekInfo);
+
+		//時間情報の設定
+		setStrTime(req,attendanceData);
+		//insert処理
+		insertWorkingDay(req,attendanceData);
+		insertWorkingAll(attendanceData);
+		insertOverTime(attendanceData);
+
+		resp.sendRedirect("/kot/employee/MonthlyAttendance");
+
+	}
+
+	//workingDayのinsert処理
+	private void insertWorkingDay(HttpServletRequest req,AttendanceData attendanceData) {
+		WorkingDay workingDay = new WorkingDay();
+
 
 		//TODO 法定休日判別 現状は法定休日が土曜なためweekNumが1だが、設定で変更できるように変更すべき？
-		if((weekInfo.getHolidayFlag() == 1) && (weekInfo.getWeekNum() == 1)){
-			workingDay.setLegalFlag(1);
+		if((attendanceData.getSchedule().getHolidayFlag() == Schedule.HOLIDAY) && (attendanceData.getSchedule().getWeekNum() == 1)){
+			workingDay.setLegalFlag(WorkingDay.HOLIDAY_WORK);
 		}else{
-			workingDay.setLegalFlag(0);
+			workingDay.setLegalFlag(WorkingDay.WEEKDAY_WORK);
 		}
-
-		//working_day Tableにinsert
-		String startTime =req.getParameter("startTime");
-		String endTime =req.getParameter("endTime");
-
-		//working_day.insert用
-		String breakStartTime =req.getParameter("breakStartTime");
-		String breakEndTime =req.getParameter("breakEndTime");
-
-		//入力がなければ00:00を入れる
-		if(startTime.equals("")){
-			startTime = "00:00";
-			endTime = "00:00";
-			breakStartTime = "00:00";
-			breakEndTime = "00:00";
-		}
-
-		//00:00形式を0:00形式に
-		startTime = DateLogic.formatTimeForServerSide(startTime);
-		endTime = DateLogic.formatTimeForServerSide(endTime);
-
-		//計算用
-		String[] tempBreakStartTime = DateLogic.timeStr(breakStartTime);
-		String[] tempBreakEndTime = DateLogic.timeStr(breakEndTime);
-
-		//一日の休憩時間算出
-		String breakTime = DateLogic.getStringTime(tempBreakStartTime, tempBreakEndTime);
 
 		//勤怠ステータス判別
 		String strStatusCode = req.getParameter("attend_status");
 		Integer statusCode = Integer.parseInt(strStatusCode);
 
 		try {
-			workingDay.setDate(sdf.parse(insertDate));
-			workingDay.setWeek(weekInfo.getWeekNum());
-			workingDay.setEmployeeId(employeeId);
+			workingDay.setDate(sdf.parse(attendanceData.getInsertDay().getInsertDay()));
+			workingDay.setWeek(attendanceData.getSchedule().getWeekNum());
+			workingDay.setEmployeeId(attendanceData.getEmployee().getEmployeeId());
 			workingDay.setStatusCode(statusCode);
 			//ステータスで場合分け
 			if(statusCode == 1){
 				//もし出勤ならば
-				workingDay.setAttendanceTime(startTime);
-				workingDay.setLeaveTime(endTime);
-				workingDay.setBreakTimeStart(breakStartTime);
-				workingDay.setBreakTimeEnd(breakEndTime);
+				workingDay.setAttendanceTime(attendanceData.getStrTime().getStartTime());
+				workingDay.setLeaveTime(attendanceData.getStrTime().getEndTime());
+				workingDay.setBreakTimeStart(attendanceData.getStrTime().getBreakStartTime());
+				workingDay.setBreakTimeEnd(attendanceData.getStrTime().getBreakEndTime());
 				//TODO 決め打ち
 				workingDay.setNapTime("0:00");
 			//TODO 欠勤有給の場合
@@ -202,50 +176,46 @@ public class AttendanceServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 
+		attendanceData.setWorkingDay(workingDay);
+
 		AttendanceServise.insertWorkingDay(workingDay);
 
+	}
+
+	private void insertWorkingAll(AttendanceData attendanceData) {
 		//勤怠時間関連取得
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(employee,employee.getWorkingType().getLaborSystemId());
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee(),attendanceData.getEmployee().getWorkingType().getLaborSystemId());
+
+		StrTime strTime = new StrTime();
+		Overtime overtime = new Overtime();
+		WorkingAll workingAll = new WorkingAll();
 
 		//規定出勤時間
 		String provisionAttendTime = attendanceTime.getStartTime();
 		//規定退勤時間
-		String provisionLeaveTime = attendanceTime.getEndTime();
+		//String provisionLeaveTime = attendanceTime.getEndTime();
 
-		//一日の残業時間算出
-		Overtime overtime = new Overtime();
-		Workingtype workingType = DataLogic.getWorkingtypeFromEmployeeId(employeeId);
+		//種別毎に必要な処理
+		if(attendanceData.getWorkingtype().getLaborSystemId() == 1){
+			/* 通常労働制ならば */
+			//遅刻計算
+			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
+		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 2){
+			//遅刻計算
+			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
+		//フレックス用
+		}
+
+		//一日の総労働時間算出
+		String attendDayAll = DateLogic.getStringTime(attendanceData.getStrTime().getArrayStartTime(),attendanceData.getStrTime().getArrayEndTime());
+
+		//一日の実労働時間算出
+		String attendDay= DateLogic.getCalculateTime(attendDayAll,attendanceData.getStrTime().getBreakTime());
+
+		workingAll.setWorkingTimeAll(attendDay);
 
 		//遅刻時間
 		String lateTime = "0:00";
-
-		//種別毎に必要な処理
-		if(workingType.getLaborSystemId() == 1){
-			/* 通常労働制ならば */
-			//遅刻計算
-			lateTime = LateLogic.lateCheckForNormal(provisionAttendTime,startTime);
-
-			overtime = OvertimeLogic.getOvertime(workingDay);
-		}else if(workingType.getLaborSystemId() == 2){
-			//遅刻計算
-			lateTime = LateLogic.lateCheckForNormal(provisionAttendTime,startTime);
-
-			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(workingDay);
-		//フレックス用
-		}else if(workingType.getLaborSystemId() == 3){
-			overtime = OvertimeLogic.getFlexTimeOvertime(workingDay);
-		}
-
-		//working_all Tableにinsert
-		//00:00形式に変換
-		String[] startTimeStr = DateLogic.timeStr(startTime);
-		String[] endTimeStr = DateLogic.timeStr(endTime);
-
-		//一日の総労働時間算出
-		String attendDayAll = DateLogic.getStringTime(startTimeStr,endTimeStr);
-
-		//一日の実労働時間算出
-		String attendDay= DateLogic.getCalculateTime(attendDayAll,breakTime);
 
 		//TODO 深夜 今は決め打ち
 		String nightTime = "0:00";
@@ -253,9 +223,9 @@ public class AttendanceServlet extends HttpServlet{
 
 		//TODO 休日出勤
 		//休日ならば
-		if(weekInfo.getHolidayFlag()==1){
+		if(attendanceData.getSchedule().getHolidayFlag()==1){
 			//法定休日ならば
-			if(workingDay.getLegalFlag()==1){
+			if(attendanceData.getWorkingDay().getLegalFlag()==1){
 				workingAll.setDayStatus("法定");
 			}else{
 				//TODO 土曜出勤,祝日出勤は何として扱うか
@@ -266,13 +236,12 @@ public class AttendanceServlet extends HttpServlet{
 		}
 
 		try {
-			workingAll.setDate(sdf.parse(insertDate));
-			workingAll.setWeek(weekInfo.getWeekNum());
-			workingAll.setWorkingTimeAll(attendDay);
+			workingAll.setDate(sdf.parse(attendanceData.getInsertDay().getInsertDay()));
+			workingAll.setWeek(attendanceData.getSchedule().getWeekNum());
 			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
 			workingAll.setStatutoryOverTimeAll(overtime.getStatutoryOvertime());
 			workingAll.setLateTimeAll(lateTime);
-			workingAll.setEmployeeId(employeeId);
+			workingAll.setEmployeeId(attendanceData.getEmployee().getEmployeeId());
 			//TODO 決め打ち
 			workingAll.setNightTimeAll(nightTime);
 			workingAll.setNightOvertimeAll(nightOvertime);
@@ -280,17 +249,104 @@ public class AttendanceServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 
-		//残業にinsertするためにworkingDayTableのIDを取得
-		WorkingDay insertDayInfo =AttendanceServise.selectByDayAndEmployeeId(insertDate, employeeId);
-		//出勤を押した日のidを残業のdailyIdと紐付け
-		overtime.setDailyId(insertDayInfo.getId());
+		attendanceData.setWorkingAll(workingAll);
 
-		OvertimeService.insertOvertime(overtime);
-
-		AttendanceServise.insertWorkingAll(workingAll);
-
-		resp.sendRedirect("/kot/employee/MonthlyAttendance");
+		AttendanceServise.insertWorkingAll(attendanceData.getWorkingAll());
 
 	}
 
+	private void insertOverTime(AttendanceData attendanceData) {
+		//残業にinsertするためにworkingDayTableのIDを取得
+		WorkingDay insertDayInfo =AttendanceServise.selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
+
+		Overtime overtime = new Overtime();
+
+		//種別毎に必要な処理
+		if(attendanceData.getWorkingtype().getLaborSystemId() == 1){
+			overtime = OvertimeLogic.getOvertime(attendanceData.getWorkingDay());
+		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 2){
+			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(attendanceData.getWorkingDay());
+		//フレックス用
+		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 3){
+			overtime = OvertimeLogic.getFlexTimeOvertime(attendanceData.getWorkingDay());
+		}
+
+		//出勤を押した日のidを残業のdailyIdと紐付け
+		overtime.setDailyId(insertDayInfo.getId());
+
+		attendanceData.setOvertime(overtime);
+
+		OvertimeService.insertOvertime(attendanceData.getOvertime());
+	}
+
+	//時間の取得
+	private void setStrTime(HttpServletRequest req, AttendanceData attendanceData) {
+		//working_day Tableにinsert
+		String startTime =req.getParameter("startTime");
+		String endTime =req.getParameter("endTime");
+		//working_day.insert用
+		String breakStartTime =req.getParameter("breakStartTime");
+		String breakEndTime =req.getParameter("breakEndTime");
+
+		//入力がなければ00:00を入れる
+		if(startTime.equals("")){
+			startTime = "0:00";
+			endTime = "0:00";
+			breakStartTime = "0:00";
+			breakEndTime = "0:00";
+		}
+
+		//00:00形式を0:00形式に
+		startTime = DateLogic.formatTimeForServerSide(startTime);
+		endTime = DateLogic.formatTimeForServerSide(endTime);
+
+		//計算用
+		String[] tempBreakStartTime = DateLogic.timeStr(breakStartTime);
+		String[] tempBreakEndTime = DateLogic.timeStr(breakEndTime);
+		//00:00形式に変換
+		String[] startTimeStr = DateLogic.timeStr(startTime);
+		String[] endTimeStr = DateLogic.timeStr(endTime);
+
+		StrTime strTime = new StrTime();
+
+		strTime.setStartTime(startTime);
+		strTime.setEndTime(endTime);
+		strTime.setBreakStartTime(breakStartTime);
+		strTime.setBreakEndTime(breakEndTime);
+		strTime.setArrayStartTime(startTimeStr);
+		strTime.setArrayEndTime(endTimeStr);
+		strTime.setArrayBreakStartTime(tempBreakStartTime);
+		strTime.setArrayBreakEndTime(tempBreakEndTime);
+
+		//一日の休憩時間算出
+		String breakTime = DateLogic.getStringTime(strTime.getArrayBreakStartTime(),strTime.getArrayBreakEndTime());
+
+		strTime.setBreakTime(breakTime);
+
+		attendanceData.setStrTime(strTime);
+	}
+
+	//日付の取得
+	private void setInsertDay(HttpServletRequest req, AttendanceData attendanceData) {
+		InsertDay insertDay = new InsertDay();
+		List<String> strInsertDay = new ArrayList<String>();
+
+		//画面から得た日付
+		insertDay.setDay(Integer.parseInt(req.getParameter("day")));
+		insertDay.setDayStr(req.getParameter("day"));
+		insertDay.setMonth(Integer.parseInt(req.getParameter("month")));
+		insertDay.setMonthStr(req.getParameter("month"));
+		insertDay.setYear(Integer.parseInt(req.getParameter("year")));
+		insertDay.setYearStr(req.getParameter("year"));
+
+		//string型のinsertする形式にするために使用
+		strInsertDay .add(insertDay.getYearStr());
+		strInsertDay.add(insertDay.getMonthStr());
+		strInsertDay.add(insertDay.getDayStr());
+
+		//サーバに登録するための日付をinsertDayにset
+		insertDay.setInsertDay(GeneralLogic.joinString(strInsertDay, "-"));
+
+		attendanceData.setInsertDay(insertDay);
+	}
 }

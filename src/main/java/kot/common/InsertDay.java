@@ -14,6 +14,8 @@ public class InsertDay {
 	String monthStr;
 	//insertする日
 	String dayStr;
+	//「-」区切りの日付
+	String insertDay;
 
 	public Integer getYear() {
 		return year;
@@ -50,6 +52,12 @@ public class InsertDay {
 	}
 	public void setDayStr(String dayStr) {
 		this.dayStr = dayStr;
+	}
+	public String getInsertDay() {
+		return insertDay;
+	}
+	public void setInsertDay(String insertDay) {
+		this.insertDay = insertDay;
 	}
 
 
