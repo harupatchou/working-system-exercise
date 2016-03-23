@@ -1,13 +1,11 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.AttendanceStatus;
 
 public class AttendanceStatusDao {
@@ -18,9 +16,7 @@ public class AttendanceStatusDao {
 	public static List<AttendanceStatus> selectAttendStatusAll() {
 		String sql = "select * from " + tableName;
 
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			List<AttendanceStatus> statusList = new ArrayList<>();
 			while(rs.next()){
