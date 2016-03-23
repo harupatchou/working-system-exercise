@@ -1,11 +1,10 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.WorkingTime;
 
 public class WorkingTimeDao {
@@ -15,9 +14,7 @@ public class WorkingTimeDao {
 	/*労働制IDから労働時間情報取得*/
 	public static WorkingTime getWorkingTime(Integer laborSystemId){
 		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId;
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			WorkingTime workingTime = new WorkingTime();
 			while(rs.next()){
@@ -40,8 +37,7 @@ public class WorkingTimeDao {
 		String sql = "UPDATE " + tableName + " SET carryover_time = ? WHERE working_type_id = " + workingTimeId;
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setString(1,carryoverTime);
 
@@ -60,8 +56,7 @@ public class WorkingTimeDao {
 		String sql = "UPDATE " + tableName + " SET working_time = ? WHERE labor_system_id = " + workingTime.getLaborSystemId();
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setDouble(1,workingTime.getWorkingTime());
 

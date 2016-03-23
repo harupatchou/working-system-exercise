@@ -1,13 +1,12 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.Workingtype;
@@ -17,12 +16,11 @@ public class EmployeeDao {
 
 	private static String tableName = "employee";
 
+
 	/*従業員IDから従業員情報取得*/
 	public static Employee getEmployee(Integer employeeId){
 		String sql = "SELECT * FROM " + tableName + " WHERE id = " + employeeId + "ORDER BY id";
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
 			while(rs.next()){
@@ -46,9 +44,7 @@ public class EmployeeDao {
 	public static Employee getEmployeeWithCompany(Integer employeeId){
 		String sql = "SELECT emp.*,com.*,work.* FROM employee emp INNER JOIN company com ON emp.company_id = com.id "
 				+ "INNER JOIN working_type work ON emp.working_type_id = work.id  WHERE emp.id = "+ employeeId;
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
 			while(rs.next()){
@@ -77,12 +73,11 @@ public class EmployeeDao {
 		}
 	}
 
+
 	/*会社IDから従業員リスト取得*/
 	public static Company getEmployeeFromCompanyId(Integer companyId){
 		String sql = "SELECT * FROM " + tableName + " WHERE company_id = " + companyId;
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Company company = new Company();
 			List<Employee> employeeList = new ArrayList<>();
@@ -109,13 +104,10 @@ public class EmployeeDao {
 	/*従業員情報のインサート*/
 	public static boolean registEmployee(Employee employee){
 
-
-
 		String sql = "INSERT INTO " + tableName + " (id, first_name, last_name, password, company_id, working_type_id) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setInt(1, employee.getEmployeeId());
 			pstmt.setString(2, employee.getFirstName());
@@ -138,8 +130,7 @@ public class EmployeeDao {
 	public static boolean updateEmployee(Employee employee) {
 		String sql = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, password = ?, company_id = ?, working_type_id = ? WHERE id = " + employee.getEmployeeId();
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setString(1, employee.getFirstName());
 			pstmt.setString(2, employee.getLastName());
@@ -160,9 +151,7 @@ public class EmployeeDao {
 	//ログイン情報と比較用の取得
 	public static Employee LoginCheckInfo(Integer employeeId) {
 		String sql = "SELECT e.*,c.company_name,c.master_id FROM " + tableName + " e INNER JOIN company c ON e.company_id = c.id WHERE e.id = " + employeeId;
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
 			Company company = new Company();
@@ -189,8 +178,7 @@ public class EmployeeDao {
 	public static boolean changePassword(Employee employee) {
 		String sql = "UPDATE " + tableName + " SET password = ? WHERE id = " + employee.getEmployeeId();
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setString(1,employee.getNewPassword());
 
