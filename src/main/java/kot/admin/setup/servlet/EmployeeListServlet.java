@@ -9,12 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import main.java.kot.dao.EmployeeDao;
-import main.java.kot.entity.Company;
-import main.java.kot.entity.Employee;
-import main.java.kot.logic.DataLogic;
+import main.java.kot.admin.setup.service.MasterSetupService;
+import main.java.kot.admin.setup.service.MasterSetupServiceImpl;
 
 @WebServlet("/master/EmployeeList")
 public class EmployeeListServlet extends HttpServlet{
@@ -26,19 +23,13 @@ public class EmployeeListServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		int loginId = (Integer) session.getAttribute("loginId");
-
-		//従業員情報
-		Employee employee = DataLogic.getEmployee(loginId);
-		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
-
-		req.setAttribute("employeeList", company.getEmployeeList());
+		//処理を委譲したServiceの呼び出し
+		req.setAttribute("reqParam", 0);
+		MasterSetupService setupService = new MasterSetupServiceImpl();
+		setupService.employeeList(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
-
 		rd.forward(req, resp);
 
 	}
@@ -50,30 +41,11 @@ public class EmployeeListServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		Employee employee = new Employee();
+		//処理を委譲したServiceの呼び出し
+		req.setAttribute("reqParam", 1);
+		MasterSetupService setupService = new MasterSetupServiceImpl();
+		setupService.employeeList(req, resp);
 
-		String firstName =req.getParameter("firstName");
-		String lastName =req.getParameter("lastName");
-		String stringEmployeeId =req.getParameter("employeeId");
-		Integer employeeId = Integer.parseInt(stringEmployeeId);
-		String stringCompanyId =req.getParameter("companyId");
-
-		if(stringCompanyId != null){
-			Integer companyId = Integer.parseInt(stringCompanyId);
-			employee.setCompanyId(companyId);
-		}else{
-			/* TODO 決め打ち */
-			employee.setCompanyId(1);
-		}
-
-		String password = req.getParameter("password");
-
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setEmployeeId(employeeId);
-		employee.setPassword(password);
-
-		EmployeeDao.registEmployee(employee);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
