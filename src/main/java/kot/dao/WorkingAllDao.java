@@ -1,12 +1,11 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.WorkingAll;
 
 public class WorkingAllDao {
@@ -19,8 +18,7 @@ public class WorkingAllDao {
 		String sql = "INSERT INTO " + tableName + " (date,week,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all,late_time_all,day_status,employee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingAll.getDate());
@@ -57,8 +55,7 @@ public class WorkingAllDao {
 		String sql = "UPDATE " + tableName + " SET working_time_all = ?,legal_overtime_all = ?,statutory_overtime_all = ?,night_time_all = ?,night_overtime_all = ?,late_time_all = ? WHERE employee_id = " + workingAll.getEmployeeId() + " AND date = ?";
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingAll.getDate());
@@ -91,9 +88,7 @@ public class WorkingAllDao {
 
 		String sql = "select * from " + tableName + " where date = '" + day +"' AND employee_id = " +employeeId;
 
-		try(Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			WorkingAll workingAll = new WorkingAll();
 			while(rs.next()){

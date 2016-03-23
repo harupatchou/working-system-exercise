@@ -1,13 +1,12 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 
@@ -21,8 +20,7 @@ public class CompanyDao {
 		String sql = "INSERT INTO " + tableName + " (id, company_name) VALUES (?,?)";
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setInt(1, company.getId());
 			pstmt.setString(2, company.getCompanyName());
@@ -43,8 +41,7 @@ public class CompanyDao {
 		String sql = "UPDATE " + tableName + " SET id = ?,company_name = ? WHERE id = " + userCompany.getId();
 
 		try {
-			Connection con = DBManager.createConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
 			pstmt.setInt(1, company.getId());
 			pstmt.setString(2, company.getCompanyName());
@@ -62,9 +59,7 @@ public class CompanyDao {
 	//companyIdから情報取得
 	public static Company getCompany(Integer companyId){
 		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + companyId;
-		try(Connection con = DBManager.createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-					ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 				Company company = new Company();
 				while(rs.next()){
@@ -82,9 +77,7 @@ public class CompanyDao {
 	//companyIdから情報取得(紐付いている情報全て)
 	public static Company getCompanyAll(Integer companyId) {
 		String sql = "SELECT c.*,at.* FROM company c INNER JOIN attendance_time at ON c.id = at.company_id WHERE c.id = " + companyId;
-		try(Connection con = DBManager.createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-					ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 				Company company = new Company();
 				List<AttendanceTime> attendList = new ArrayList<AttendanceTime>();

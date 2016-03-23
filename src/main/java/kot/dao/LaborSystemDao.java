@@ -1,11 +1,9 @@
 package main.java.kot.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.kot.common.database.DBManager;
+import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.LaborSystem;
 
 public class LaborSystemDao {
@@ -18,9 +16,7 @@ public class LaborSystemDao {
 
 		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + laborSystemId;
 
-		try(Connection con = DBManager.createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-					ResultSet rs = pstmt.executeQuery();){
+		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			LaborSystem loborSystem = new LaborSystem();
 				while(rs.next()){
