@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.service.MasterSetupService;
-import main.java.kot.admin.setup.service.MasterSetupServiceImpl;
+import main.java.kot.admin.setup.service.SetupService;
+import main.java.kot.admin.setup.service.SetupServiceImpl;
 
 @WebServlet("/master/WorkingtypeList")
 public class WorkingtypeListServlet extends HttpServlet{
@@ -25,7 +25,7 @@ public class WorkingtypeListServlet extends HttpServlet{
 
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 0);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
+		SetupService setupService = new SetupServiceImpl();
 		setupService.workingtypeList(req, resp);
 
 		ServletContext application = req.getServletContext();
@@ -43,7 +43,7 @@ public class WorkingtypeListServlet extends HttpServlet{
 
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 1);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
+		SetupService setupService = new SetupServiceImpl();
 		setupService.workingtypeList(req, resp);
 
 		ServletContext application = req.getServletContext();
