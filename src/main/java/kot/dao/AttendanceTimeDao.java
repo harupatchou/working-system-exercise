@@ -19,7 +19,7 @@ public class AttendanceTimeDao {
 	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee){
 		Integer laborSystemId = employee.getWorkingType().getLaborSystem().getId();
 		Integer companyId = employee.getCompany().getId();
-		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId + " AND company_id = " + companyId;
+		String sql = "SELECT * FROM " + tableName + " at JOIN labor_system labor ON at.labor_system_id = labor.id WHERE labor_system_id = " + laborSystemId + " AND company_id = " + companyId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			AttendanceTime attendanceTime = new AttendanceTime();
@@ -29,7 +29,11 @@ public class AttendanceTimeDao {
 				attendanceTime.setEndTime(rs.getString("end_time"));
 				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
 				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
-				attendanceTime.setLaborSystemId(rs.getInt("labor_system_id"));
+
+				LaborSystem laborSystem = new LaborSystem();
+				laborSystem.setId(rs.getInt("labor_system_id"));
+				laborSystem.setLaborSystemName(rs.getString("labor_system_name"));
+				attendanceTime.setLaborSystem(laborSystem);
 			}
 
 			return attendanceTime;
@@ -56,7 +60,6 @@ public class AttendanceTimeDao {
 				attendanceTime.setEndTime(rs.getString("end_time"));
 				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
 				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
-				attendanceTime.setLaborSystemId(rs.getInt("labor_system_id"));
 
 				LaborSystem tempLaborSystem = new LaborSystem();
 				tempLaborSystem.setId(rs.getInt("labor_system_id"));
@@ -78,7 +81,7 @@ public class AttendanceTimeDao {
 	//update
 	public static void editAttendanceTime(AttendanceTime insertTime) {
 		String sql = "UPDATE " + tableName + " SET start_time = ?,end_time = ? "
-				+ "WHERE labor_system_id = " + insertTime.getLaborSystemId() +" AND company_id = " + insertTime.getCompany().getId();
+				+ "WHERE labor_system_id = " + insertTime.getLaborSystem().getId() +" AND company_id = " + insertTime.getCompany().getId();
 
 		try {
 			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);

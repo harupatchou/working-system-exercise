@@ -15,8 +15,6 @@ public class AttendanceTime {
 	private String coreTimeStrat;
 	//コアタイム終了時間
 	private String coreTimeEnd;
-	//従業員種別コード
-	private Integer laborSystemId;
 	//従業員種別
 	private LaborSystem laborSystem;
 	//カンパニー
@@ -61,14 +59,6 @@ public class AttendanceTime {
 
 	public void setCoreTimeEnd(String coreTimeEnd) {
 		this.coreTimeEnd = coreTimeEnd;
-	}
-
-	public Integer getLaborSystemId() {
-		return laborSystemId;
-	}
-
-	public void setLaborSystemId(Integer workingtypeId) {
-		this.laborSystemId = workingtypeId;
 	}
 
 	public AttendanceTime(){

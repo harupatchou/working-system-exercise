@@ -88,7 +88,10 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			laborSystem.setId(laborSystemId);
 			workingtype.setLaborSystem(laborSystem);
 
-			workingtype.setCompanyId(companyId);
+			Company company = new Company();
+			company.setId(companyId);
+
+			workingtype.setCompany(company);
 
 			WorkingtypeDao.registWorkingtype(workingtype);
 
@@ -185,12 +188,12 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			//変形労働があるかどうか判別
 			Integer count = 0;
 			for(int i=0;i<attendanceTimeList.size();i++){
-				if(attendanceTimeList.get(i).getLaborSystemId() == 2){
+				if(attendanceTimeList.get(i).getLaborSystem().getId() == LaborSystem.deformationLaborSystem){
 					count += 1;
-					Integer irregularId = attendanceTimeList.get(i).getLaborSystemId();
+					Integer irregularId = attendanceTimeList.get(i).getLaborSystem().getId();
 					req.setAttribute("irregular", irregularId);
 					//workingTimeを取得
-					workingTime = MasterSetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystemId());
+					workingTime = MasterSetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystem().getId());
 				}
 			}
 
@@ -226,7 +229,9 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			//勤怠時間の登録
 			AttendanceTime insertTime = new AttendanceTime();
 
-			insertTime.setLaborSystemId(laborSystemId);
+			LaborSystem laborSystem = new LaborSystem();
+			laborSystem.setId(laborSystemId);
+			insertTime.setLaborSystem(laborSystem);
 			insertTime.setStartTime(attendanceTime);
 			insertTime.setEndTime(leaveTime);
 			insertTime.setCompany(userCompany);
@@ -242,8 +247,8 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 				WorkingTime insertWorkingTime = new WorkingTime();
 
 
-				LaborSystem laborSystem = new LaborSystem();
-				laborSystem.setId(laborSystemId);
+				LaborSystem tempLabor = new LaborSystem();
+				tempLabor.setId(laborSystemId);
 				insertWorkingTime.setLaborSystem(laborSystem);
 				insertWorkingTime.setWorkingTime(regularTime);
 

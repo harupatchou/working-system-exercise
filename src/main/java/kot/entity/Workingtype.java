@@ -9,18 +9,18 @@ public class Workingtype {
 	private Integer id;
 	//種別名
 	private String workingName;
-	//会社コード
-	private Integer company_id;
+	//会社
+	private Company company;
 	//労働制
 	private LaborSystem laborSystem;
 
 	public Workingtype(){
 	}
 
-	public Workingtype(Integer id, String workingName, Integer company_id,LaborSystem laborSystem){
+	public Workingtype(Integer id, String workingName, Integer company_id,Company company,LaborSystem laborSystem){
 		this.id = id;
 		this.workingName = workingName;
-		this.company_id = company_id;
+		this.company = company;
 		this.laborSystem = laborSystem;
 	}
 
@@ -36,11 +36,11 @@ public class Workingtype {
 	public void setWorkingName(String workingName) {
 		this.workingName = workingName;
 	}
-	public Integer getCompanyId() {
-		return company_id;
+	public Company getCompany() {
+		return company;
 	}
-	public void setCompanyId(Integer company_id) {
-		this.company_id = company_id;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 	public LaborSystem getLaborSystem() {
 		return laborSystem;

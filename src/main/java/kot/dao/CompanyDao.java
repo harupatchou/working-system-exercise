@@ -25,7 +25,6 @@ public class CompanyDao {
 			pstmt.setInt(1, company.getId());
 			pstmt.setString(2, company.getCompanyName());
 
-
 			pstmt.executeUpdate();
 
 			return true;

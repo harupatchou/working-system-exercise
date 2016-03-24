@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.kot.common.database.DBcommon;
+import main.java.kot.entity.Company;
 import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Workingtype;
 
@@ -26,7 +27,7 @@ public class WorkingtypeDao {
 			pstmt.setInt(1, workingtype.getId());
 			pstmt.setString(2, workingtype.getWorkingName());
 			pstmt.setInt(3, workingtype.getLaborSystem().getId());
-			pstmt.setInt(4, workingtype.getCompanyId());
+			pstmt.setInt(4, workingtype.getCompany().getId());
 
 
 			pstmt.executeUpdate();
@@ -49,7 +50,10 @@ public class WorkingtypeDao {
 				while(rs.next()){
 					workingtype.setId(rs.getInt("id"));
 					workingtype.setWorkingName(rs.getString("working_name"));
-					workingtype.setCompanyId(rs.getInt("company_id"));
+
+					Company tempCompany = new Company();
+					tempCompany.setId(rs.getInt("company_id"));
+					workingtype.setCompany(tempCompany);
 
 					LaborSystem laborSystem = new LaborSystem();
 					laborSystem.setId(rs.getInt("labor_system_id"));
@@ -76,7 +80,10 @@ public class WorkingtypeDao {
 					Workingtype workingtype = new Workingtype();
 					workingtype.setId(rs.getInt("id"));
 					workingtype.setWorkingName(rs.getString("working_name"));
-					workingtype.setCompanyId(rs.getInt("company_id"));
+
+					Company tempCompany = new Company();
+					tempCompany.setId(rs.getInt("company_id"));
+					workingtype.setCompany(tempCompany);
 
 					LaborSystem laborSystem = new LaborSystem();
 					laborSystem.setId(rs.getInt("labor_system_id"));

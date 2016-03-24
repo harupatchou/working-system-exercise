@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.employee.setup.service.EmployeeSetupService;
-import main.java.kot.employee.setup.service.EmployeeSetupServiceImpl;
+import main.java.kot.employee.setup.serviceImpl.EmployeeSetupServiceImpl;
 @WebServlet("/employee/PasswordEdit")
 public class PasswordEditServlet extends HttpServlet {
 
