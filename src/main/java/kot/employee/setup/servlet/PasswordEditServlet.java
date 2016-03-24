@@ -9,11 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import main.java.kot.employee.setup.service.SetupService;
-import main.java.kot.entity.Employee;
-import main.java.kot.logic.DataLogic;
+import main.java.kot.employee.setup.service.EmployeeSetupService;
+import main.java.kot.employee.setup.service.EmployeeSetupServiceImpl;
 @WebServlet("/employee/PasswordEdit")
 public class PasswordEditServlet extends HttpServlet {
 
@@ -36,27 +34,10 @@ public class PasswordEditServlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		int loginId = (Integer) session.getAttribute("loginId");
-
-		String password = req.getParameter("password");
-		String newPassWord = req.getParameter("new_password");
-
-		Employee employee = DataLogic.getEmployee(loginId);
-		//パスワードチェック
-		String message = "";
-		if(password.equals(employee.getPassword())){
-			employee.setPassword(newPassWord);
-			SetupService.changePassword(employee);
-			message = "パスワード変更が完了しました";
-		}else{
-
-			if(!password.equals(employee.getPassword())){
-				message = "現在のパスワードが間違っています";
-			}
-		}
-		req.setAttribute("message", message);
+		//処理を委譲したServiceの呼び出し
+		req.setAttribute("reqParam", 1);
+		EmployeeSetupService setupService = new EmployeeSetupServiceImpl();
+		setupService.passwordEdit(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/setup/passwordEdit.jsp");

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.service.SetupService;
-import main.java.kot.admin.setup.service.SetupServiceImpl;
+import main.java.kot.admin.setup.service.MasterSetupService;
+import main.java.kot.admin.setup.service.MasterSetupServiceImpl;
 
 @WebServlet("/master/EmployeeEdit")
 public class EmployeeEditServlet extends HttpServlet{
@@ -26,7 +26,7 @@ public class EmployeeEditServlet extends HttpServlet{
 
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 0);
-		SetupService setupService = new SetupServiceImpl();
+		MasterSetupService setupService = new MasterSetupServiceImpl();
 		setupService.employeeEdit(req, resp);
 
 		ServletContext application = req.getServletContext();
@@ -44,7 +44,7 @@ public class EmployeeEditServlet extends HttpServlet{
 
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 1);
-		SetupService setupService = new SetupServiceImpl();
+		MasterSetupService setupService = new MasterSetupServiceImpl();
 		setupService.employeeEdit(req, resp);
 
 		resp.sendRedirect("/kot/master/EmployeeList");

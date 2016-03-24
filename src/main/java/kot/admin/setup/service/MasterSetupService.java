@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
  * master画面setup関連サービス
  * @author ueno
  **/
-public interface SetupService {
+public interface MasterSetupService {
 
 	/*EmployeeListServlet委譲処理*/
 	public void employeeList(HttpServletRequest req, HttpServletResponse resp);

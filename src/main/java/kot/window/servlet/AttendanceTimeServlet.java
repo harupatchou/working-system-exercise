@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.kot.admin.setup.logic.SetupLogic;
+import main.java.kot.admin.setup.logic.MasterSetupLogic;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.WorkingTime;
@@ -33,7 +33,7 @@ public class AttendanceTimeServlet extends HttpServlet {
 		Company userCompany = (Company) session.getAttribute("sesCompany");
 
 		//勤怠時間関連取得
-		List<AttendanceTime> attendanceTimeList = SetupLogic.getAttendanceTime(userCompany.getId());
+		List<AttendanceTime> attendanceTimeList = MasterSetupLogic.getAttendanceTime(userCompany.getId());
 
 		Integer laborSystemId = Integer.parseInt(req.getParameter("laborSystemId"));
 
@@ -49,7 +49,7 @@ public class AttendanceTimeServlet extends HttpServlet {
 		req.setAttribute("attendanceTimeList", attendanceTimeList);
 
 		//workingTimeを取得
-		WorkingTime workingTime = SetupLogic.getWorkingTime(laborSystemId);
+		WorkingTime workingTime = MasterSetupLogic.getWorkingTime(laborSystemId);
 
 		req.setAttribute("workingTime", workingTime);
 

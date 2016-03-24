@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.kot.admin.setup.logic.SetupLogic;
+import main.java.kot.admin.setup.logic.MasterSetupLogic;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.AttendanceTime;
@@ -17,7 +17,7 @@ import main.java.kot.entity.WorkingTime;
 import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
 
-public class SetupServiceImpl implements SetupService{
+public class MasterSetupServiceImpl implements MasterSetupService{
 
 	@Override
 	public void employeeList(HttpServletRequest req, HttpServletResponse resp){
@@ -155,7 +155,7 @@ public class SetupServiceImpl implements SetupService{
 			employee.setCompany(sessEmployee.getCompany());
 
 			//従業員登録
-			SetupLogic.registEmployee(employee);
+			MasterSetupLogic.registEmployee(employee);
 
 		}
 	}
@@ -175,7 +175,7 @@ public class SetupServiceImpl implements SetupService{
 			req.setAttribute("userCompany", userCompany);
 
 			//勤怠時間関連取得
-			List<AttendanceTime> attendanceTimeList = SetupLogic.getAttendanceTime(userCompany.getId());
+			List<AttendanceTime> attendanceTimeList = MasterSetupLogic.getAttendanceTime(userCompany.getId());
 
 			req.setAttribute("attendanceTimeList", attendanceTimeList);
 
@@ -189,7 +189,7 @@ public class SetupServiceImpl implements SetupService{
 					Integer irregularId = attendanceTimeList.get(i).getLaborSystemId();
 					req.setAttribute("irregular", irregularId);
 					//workingTimeを取得
-					workingTime = SetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystemId());
+					workingTime = MasterSetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystemId());
 				}
 			}
 
@@ -214,7 +214,7 @@ public class SetupServiceImpl implements SetupService{
 			company.setCompanyName(companyName);
 
 			//companyの登録
-			SetupLogic.registCompany(company,userCompany);
+			MasterSetupLogic.registCompany(company,userCompany);
 
 			String strLaborSystemId =req.getParameter("laborSystemId");
 			Integer laborSystemId = Integer.parseInt(strLaborSystemId);
@@ -230,7 +230,7 @@ public class SetupServiceImpl implements SetupService{
 			insertTime.setEndTime(leaveTime);
 			insertTime.setCompany(userCompany);
 
-			SetupLogic.registAttendTime(insertTime);
+			MasterSetupLogic.registAttendTime(insertTime);
 
 			//もし変形労働ならば
 			if(laborSystemId == 2){
@@ -243,7 +243,7 @@ public class SetupServiceImpl implements SetupService{
 				insertWorkingTime.setLaborSystemId(laborSystemId);
 				insertWorkingTime.setWorkingTime(regularTime);
 
-				SetupLogic.registWorkingTime(insertWorkingTime);
+				MasterSetupLogic.registWorkingTime(insertWorkingTime);
 			}
 
 		}

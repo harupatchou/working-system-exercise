@@ -11,7 +11,7 @@ import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.WorkingTime;
 
-public class SetupLogic {
+public class MasterSetupLogic {
 
 	//company情報の登録
 	public static void registCompany(Company company,Company userCompany) {
