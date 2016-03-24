@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet{
 				Employee sesEmployee = LoginServise.getSessionEmployee(sess.getLogin_id());
 
 				//会社情報をセッションに格納
-				Company sesCompany = LoginServise.getSessionCompany(sesEmployee.getCompanyId());
+				Company sesCompany = LoginServise.getSessionCompany(sesEmployee.getCompany().getId());
 
 				session.setAttribute("userName", userName);
 				session.setAttribute("sesEmployee",sesEmployee);

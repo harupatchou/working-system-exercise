@@ -302,7 +302,7 @@ public class OvertimeLogic {
 
 		//法定労働時間と所定労働時間の差
 		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(workingday.getEmployeeId());
-		double timeLag = ConstantWorkingTime.WORKINGTIME - WorkingTimeDao.getWorkingTime(workingtype.getLaborSystemId()).getWorkingTime();
+		double timeLag = ConstantWorkingTime.WORKINGTIME - WorkingTimeDao.getWorkingTime(workingtype.getLaborSystem().getId()).getWorkingTime();
 		String timeLagStr = WorkingTimeLogic.getTimeDoubleToString(timeLag);
 
 		//法定内残業・法定外残業セット
@@ -366,7 +366,7 @@ public class OvertimeLogic {
 
 		//月の最大日数から月の法定労働時間をセット
 		Workingtype workingtype = DataLogic.getWorkingtypeFromEmployeeId(workingday.getEmployeeId());
-		WorkingTime workingTime = WorkingTimeDao.getWorkingTime(workingtype.getLaborSystemId());
+		WorkingTime workingTime = WorkingTimeDao.getWorkingTime(workingtype.getLaborSystem().getId());
 
 		String monthlyLegalWorkingtime;
 		if(workingTime.getCarryoverTime().equals("0:00")){

@@ -33,7 +33,7 @@ public class ViewMasterSevlet extends HttpServlet {
 		int loginId = (Integer) session.getAttribute("loginId");
 
 		Employee employee = DataLogic.getEmployee(loginId);
-		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 		//会社IDから年月取得
 		SelectDate selectDate = DateLogic.employeeDateSummary(company);
 		req.setAttribute("selectYear", selectDate.getYearList());
