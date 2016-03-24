@@ -12,6 +12,7 @@ import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
+import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.WorkingTime;
 import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
@@ -81,7 +82,11 @@ public class SetupServiceImpl implements SetupService{
 
 			workingtype.setId(workingtypeId);
 			workingtype.setWorkingName(workingName);
-			workingtype.getLaborSystem().setId(laborSystemId);
+
+			LaborSystem laborSystem = new LaborSystem();
+			laborSystem.setId(laborSystemId);
+			workingtype.setLaborSystem(laborSystem);
+
 			workingtype.setCompanyId(companyId);
 
 			WorkingtypeDao.registWorkingtype(workingtype);
@@ -142,7 +147,10 @@ public class SetupServiceImpl implements SetupService{
 			employee.setFirstName(firstName);
 			employee.setLastName(lastName);
 			employee.setEmployeeId(employeeId);
-			employee.getWorkingType().setId(workingtypeId);
+
+			Workingtype workingtype = new Workingtype();
+			workingtype.setId(workingtypeId);
+			employee.setWorkingType(workingtype);
 			employee.setPassword(password);
 			employee.setCompany(sessEmployee.getCompany());
 

@@ -13,6 +13,7 @@ import main.java.kot.common.Schedule;
 import main.java.kot.common.StrTime;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
@@ -141,7 +142,7 @@ public class AttendanceLogic {
 
 	public static WorkingAll setWorkingAll(AttendanceData attendanceData) {
 		//勤怠時間関連取得
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee(),attendanceData.getEmployee().getWorkingType().getLaborSystemId());
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee(),attendanceData.getEmployee().getWorkingType().getLaborSystem().getId());
 
 		StrTime strTime = new StrTime();
 		Overtime overtime = new Overtime();
@@ -152,12 +153,14 @@ public class AttendanceLogic {
 		//規定退勤時間
 		//String provisionLeaveTime = attendanceTime.getEndTime();
 
+		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
+
 		//種別毎に必要な処理
-		if(attendanceData.getWorkingtype().getLaborSystemId() == 1){
+		if(laborSystemId == LaborSystem.normalLaborSystem){
 			/* 通常労働制ならば */
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
-		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 2){
+		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
 		//フレックス用
@@ -214,16 +217,16 @@ public class AttendanceLogic {
 	public static Overtime setOverTime(AttendanceData attendanceData) {
 		//残業にinsertするためにworkingDayTableのIDを取得
 		WorkingDay insertDayInfo =AttendanceServise.selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
-
 		Overtime overtime = new Overtime();
+		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
 
 		//種別毎に必要な処理
-		if(attendanceData.getWorkingtype().getLaborSystemId() == 1){
+		if(laborSystemId == LaborSystem.normalLaborSystem){
 			overtime = OvertimeLogic.getOvertime(attendanceData.getWorkingDay());
-		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 2){
+		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(attendanceData.getWorkingDay());
 		//フレックス用
-		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 3){
+		}else if(laborSystemId == LaborSystem.flexLaborSystem){
 			overtime = OvertimeLogic.getFlexTimeOvertime(attendanceData.getWorkingDay());
 		}
 

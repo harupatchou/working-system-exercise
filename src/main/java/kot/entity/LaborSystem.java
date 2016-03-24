@@ -10,6 +10,11 @@ public class LaborSystem {
 	//種別名
 	private String laborSystemName;
 
+	//労働制IDの定数
+	public static final Integer normalLaborSystem = 1;
+	public static final Integer deformationLaborSystem = 2;
+	public static final Integer flexLaborSystem = 3;
+
 	public Integer getId() {
 		return id;
 	}
