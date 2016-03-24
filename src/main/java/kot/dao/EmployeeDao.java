@@ -196,7 +196,7 @@ public class EmployeeDao {
 		try {
 			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
-			pstmt.setString(1,employee.getNewPassword());
+			pstmt.setString(1,employee.getPassword());
 
 			pstmt.executeUpdate();
 

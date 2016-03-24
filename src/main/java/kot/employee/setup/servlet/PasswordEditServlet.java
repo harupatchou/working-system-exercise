@@ -42,21 +42,18 @@ public class PasswordEditServlet extends HttpServlet {
 
 		String password = req.getParameter("password");
 		String newPassWord = req.getParameter("new_password");
-		String confirmNewPassword = req.getParameter("confirm_new_password");
 
 		Employee employee = DataLogic.getEmployee(loginId);
-		employee.setNewPassword(newPassWord);
 		//パスワードチェック
 		String message = "";
-		if(password.equals(employee.getPassword()) && newPassWord.equals(confirmNewPassword)){
+		if(password.equals(employee.getPassword())){
+			employee.setPassword(newPassWord);
 			SetupService.changePassword(employee);
 			message = "パスワード変更が完了しました";
 		}else{
 
 			if(!password.equals(employee.getPassword())){
 				message = "現在のパスワードが間違っています";
-			}else if(!newPassWord.equals(confirmNewPassword)){
-				message = "新規パスワードと確認パスワードが一致しません";
 			}
 		}
 		req.setAttribute("message", message);

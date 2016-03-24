@@ -13,19 +13,16 @@ public class Employee {
 	private String lastName;
 	//パスワード
 	private String password;
-	//新規パスワード(パスワード変更時用)
-	private String newPassword;
 	//company情報
 	private Company company;
 	//従業員種別
 	private Workingtype workingType;
 
-	public Employee(Integer employeeId, String firstName, String lastName,String password,String newPassword){
+	public Employee(Integer employeeId, String firstName, String lastName,String password){
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
-		this.newPassword = newPassword;
 	}
 
 	public Integer getEmployeeId() {
@@ -58,14 +55,6 @@ public class Employee {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
 	}
 
 	public Company getCompany() {
