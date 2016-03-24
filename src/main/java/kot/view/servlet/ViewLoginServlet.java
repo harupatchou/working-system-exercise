@@ -1,4 +1,4 @@
-package main.java.kot.view;
+package main.java.kot.view.servlet;
 
 import java.io.IOException;
 
@@ -11,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.kot.common.LimitWorkingTime;
-import main.java.kot.entity.Employee;
-import main.java.kot.logic.DataLogic;
-import main.java.kot.logic.OvertimeLogic;
+import main.java.kot.view.service.ViewLoginService;
+import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 
-@WebServlet("/employee/Top")
-public class ViewEmployeeSevlet extends HttpServlet {
+@WebServlet("/login")
+public class ViewLoginServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -26,24 +24,27 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		int loginId = (Integer) session.getAttribute("loginId");
-
-		//月次労働時間情報
-		Employee employee = DataLogic.getEmployee(loginId);
-		LimitWorkingTime limitWorkingtime = OvertimeLogic.getPossibleOvertime(employee);
-
-		req.setAttribute("limitWorkingtime", limitWorkingtime);
+		//セッション破棄
+		HttpSession session=req.getSession(true);
+		session.invalidate();
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/login/login.jsp");
 		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doGet(req, resp);
+
+		//文字形式をUTF-8指定
+		req.setCharacterEncoding("UTF-8");
+
+		//処理を委譲したServiceの呼び出し
+		req.setAttribute("reqParam", 1);
+		ViewLoginService viewLoginService = new ViewLoginServiceImpl();
+		viewLoginService.viewLogin(req, resp);
+
+		resp.sendRedirect("/kot/login/check");
 	}
 }

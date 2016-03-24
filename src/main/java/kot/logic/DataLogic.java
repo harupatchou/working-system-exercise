@@ -52,7 +52,6 @@ public class DataLogic {
 
 	/*従業員種別IDから従業員種別の勤務情報を取得*/
 	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee){
-		Workingtype workingtype = getWorkingtypeFromEmployeeId(employee.getEmployeeId());
-		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee,workingtype.getLaborSystem().getId());
+		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee);
 	}
 }

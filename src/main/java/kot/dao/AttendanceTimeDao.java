@@ -16,8 +16,10 @@ public class AttendanceTimeDao {
 	private static String tableName = "attendance_time";
 
 	/*従業員種別IDから種別ごとの労働時間を取得*/
-	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee ,Integer labor_system_id){
-		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + labor_system_id + " AND company_id = " + employee.getCompany().getId();
+	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee){
+		Integer laborSystemId = employee.getWorkingType().getLaborSystem().getId();
+		Integer companyId = employee.getCompany().getId();
+		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId + " AND company_id = " + companyId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			AttendanceTime attendanceTime = new AttendanceTime();

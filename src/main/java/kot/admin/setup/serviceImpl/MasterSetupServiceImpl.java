@@ -1,4 +1,4 @@
-package main.java.kot.admin.setup.service;
+package main.java.kot.admin.setup.serviceImpl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import main.java.kot.admin.setup.logic.MasterSetupLogic;
+import main.java.kot.admin.setup.service.MasterSetupService;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.AttendanceTime;
@@ -240,7 +241,10 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 				//所定時間の登録
 				WorkingTime insertWorkingTime = new WorkingTime();
 
-				insertWorkingTime.setLaborSystemId(laborSystemId);
+
+				LaborSystem laborSystem = new LaborSystem();
+				laborSystem.setId(laborSystemId);
+				insertWorkingTime.setLaborSystem(laborSystem);
 				insertWorkingTime.setWorkingTime(regularTime);
 
 				MasterSetupLogic.registWorkingTime(insertWorkingTime);

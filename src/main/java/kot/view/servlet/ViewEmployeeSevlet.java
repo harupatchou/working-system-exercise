@@ -1,4 +1,4 @@
-package main.java.kot.admin.setup.servlet;
+package main.java.kot.view.servlet;
 
 import java.io.IOException;
 
@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.service.MasterSetupService;
-import main.java.kot.admin.setup.serviceImpl.MasterSetupServiceImpl;
+import main.java.kot.view.service.ViewEmployeeService;
+import main.java.kot.view.serviceImpl.ViewEmployeeServiceImpl;
 
-@WebServlet("/master/EmployeeEdit")
-public class EmployeeEditServlet extends HttpServlet{
-
+@WebServlet("/employee/Top")
+public class ViewEmployeeSevlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -26,27 +25,17 @@ public class EmployeeEditServlet extends HttpServlet{
 
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 0);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.employeeEdit(req, resp);
+		ViewEmployeeService viewEmployeeService = new ViewEmployeeServiceImpl();
+		viewEmployeeService.viewEmployee(req, resp);
 
 		ServletContext application = req.getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeEdit.jsp");
-
+		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");
 		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		//文字形式をUTF-8指定
-		req.setCharacterEncoding("UTF-8");
-
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.employeeEdit(req, resp);
-
-		resp.sendRedirect("/kot/master/EmployeeList");
+		doGet(req, resp);
 	}
 }

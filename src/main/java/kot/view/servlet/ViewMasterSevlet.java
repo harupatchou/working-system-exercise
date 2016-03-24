@@ -1,4 +1,4 @@
-package main.java.kot.view;
+package main.java.kot.view.servlet;
 
 import java.io.IOException;
 
@@ -9,14 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import main.java.kot.common.SelectDate;
-import main.java.kot.dao.EmployeeDao;
-import main.java.kot.entity.Company;
-import main.java.kot.entity.Employee;
-import main.java.kot.logic.DataLogic;
-import main.java.kot.logic.DateLogic;
+import main.java.kot.view.service.ViewMasterService;
+import main.java.kot.view.serviceImpl.ViewMasterServiceImpl;
 
 @WebServlet("/master/Top")
 public class ViewMasterSevlet extends HttpServlet {
@@ -28,16 +23,10 @@ public class ViewMasterSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		int loginId = (Integer) session.getAttribute("loginId");
-
-		Employee employee = DataLogic.getEmployee(loginId);
-		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
-		//会社IDから年月取得
-		SelectDate selectDate = DateLogic.employeeDateSummary(company);
-		req.setAttribute("selectYear", selectDate.getYearList());
-		req.setAttribute("selectMonth", selectDate.getMonthList());
+		//処理を委譲したServiceの呼び出し
+		req.setAttribute("reqParam", 0);
+		ViewMasterService viewMasterService = new ViewMasterServiceImpl();
+		viewMasterService.viewMaster(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/index.jsp");

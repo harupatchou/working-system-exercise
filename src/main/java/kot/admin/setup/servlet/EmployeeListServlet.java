@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.admin.setup.service.MasterSetupService;
-import main.java.kot.admin.setup.service.MasterSetupServiceImpl;
+import main.java.kot.admin.setup.serviceImpl.MasterSetupServiceImpl;
 
 @WebServlet("/master/EmployeeList")
 public class EmployeeListServlet extends HttpServlet{

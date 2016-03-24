@@ -75,8 +75,8 @@ public class AttendanceServise {
 	}
 
 	//attendance_time内の情報取得
-	public static AttendanceTime selectAttendTime(Employee employee ,Integer labor_system_id) {
-		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee,labor_system_id);
+	public static AttendanceTime selectAttendTime(Employee employee) {
+		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee);
 	}
 
 	public static AttendanceData setAttendanceData(HttpServletRequest req,HttpServletResponse resp) {

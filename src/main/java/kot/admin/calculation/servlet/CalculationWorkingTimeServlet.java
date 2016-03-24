@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
-import main.java.kot.admin.calculation.service.CalculationWorkingTimeServiceImpl;
+import main.java.kot.admin.calculation.serviceImpl.CalculationWorkingTimeServiceImpl;
 
 @WebServlet("/master/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{

@@ -7,7 +7,7 @@ import main.java.kot.common.LimitWorkingTime;
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.WeeklyLegalWorkingTime;
-import main.java.kot.dao.CalculationWorkingTimeDao;
+import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingTimeDao;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.Overtime;
@@ -41,7 +41,7 @@ public class OvertimeLogic {
 
 		//現在の総労働時間
 		Date date = new Date();
-		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
+		CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingAllDao.getCurrentWorkingTimeTotal(employee.getEmployeeId(), date);
 		String currentWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
 		String currentOvertimeTotal = currentCalculationWorkingTimeTotal.getStatutoryOverWorkingTimeTotal();
 
@@ -210,7 +210,7 @@ public class OvertimeLogic {
 			currentWorkingTimeTotal = workingTime;
 			untilYesterdayWorkingTimeTotal = "0:00";
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingAllDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
 			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
 			untilYesterdayWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
 		}
@@ -269,7 +269,7 @@ public class OvertimeLogic {
 			currentWeeklyWorkingTimeTotal = workingTime;
 			untilYesterdayWeeklyWorkingTimeTotal = "0:00";
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWeeklyWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWeeklyWorkingTimeTotal(workingday, startDay, endDay);
+			CalculationWorkingTimeTotal currentCalculationWeeklyWorkingTimeTotal = WorkingAllDao.getCurrentWeeklyWorkingTimeTotal(workingday, startDay, endDay);
 			currentWeeklyWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWeeklyWorkingTimeTotal.getWorkingTimeTotal(), workingTime);
 			untilYesterdayWeeklyWorkingTimeTotal = currentCalculationWeeklyWorkingTimeTotal.getWorkingTimeTotal();
 		}
@@ -359,7 +359,7 @@ public class OvertimeLogic {
 			currentWorkingTimeTotal = todayWorkingTime;
 			untilYesterdayWorkingTimeTotal = "0:00";
 		}else{
-			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = CalculationWorkingTimeDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
+			CalculationWorkingTimeTotal currentCalculationWorkingTimeTotal = WorkingAllDao.getCurrentWorkingTimeTotal(workingday.getEmployeeId(), workingday.getDate());
 			currentWorkingTimeTotal = WorkingTimeLogic.additionWorkingTimeString(currentCalculationWorkingTimeTotal.getWorkingTimeTotal(), todayWorkingTime);
 			untilYesterdayWorkingTimeTotal = currentCalculationWorkingTimeTotal.getWorkingTimeTotal();
 		}

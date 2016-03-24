@@ -142,7 +142,7 @@ public class AttendanceLogic {
 
 	public static WorkingAll setWorkingAll(AttendanceData attendanceData) {
 		//勤怠時間関連取得
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee(),attendanceData.getEmployee().getWorkingType().getLaborSystem().getId());
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee());
 
 		StrTime strTime = new StrTime();
 		Overtime overtime = new Overtime();

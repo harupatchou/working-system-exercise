@@ -68,7 +68,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setAttribute("attendanceStatus", attendanceStatus);
 
 		//従業員の出社時間と退社時間を算出
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(employee,employee.getWorkingType().getLaborSystem().getId());
+		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(employee);
 
 		req.setAttribute("attendanceTime", attendanceTime);
 

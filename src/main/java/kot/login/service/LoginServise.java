@@ -16,7 +16,7 @@ public class LoginServise extends HttpServlet{
 
 	//employee_idからemployee情報取得
 	public static Employee getSessionEmployee(Integer employeeId){
-		return EmployeeDao.getEmployeeWithCompany(employeeId);
+		return EmployeeDao.getEmployee(employeeId);
 	}
 
 	//company_idからcompany情報取得（紐付いている情報全て）

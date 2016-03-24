@@ -9,7 +9,7 @@ import java.util.List;
 import main.java.kot.common.Schedule;
 import main.java.kot.common.SelectDate;
 import main.java.kot.common.TempDate;
-import main.java.kot.dao.CalculationWorkingTimeDao;
+import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.Company;
@@ -259,7 +259,7 @@ public class DateLogic {
 
 		for(int i = 0;i < employeeList.size(); i++){
 			int employeeId = employeeList.get(i).getEmployeeId();
-			SelectDate tempSelectDate = CalculationWorkingTimeDao.getYearAndMonth(employeeId);
+			SelectDate tempSelectDate = WorkingAllDao.getYearAndMonth(employeeId);
 			List<Integer> tempYearList = tempSelectDate.getYearList();
 			List<Integer> tempMonthList = tempSelectDate.getMonthList();
 			for(int j = 0; j < tempYearList.size(); j++){
