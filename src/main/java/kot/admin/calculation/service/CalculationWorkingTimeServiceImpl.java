@@ -24,7 +24,7 @@ public class CalculationWorkingTimeServiceImpl implements CalculationWorkingTime
 		/* Get*/
 		if(reqParam == 0){
 
-			/*doGet側処理、ここに書く*/
+			/* doGet側処理、今後追加する際はここに書く*/
 
 		/* Post */
 		}else{
@@ -34,7 +34,7 @@ public class CalculationWorkingTimeServiceImpl implements CalculationWorkingTime
 			int loginId = (Integer) session.getAttribute("loginId");
 
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 
 			String stringYear = req.getParameter("year");
 			Integer year = Integer.parseInt(stringYear);

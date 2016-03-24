@@ -11,7 +11,6 @@ import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.SelectDate;
 import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.WorkingDay;
-import main.java.kot.logic.ArrayListLogic;
 import main.java.kot.logic.HolidayLogic;
 
 /**
@@ -170,7 +169,7 @@ public class CalculationWorkingTimeDao {
 
 	/*年月を取得*/
 	public static SelectDate getYearAndMonth(Integer employeeId){
-		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month FROM " + tableName + " WHERE employee_id = " + employeeId;
+		String sql = "SELECT DISTINCT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month FROM " + tableName + " WHERE employee_id = " + employeeId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			SelectDate selectDate = new SelectDate();
@@ -182,9 +181,13 @@ public class CalculationWorkingTimeDao {
 				yearList.add(rs.getInt("year"));
 				monthList.add(rs.getInt("month"));
 			}
+
+			selectDate.setYearList(yearList);
+			selectDate.setMonthList(monthList);
+
 			//重複削除してセット
-			selectDate.setYearList(ArrayListLogic.duplicateDelete(yearList));
-			selectDate.setMonthList(ArrayListLogic.duplicateDelete(monthList));
+		/*	selectDate.setYearList(ArrayListLogic.duplicateDelete(yearList));
+			selectDate.setMonthList(ArrayListLogic.duplicateDelete(monthList));*/
 			return selectDate;
 
 		}catch(SQLException e){

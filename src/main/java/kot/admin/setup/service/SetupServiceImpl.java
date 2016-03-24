@@ -32,14 +32,14 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員情報
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 
 			req.setAttribute("employeeList", company.getEmployeeList());
 
 		/* Post */
 		}else{
 
-			/*現状なにもなし、今後追加する際はここに書く*/
+			/* doPost側処理、今後追加する際はここに書く*/
 
 		}
 
@@ -59,7 +59,7 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員種別情報
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 			company = DataLogic.getWorkingTypeOfCompany(company);
 
 			req.setAttribute("workingtypeList", company.getWorkingtypeList());
@@ -81,7 +81,7 @@ public class SetupServiceImpl implements SetupService{
 
 			workingtype.setId(workingtypeId);
 			workingtype.setWorkingName(workingName);
-			workingtype.setLaborSystemId(laborSystemId);
+			workingtype.getLaborSystem().setId(laborSystemId);
 			workingtype.setCompanyId(companyId);
 
 			WorkingtypeDao.registWorkingtype(workingtype);
@@ -90,7 +90,7 @@ public class SetupServiceImpl implements SetupService{
 	}
 
 	@Override
-	public void epmloyeeEdit(HttpServletRequest req, HttpServletResponse resp){
+	public void employeeEdit(HttpServletRequest req, HttpServletResponse resp){
 
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
@@ -103,7 +103,7 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員種別リスト
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 			company = DataLogic.getWorkingTypeOfCompany(company);
 
 			req.setAttribute("workingtypeList", company.getWorkingtypeList());
@@ -142,9 +142,9 @@ public class SetupServiceImpl implements SetupService{
 			employee.setFirstName(firstName);
 			employee.setLastName(lastName);
 			employee.setEmployeeId(employeeId);
-			employee.setWorkingTypeId(workingtypeId);
+			employee.getWorkingType().setId(workingtypeId);
 			employee.setPassword(password);
-			employee.setCompanyId(sessEmployee.getCompanyId());
+			employee.setCompany(sessEmployee.getCompany());
 
 			//従業員登録
 			SetupLogic.registEmployee(employee);

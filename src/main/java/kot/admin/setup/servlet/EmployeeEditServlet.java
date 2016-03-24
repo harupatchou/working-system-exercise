@@ -27,7 +27,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 0);
 		SetupService setupService = new SetupServiceImpl();
-		setupService.epmloyeeEdit(req, resp);
+		setupService.employeeEdit(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeEdit.jsp");
@@ -45,7 +45,7 @@ public class EmployeeEditServlet extends HttpServlet{
 		//処理を委譲したServiceの呼び出し
 		req.setAttribute("reqParam", 1);
 		SetupService setupService = new SetupServiceImpl();
-		setupService.epmloyeeEdit(req, resp);
+		setupService.employeeEdit(req, resp);
 
 		resp.sendRedirect("/kot/master/EmployeeList");
 	}

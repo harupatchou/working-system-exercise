@@ -9,8 +9,6 @@ public class Workingtype {
 	private Integer id;
 	//種別名
 	private String workingName;
-	//労働制
-	private Integer labor_system_id;
 	//会社コード
 	private Integer company_id;
 	//労働制
@@ -19,10 +17,9 @@ public class Workingtype {
 	public Workingtype(){
 	}
 
-	public Workingtype(Integer id, String workingName, Integer labor_system_id,Integer company_id,LaborSystem laborSystem){
+	public Workingtype(Integer id, String workingName, Integer company_id,LaborSystem laborSystem){
 		this.id = id;
 		this.workingName = workingName;
-		this.labor_system_id = labor_system_id;
 		this.company_id = company_id;
 		this.laborSystem = laborSystem;
 	}
@@ -38,12 +35,6 @@ public class Workingtype {
 	}
 	public void setWorkingName(String workingName) {
 		this.workingName = workingName;
-	}
-	public Integer getLaborSystemId() {
-		return labor_system_id;
-	}
-	public void setLaborSystemId(Integer labor_system_id) {
-		this.labor_system_id = labor_system_id;
 	}
 	public Integer getCompanyId() {
 		return company_id;
