@@ -1,27 +1,10 @@
 package main.java.kot.login.service;
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.dao.CompanyDao;
-import main.java.kot.dao.EmployeeDao;
-import main.java.kot.entity.Company;
-import main.java.kot.entity.Employee;
+public interface LoginServise{
 
-public class LoginServise extends HttpServlet{
-
-	//employee_idからログインチェック
-	public static Employee LoginCheckInfo(Integer employeeId){
-		return EmployeeDao.LoginCheckInfo(employeeId);
-	}
-
-	//employee_idからemployee情報取得
-	public static Employee getSessionEmployee(Integer employeeId){
-		return EmployeeDao.getEmployee(employeeId);
-	}
-
-	//company_idからcompany情報取得（紐付いている情報全て）
-	public static Company getSessionCompany(Integer companyId) {
-		return CompanyDao.getCompany(companyId);
-	}
-
+	/*LoginSevlet委譲処理*/
+	public String Login(HttpServletRequest req, HttpServletResponse resp);
 }

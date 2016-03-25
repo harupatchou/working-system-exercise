@@ -44,7 +44,6 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			/* doPost側処理、今後追加する際はここに書く*/
 
 		}
-
 	}
 
 	@Override
