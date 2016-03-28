@@ -16,6 +16,13 @@ import main.java.kot.employee.attendance.serviceImpl.MonthlyAttendanceServiceImp
 @WebServlet("/employee/MonthlyAttendance")
 public class MonthlyAttedanceServlet extends HttpServlet{
 
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		MonthlyAttendanceService monthlyAttendanceService = new MonthlyAttendanceServiceImpl();
+		monthlyAttendanceService.monthlyAttendance(req, resp);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -23,10 +30,8 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		MonthlyAttendanceService monthlyAttendanceService = new MonthlyAttendanceServiceImpl();
-		monthlyAttendanceService.monthlyAttendance(req, resp);
+		//serviceの呼び出し
+		serviceInvocation(req, resp, 0);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/monthly/monthlyAttendance.jsp");

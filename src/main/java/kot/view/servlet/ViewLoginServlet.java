@@ -17,6 +17,13 @@ import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 @WebServlet("/login")
 public class ViewLoginServlet extends HttpServlet {
 
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		ViewLoginService viewLoginService = new ViewLoginServiceImpl();
+		viewLoginService.viewLogin(req, resp);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -40,10 +47,8 @@ public class ViewLoginServlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		ViewLoginService viewLoginService = new ViewLoginServiceImpl();
-		viewLoginService.viewLogin(req, resp);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 1);
 
 		resp.sendRedirect("/kot/login/check");
 	}

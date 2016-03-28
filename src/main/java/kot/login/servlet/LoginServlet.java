@@ -14,6 +14,14 @@ import main.java.kot.login.serviceImpl.LoginServiceImpl;
 @WebServlet("/login/check")
 public class LoginServlet extends HttpServlet{
 
+	/* Serviceの呼び出し */
+	private static String serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		LoginServise loginService = new LoginServiceImpl();
+		String url = loginService.Login(req, resp);
+		return url;
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -27,10 +35,8 @@ public class LoginServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		LoginServise loginService = new LoginServiceImpl();
-		String url = loginService.Login(req, resp);
+		//Serviceの呼び出し
+		String url = serviceInvocation(req, resp, 1);
 
 		resp.sendRedirect(url);
 	}

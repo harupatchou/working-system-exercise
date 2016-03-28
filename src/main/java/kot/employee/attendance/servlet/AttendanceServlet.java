@@ -1,7 +1,6 @@
 package main.java.kot.employee.attendance.servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -17,7 +16,12 @@ import main.java.kot.employee.attendance.serviceImpl.AttendanceServiceImpl;
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		AttendanceServise attendanceService = new AttendanceServiceImpl();
+		attendanceService.attendance(req, resp);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
@@ -25,10 +29,8 @@ public class AttendanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		AttendanceServise attendanceService = new AttendanceServiceImpl();
-		attendanceService.attendance(req, resp);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 0);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");
@@ -42,10 +44,8 @@ public class AttendanceServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		AttendanceServise attendanceService = new AttendanceServiceImpl();
-		attendanceService.attendance(req, resp);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 1);
 
 		resp.sendRedirect("/kot/employee/MonthlyAttendance");
 

@@ -16,6 +16,13 @@ import main.java.kot.view.serviceImpl.ViewEmployeeServiceImpl;
 @WebServlet("/employee/Top")
 public class ViewEmployeeSevlet extends HttpServlet {
 
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		ViewEmployeeService viewEmployeeService = new ViewEmployeeServiceImpl();
+		viewEmployeeService.viewEmployee(req, resp);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -23,10 +30,8 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		ViewEmployeeService viewEmployeeService = new ViewEmployeeServiceImpl();
-		viewEmployeeService.viewEmployee(req, resp);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 0);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");

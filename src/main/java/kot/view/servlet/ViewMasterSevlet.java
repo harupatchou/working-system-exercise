@@ -16,6 +16,13 @@ import main.java.kot.view.serviceImpl.ViewMasterServiceImpl;
 @WebServlet("/master/Top")
 public class ViewMasterSevlet extends HttpServlet {
 
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		ViewMasterService viewMasterService = new ViewMasterServiceImpl();
+		viewMasterService.viewMaster(req, resp);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -23,10 +30,8 @@ public class ViewMasterSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		ViewMasterService viewMasterService = new ViewMasterServiceImpl();
-		viewMasterService.viewMaster(req, resp);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 0);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/index.jsp");
