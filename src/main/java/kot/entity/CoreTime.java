@@ -20,7 +20,6 @@ public class CoreTime {
 		this.coreTimeEnd = coreTimeEnd;
 	}
 
-
 	public CoreTime() {
 	}
 	public CoreTime(String coreTimeStrat, String coreTimeEnd) {

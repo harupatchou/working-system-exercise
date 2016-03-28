@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.service.MasterSetupService;
-import main.java.kot.admin.setup.serviceImpl.MasterSetupServiceImpl;
+import main.java.kot.admin.setup.common.ServiceInvocation;
 
 @WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
@@ -23,10 +22,8 @@ public class CompanyEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.companyEdit(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 0, 1);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
@@ -42,10 +39,8 @@ public class CompanyEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.companyEdit(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 1, 1);
 
 		resp.sendRedirect("/kot/login");
 	}

@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.service.MasterSetupService;
-import main.java.kot.admin.setup.serviceImpl.MasterSetupServiceImpl;
+import main.java.kot.admin.setup.common.ServiceInvocation;
 
 @WebServlet("/master/WorkingtypeList")
 public class WorkingtypeListServlet extends HttpServlet{
@@ -23,10 +22,8 @@ public class WorkingtypeListServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.workingtypeList(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 0, 4);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/working_type/workingTypeList.jsp");
@@ -41,10 +38,8 @@ public class WorkingtypeListServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		MasterSetupService setupService = new MasterSetupServiceImpl();
-		setupService.workingtypeList(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 1, 4);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");
