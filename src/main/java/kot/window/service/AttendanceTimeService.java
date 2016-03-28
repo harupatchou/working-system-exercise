@@ -1,4 +1,4 @@
-package main.java.kot.window.serviceimpl;
+package main.java.kot.window.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

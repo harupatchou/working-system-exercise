@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.window.service.AttendanceTimeServiceImpl;
-import main.java.kot.window.serviceimpl.AttendanceTimeService;
+import main.java.kot.window.service.AttendanceTimeService;
+import main.java.kot.window.serviceimpl.AttendanceTimeServiceImpl;
 
 
 @WebServlet("/window/attendanceTime")

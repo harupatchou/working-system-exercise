@@ -1,4 +1,4 @@
-package main.java.kot.window.service;
+package main.java.kot.window.serviceimpl;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import main.java.kot.admin.setup.logic.MasterSetupLogic;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.WorkingTime;
-import main.java.kot.window.serviceimpl.AttendanceTimeService;
+import main.java.kot.window.service.AttendanceTimeService;
 
 public class AttendanceTimeServiceImpl implements AttendanceTimeService {
 
