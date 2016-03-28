@@ -16,8 +16,6 @@ public class Company {
 	private Integer masterId;
 	//従業員リスト
 	private List<Employee> employeeList;
-	//勤怠時間リスト
-	private List<AttendanceTime> attendanceTime;
 	//従業員種別リスト
 	private List<Workingtype> workingtypeList;
 
@@ -59,13 +57,6 @@ public class Company {
 		this.employeeList = employeeList;
 	}
 
-	public List<AttendanceTime> getAttendanceTime() {
-		return attendanceTime;
-	}
-
-	public void setAttendanceTime(List<AttendanceTime> attendanceTime) {
-		this.attendanceTime = attendanceTime;
-	}
 	public List<Workingtype> getWorkingtypeList() {
 		return workingtypeList;
 	}

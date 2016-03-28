@@ -13,15 +13,18 @@ public class Workingtype {
 	private Company company;
 	//労働制
 	private LaborSystem laborSystem;
+	//勤怠時間
+	private AttendanceTime attendanceTime;
 
 	public Workingtype(){
 	}
 
-	public Workingtype(Integer id, String workingName, Integer company_id,Company company,LaborSystem laborSystem){
+	public Workingtype(Integer id, String workingName, Integer company_id,Company company,LaborSystem laborSystem, AttendanceTime attendanceTime){
 		this.id = id;
 		this.workingName = workingName;
 		this.company = company;
 		this.laborSystem = laborSystem;
+		this.attendanceTime = attendanceTime;
 	}
 
 	public Integer getId() {
@@ -48,5 +51,12 @@ public class Workingtype {
 	public void setLaborSystem(LaborSystem loborSystem) {
 		this.laborSystem = loborSystem;
 	}
+	public AttendanceTime getAttendanceTime() {
+		return attendanceTime;
+	}
+	public void setAttendanceTime(AttendanceTime attendanceTime) {
+		this.attendanceTime = attendanceTime;
+	}
+
 
 }

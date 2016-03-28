@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.kot.common.database.DBcommon;
+import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
+import main.java.kot.entity.CoreTime;
 import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Workingtype;
 
@@ -42,7 +44,8 @@ public class WorkingtypeDao {
 
 	/*従業員種別IDから従業員種別情報を取得*/
 	public static Workingtype getWorkingtype(Integer workingtypeId){
-		String sql = "SELECT work.*,labor.* FROM working_type work JOIN labor_system labor ON work.labor_system_id = labor.id WHERE work.id = " + workingtypeId;
+		String sql = "SELECT work.*,labor.*,attend.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id "
+				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.id = " + workingtypeId;
 
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
@@ -55,10 +58,20 @@ public class WorkingtypeDao {
 					tempCompany.setId(rs.getInt("company_id"));
 					workingtype.setCompany(tempCompany);
 
-					LaborSystem laborSystem = new LaborSystem();
-					laborSystem.setId(rs.getInt("labor_system_id"));
-					laborSystem.setLaborSystemName(rs.getString("labor_system_name"));
-					workingtype.setLaborSystem(laborSystem);
+					LaborSystem tempLabor = new LaborSystem();
+					tempLabor.setId(rs.getInt("labor_system_id"));
+					tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
+					workingtype.setLaborSystem(tempLabor);
+
+					AttendanceTime tempAttend = new AttendanceTime();
+					tempAttend.setStartTime(rs.getString("start_time"));
+					tempAttend.setEndTime(rs.getString("end_time"));
+
+					CoreTime tempCore = new CoreTime();
+					tempCore.setCoreTimeStrat(rs.getString("core_time_start"));
+					tempCore.setCoreTimeEnd(rs.getString("core_time_end"));
+					tempAttend.setCoreTime(tempCore);
+					workingtype.setAttendanceTime(tempAttend);
 				}
 				return workingtype;
 
@@ -71,7 +84,8 @@ public class WorkingtypeDao {
 	/*会社IDから従業員種別情報を取得*/
 	public static List<Workingtype>  getWorkingtypeFromCompanyId(Integer companyId){
 
-		String sql = "SELECT work.*,labor.* FROM working_type work JOIN labor_system labor ON work.labor_system_id = labor.id WHERE work.id = " + companyId;
+		String sql = "SELECT work.*,labor.*,attend.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id "
+				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.id = " + companyId;
 
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
@@ -85,10 +99,21 @@ public class WorkingtypeDao {
 					tempCompany.setId(rs.getInt("company_id"));
 					workingtype.setCompany(tempCompany);
 
-					LaborSystem laborSystem = new LaborSystem();
-					laborSystem.setId(rs.getInt("labor_system_id"));
-					laborSystem.setLaborSystemName(rs.getString("labor_system_name"));
-					workingtype.setLaborSystem(laborSystem);
+					LaborSystem tempLabor = new LaborSystem();
+					tempLabor.setId(rs.getInt("labor_system_id"));
+					tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
+					workingtype.setLaborSystem(tempLabor);
+
+					AttendanceTime tempAttend = new AttendanceTime();
+					tempAttend.setStartTime(rs.getString("start_time"));
+					tempAttend.setEndTime(rs.getString("end_time"));
+
+					CoreTime tempCore = new CoreTime();
+					tempCore.setCoreTimeStrat(rs.getString("core_time_start"));
+					tempCore.setCoreTimeEnd(rs.getString("core_time_end"));
+					tempAttend.setCoreTime(tempCore);
+					workingtype.setAttendanceTime(tempAttend);
+
 					workingytpeList.add(workingtype);
 				}
 				return workingytpeList;
