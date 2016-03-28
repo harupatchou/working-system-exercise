@@ -1,10 +1,11 @@
 package main.java.kot.util;
 
+import main.java.kot.common.Schedule;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import main.java.kot.common.Schedule;
-
+//TODO DATEUTIL使った？？？
 public class CalendarUtil {
 
 	//曜日定数

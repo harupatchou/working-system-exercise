@@ -1,6 +1,7 @@
 package main.java.kot.window.servlet;
 
-import java.io.IOException;
+import main.java.kot.window.service.AttendanceTimeService;
+import main.java.kot.window.serviceimpl.AttendanceTimeServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,18 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import main.java.kot.window.service.AttendanceTimeService;
-import main.java.kot.window.serviceimpl.AttendanceTimeServiceImpl;
+import java.io.IOException;
 
 
 @WebServlet("/window/attendanceTime")
 public class AttendanceTimeServlet extends HttpServlet {
 
 	/* Serviceの呼び出し */
+	//TODO 切り出した目的は？
 	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		AttendanceTimeService attendanceTimeService = new AttendanceTimeServiceImpl();
+		req.setAttribute("reqParam", reqParam); //FIXME なぜここでセットしてる？
+		AttendanceTimeService attendanceTimeService = new AttendanceTimeServiceImpl(); //TODO ここでインスタンス化する意味は？
 		attendanceTimeService.attendanceTime(req, resp);
 	}
 
@@ -32,7 +32,7 @@ public class AttendanceTimeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 0);
+		serviceInvocation(req, resp, 0); //FIXME このゼロなにかな
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/window/attendanceTime.jsp");

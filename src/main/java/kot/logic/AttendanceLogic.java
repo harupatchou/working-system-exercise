@@ -1,12 +1,5 @@
 package main.java.kot.logic;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import main.java.kot.common.AttendanceData;
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
@@ -14,13 +7,13 @@ import main.java.kot.common.StrTime;
 import main.java.kot.dao.AttendanceStatusDao;
 import main.java.kot.dao.AttendanceTimeDao;
 import main.java.kot.dao.WorkingDayDao;
-import main.java.kot.entity.AttendanceStatus;
-import main.java.kot.entity.AttendanceTime;
-import main.java.kot.entity.Employee;
-import main.java.kot.entity.LaborSystem;
-import main.java.kot.entity.Overtime;
-import main.java.kot.entity.WorkingAll;
-import main.java.kot.entity.WorkingDay;
+import main.java.kot.entity.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttendanceLogic {
 
@@ -80,6 +73,7 @@ public class AttendanceLogic {
 		String breakEndTime = req.getParameter("breakEndTime");
 
 		// 入力がなければ00:00を入れる
+		//FIXME 定数化しようよ・・・
 		if (startTime.equals("")) {
 			startTime = "0:00";
 			endTime = "0:00";
@@ -137,6 +131,7 @@ public class AttendanceLogic {
 			workingDay.setEmployeeId(attendanceData.getEmployee().getEmployeeId());
 			workingDay.setStatusCode(statusCode);
 			//ステータスで場合分け
+			//FIXME マジックナンバーやめて
 			if(statusCode == 1){
 				//もし出勤ならば
 				workingDay.setAttendanceTime(attendanceData.getStrTime().getStartTime());
@@ -180,6 +175,7 @@ public class AttendanceLogic {
 		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
 
 		//種別毎に必要な処理
+		//FIXME LaborSystemごとに処理を持つクラス作ったら？setOverTimeでも同じ分岐してますよね。
 		if(laborSystemId == LaborSystem.normalLaborSystem){
 			/* 通常労働制ならば */
 			//遅刻計算

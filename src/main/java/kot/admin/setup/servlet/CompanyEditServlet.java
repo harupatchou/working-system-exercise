@@ -1,6 +1,6 @@
 package main.java.kot.admin.setup.servlet;
 
-import java.io.IOException;
+import main.java.kot.admin.setup.common.ServiceInvocation;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,8 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import main.java.kot.admin.setup.common.ServiceInvocation;
+import java.io.IOException;
 
 @WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
@@ -23,7 +22,7 @@ public class CompanyEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, 0, 1);
+		ServiceInvocation.serviceInvocation(req, resp, 0, 1);//FIXME マジックナンバーおおくない？
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");

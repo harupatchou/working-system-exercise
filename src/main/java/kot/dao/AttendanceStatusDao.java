@@ -1,12 +1,12 @@
 package main.java.kot.dao;
 
+import main.java.kot.common.database.DBcommon;
+import main.java.kot.entity.AttendanceStatus;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.kot.common.database.DBcommon;
-import main.java.kot.entity.AttendanceStatus;
 
 public class AttendanceStatusDao {
 
@@ -18,6 +18,7 @@ public class AttendanceStatusDao {
 
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
+			//TODO もっと共通化できる気が・・・。
 			List<AttendanceStatus> statusList = new ArrayList<>();
 			while(rs.next()){
 				AttendanceStatus attendanceStatus = new AttendanceStatus();

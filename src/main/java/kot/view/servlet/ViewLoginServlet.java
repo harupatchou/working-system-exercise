@@ -1,6 +1,7 @@
 package main.java.kot.view.servlet;
 
-import java.io.IOException;
+import main.java.kot.view.service.ViewLoginService;
+import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import main.java.kot.view.service.ViewLoginService;
-import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
+import java.io.IOException;
 
 @WebServlet("/login")
 public class ViewLoginServlet extends HttpServlet {
@@ -32,6 +31,7 @@ public class ViewLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//セッション破棄
+		//TODO なんで破棄？
 		HttpSession session=req.getSession(true);
 		session.invalidate();
 
@@ -48,7 +48,7 @@ public class ViewLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 1);
+		serviceInvocation(req, resp, 1);//FIXME マジックナンバーやめて
 
 		resp.sendRedirect("/kot/login/check");
 	}

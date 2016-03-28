@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//FIXME キャメルケースで書いて
 public class DBcommon {
 
 	/*ResultSetオブジェクト作成*/
+	//static final メソッドってどういう意味？
 	public static final ResultSet getResultSet(String sql){
 		try{
 			Connection con = DBManager.createConnection();

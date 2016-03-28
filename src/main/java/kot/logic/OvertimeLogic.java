@@ -1,7 +1,5 @@
 package main.java.kot.logic;
 
-import java.util.Date;
-
 import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.LimitWorkingTime;
 import main.java.kot.common.TempTime;
@@ -9,12 +7,10 @@ import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.WeeklyLegalWorkingTime;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingTimeDao;
-import main.java.kot.entity.Employee;
-import main.java.kot.entity.Overtime;
-import main.java.kot.entity.WorkingDay;
-import main.java.kot.entity.WorkingTime;
-import main.java.kot.entity.Workingtype;
+import main.java.kot.entity.*;
 import main.java.kot.util.CalendarUtil;
+
+import java.util.Date;
 
 /**
  * 残業関連ロジッククラス
@@ -22,7 +18,7 @@ import main.java.kot.util.CalendarUtil;
  **/
 public class OvertimeLogic {
 
-	private static final String ZEROHOUR = "0:00";
+	private static final String ZEROHOUR = "0:00"; //TODO ここだけで定数化している意味は？
 
 	/*実労働時間取得*/
 	private static String getWorkingTime(WorkingDay workingday){
@@ -96,6 +92,7 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//本日の労働時間で法定労働時間を超えた場合
+		//FIXME 分岐の処理の違いがわからない
 		if(largeMonthlyWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeMonthlyWorkingTime.equals(monthlyLegalWorkingtime)){
 			String monthlyOvetime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
 
@@ -124,6 +121,7 @@ public class OvertimeLogic {
 		int endDay = day;
 
 		//金曜日に週の労働時間と法定労働時間から残業計算を行う
+		// FIXME Integerをイコールで比較するのはまずい。
 		if(workingday.getWeek() == CalendarUtil.FRIDAY){
 			//第一週
 			if(day <= 5){

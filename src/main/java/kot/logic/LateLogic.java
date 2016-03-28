@@ -8,6 +8,7 @@ public class LateLogic {
 		String[] tempProvision = provisionAttendTime.split(":");
 		String[] tempAttendance = startTime.split(":");
 
+		//TODO 一旦Stringにする意味は？
 		String strProvisionHour = tempProvision[0];
 		String strProvisionMinutes = tempProvision[1];
 		String strAttendanceHour = tempAttendance[0];
@@ -29,7 +30,7 @@ public class LateLogic {
 		//出社時間が規定時間を超えていれば
 		if(provisionHour<=attendanceHour){
 			//出社時間から規定時間を引く
-			tempLateHour = String.valueOf(attendanceHour - provisionHour);
+			tempLateHour = String.valueOf(attendanceHour - provisionHour);//FIXME String.valueOfを使いまくる意味ある？
 			//分数計算
 			if(provisionMinutes<=attendanceMinutes){
 				tempLateMinutes = String.valueOf(attendanceMinutes - provisionMinutes);
@@ -42,7 +43,7 @@ public class LateLogic {
 				tempLateMinutes = "0" + tempLateMinutes;
 			}
 
-			lateTime += tempLateHour + ":" + tempLateMinutes;
+			lateTime += tempLateHour + ":" + tempLateMinutes; //FIXME +=の意味がわかんない
 
 		}else{
 			lateTime="0:00";

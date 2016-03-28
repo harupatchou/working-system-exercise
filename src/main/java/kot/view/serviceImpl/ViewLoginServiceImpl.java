@@ -1,10 +1,10 @@
 package main.java.kot.view.serviceImpl;
 
+import main.java.kot.view.service.ViewLoginService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import main.java.kot.view.service.ViewLoginService;
 
 public class ViewLoginServiceImpl implements ViewLoginService{
 
@@ -24,7 +24,7 @@ public class ViewLoginServiceImpl implements ViewLoginService{
 			//初期化
 			HttpSession session=req.getSession(true);
 			//セッションのタイムアウト時間20分
-			session.setMaxInactiveInterval(1200);
+			session.setMaxInactiveInterval(1200); //TODO なぜここでタイムアウト20分？？20分の意味は？
 
 			String strUserId =req.getParameter("userId");
 			Integer userId = Integer.parseInt(strUserId);

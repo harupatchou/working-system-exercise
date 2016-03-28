@@ -12,6 +12,7 @@ public class AttendanceTime {
 	//退勤時間
 	private String endTime;
 	//コアタイム
+	// FIXME 全ての勤務時間にコアタイムが適用されるような表現ですが・・・？
 	private CoreTime coreTime;
 	//従業員種別
 	private LaborSystem laborSystem;
