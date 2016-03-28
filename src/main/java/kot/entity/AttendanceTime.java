@@ -11,10 +11,12 @@ public class AttendanceTime {
 	private String startTime;
 	//退勤時間
 	private String endTime;
-	//コアタイム開始時間
+/*	//コアタイム開始時間
 	private String coreTimeStrat;
 	//コアタイム終了時間
-	private String coreTimeEnd;
+	private String coreTimeEnd;*/
+	//コアタイム
+	private CoreTime coreTime;
 	//従業員種別
 	private LaborSystem laborSystem;
 	//カンパニー
@@ -45,7 +47,7 @@ public class AttendanceTime {
 		this.endTime = endTime;
 	}
 
-	public String getCoreTimeStrat() {
+/*	public String getCoreTimeStrat() {
 		return coreTimeStrat;
 	}
 
@@ -59,6 +61,14 @@ public class AttendanceTime {
 
 	public void setCoreTimeEnd(String coreTimeEnd) {
 		this.coreTimeEnd = coreTimeEnd;
+	}*/
+
+	public CoreTime getCoreTime() {
+		return coreTime;
+	}
+
+	public void setCoreTime(CoreTime coreTime) {
+		this.coreTime = coreTime;
 	}
 
 	public AttendanceTime(){

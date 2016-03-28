@@ -9,6 +9,7 @@ import java.util.List;
 import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
+import main.java.kot.entity.CoreTime;
 
 public class CompanyDao {
 
@@ -88,8 +89,11 @@ public class CompanyDao {
 
 					tempAttend.setStartTime(rs.getString("start_time"));
 					tempAttend.setEndTime(rs.getString("end_time"));
-					tempAttend.setCoreTimeStrat(rs.getString("core_time_start"));
-					tempAttend.setCoreTimeEnd(rs.getString("core_time_end"));
+
+					CoreTime coreTime = new CoreTime();
+					coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+					coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+					tempAttend.setCoreTime(coreTime);
 
 					attendList.add(tempAttend);
 

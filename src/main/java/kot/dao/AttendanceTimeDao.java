@@ -8,6 +8,7 @@ import java.util.List;
 
 import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.CoreTime;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.LaborSystem;
 
@@ -27,8 +28,11 @@ public class AttendanceTimeDao {
 				attendanceTime.setId(rs.getInt("id"));
 				attendanceTime.setStartTime(rs.getString("start_time"));
 				attendanceTime.setEndTime(rs.getString("end_time"));
-				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
-				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
+
+				CoreTime coreTime = new CoreTime();
+				coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+				coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+				attendanceTime.setCoreTime(coreTime);
 
 				LaborSystem laborSystem = new LaborSystem();
 				laborSystem.setId(rs.getInt("labor_system_id"));
@@ -58,8 +62,11 @@ public class AttendanceTimeDao {
 				attendanceTime.setId(rs.getInt("id"));
 				attendanceTime.setStartTime(rs.getString("start_time"));
 				attendanceTime.setEndTime(rs.getString("end_time"));
-				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
-				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
+
+				CoreTime coreTime = new CoreTime();
+				coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+				coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+				attendanceTime.setCoreTime(coreTime);
 
 				LaborSystem tempLaborSystem = new LaborSystem();
 				tempLaborSystem.setId(rs.getInt("labor_system_id"));
