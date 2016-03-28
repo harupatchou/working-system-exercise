@@ -8,7 +8,7 @@ import main.java.kot.admin.setup.serviceImpl.MasterSetupServiceImpl;
 
 public class ServiceInvocation {
 
-	//機能ごとの定数
+	//処理呼び出し用定数
 	private static final int companyEdit = 1;
 	private static final int employeeEdit = 2;
 	private static final int employeeList = 3;
