@@ -10,7 +10,6 @@ import main.java.kot.common.Schedule;
 import main.java.kot.common.SelectDate;
 import main.java.kot.common.TempDate;
 import main.java.kot.dao.WorkingAllDao;
-import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
@@ -177,7 +176,7 @@ public class DateLogic {
 			//当日のWorkingDayを取得
 			WorkingDay tempWork = new WorkingDay();
 
-			tempWork = AttendanceServise.selectAllByEmployeeId(year, month,i+1, userId);
+			tempWork = AttendanceLogic.selectAllByEmployeeId(year, month,i+1, userId);
 
 			if(tempWork.getId() == null){
 				tempSchedule.setEnterStatus("未入力");

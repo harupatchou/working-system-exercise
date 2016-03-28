@@ -11,8 +11,12 @@ import main.java.kot.common.AttendanceData;
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
 import main.java.kot.common.StrTime;
-import main.java.kot.employee.attendance.service.AttendanceServise;
+import main.java.kot.dao.AttendanceStatusDao;
+import main.java.kot.dao.AttendanceTimeDao;
+import main.java.kot.dao.WorkingDayDao;
+import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.Employee;
 import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
@@ -21,6 +25,26 @@ import main.java.kot.entity.WorkingDay;
 public class AttendanceLogic {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	//working_day検索
+	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId){
+		return WorkingDayDao.selectByDayAndEmployeeId(selectDay,employeeId);
+	}
+
+	//working_day検索(all)
+	public static WorkingDay selectAllByEmployeeId(Integer year,Integer month,Integer day, Integer userId){
+		return WorkingDayDao.selectAllByEmployeeId(year,month,day,userId);
+	}
+
+	//attendance_status内の情報取得
+	public static List<AttendanceStatus> selectAttendStatusAll(){
+		return AttendanceStatusDao.selectAttendStatusAll();
+	}
+
+	//attendance_time内の情報取得
+	public static AttendanceTime selectAttendTime(Employee employee) {
+		return AttendanceTimeDao.getAttendanceTimeFromLaborSystemId(employee);
+	}
 
 	// 日付の取得
 	public static InsertDay setInsertDay(HttpServletRequest req,AttendanceData attendanceData) {
@@ -142,7 +166,7 @@ public class AttendanceLogic {
 
 	public static WorkingAll setWorkingAll(AttendanceData attendanceData) {
 		//勤怠時間関連取得
-		AttendanceTime attendanceTime = AttendanceServise.selectAttendTime(attendanceData.getEmployee());
+		AttendanceTime attendanceTime = selectAttendTime(attendanceData.getEmployee());
 
 		StrTime strTime = new StrTime();
 		Overtime overtime = new Overtime();
@@ -216,7 +240,7 @@ public class AttendanceLogic {
 
 	public static Overtime setOverTime(AttendanceData attendanceData) {
 		//残業にinsertするためにworkingDayTableのIDを取得
-		WorkingDay insertDayInfo =AttendanceServise.selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
+		WorkingDay insertDayInfo = selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
 		Overtime overtime = new Overtime();
 		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
 
