@@ -189,11 +189,11 @@ public class AttendanceLogic {
 
 		//種別毎に必要な処理
 		//FIXME LaborSystemごとに処理を持つクラス作ったら？setOverTimeでも同じ分岐してますよね。
-		if(laborSystemId == LaborSystem.normalLaborSystem){
+		if(laborSystemId.equals(LaborSystem.normalLaborSystem)){
 			/* 通常労働制ならば */
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
-		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
+		}else if(laborSystemId.equals(LaborSystem.deformationLaborSystem)){
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
 		//フレックス用
@@ -254,12 +254,12 @@ public class AttendanceLogic {
 		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
 
 		//種別毎に必要な処理
-		if(laborSystemId == LaborSystem.normalLaborSystem){
+		if(laborSystemId.equals(LaborSystem.normalLaborSystem)){
 			overtime = OvertimeLogic.getOvertime(attendanceData.getWorkingDay());
-		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
+		}else if(laborSystemId.equals(LaborSystem.deformationLaborSystem)){
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(attendanceData.getWorkingDay());
 		//フレックス用
-		}else if(laborSystemId == LaborSystem.flexLaborSystem){
+		}else if(laborSystemId.equals(LaborSystem.flexLaborSystem)){
 			overtime = OvertimeLogic.getFlexTimeOvertime(attendanceData.getWorkingDay());
 		}
 

@@ -34,7 +34,7 @@ public class CompanyEditService extends Service {
 		//変形労働があるかどうか判別
 		Integer count = 0;
 		for(int i=0;i<attendanceTimeList.size();i++){
-			if(attendanceTimeList.get(i).getLaborSystem().getId() == LaborSystem.deformationLaborSystem){
+			if(attendanceTimeList.get(i).getLaborSystem().getId().equals(LaborSystem.deformationLaborSystem)){
 				count += 1;
 				Integer irregularId = attendanceTimeList.get(i).getLaborSystem().getId();
 				req.setAttribute("irregular", irregularId);
@@ -86,7 +86,7 @@ public class CompanyEditService extends Service {
 		MasterSetupLogic.registAttendTime(insertTime);
 
 		//もし変形労働ならば
-		if(laborSystemId == 2){
+		if(laborSystemId.equals(LaborSystem.deformationLaborSystem)){
 			String strRegularTime =req.getParameter("regularTime");
 			Double regularTime = Double.parseDouble(strRegularTime);
 
