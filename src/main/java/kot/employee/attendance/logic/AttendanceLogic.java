@@ -86,17 +86,18 @@ public class AttendanceLogic {
 		String breakEndTime = req.getParameter("breakEndTime");
 
 		// 入力がなければ00:00を入れる
-		//FIXME 定数化しようよ・・・
 		if (startTime.equals("")) {
-			startTime = "00:00";
-			endTime = "00:00";
-			breakStartTime = "0:00";
-			breakEndTime = "0:00";
+			/*startTime = ZERO_HOUR;
+			endTime = ZERO_HOUR;
+			breakStartTime = ZERO_HOUR;
+			breakEndTime = ZERO_HOUR;*/
 		}
 
 		// 00:00形式を0:00形式に
 		startTime = DateLogic.formatTimeForServerSide(startTime);
 		endTime = DateLogic.formatTimeForServerSide(endTime);
+		breakStartTime = DateLogic.formatTimeForServerSide(breakStartTime);
+		breakEndTime = DateLogic.formatTimeForServerSide(breakEndTime);
 
 		// 計算用
 		String[] tempBreakStartTime = DateLogic.timeStr(breakStartTime);
@@ -144,8 +145,7 @@ public class AttendanceLogic {
 			workingDay.setEmployeeId(attendanceData.getEmployee().getEmployeeId());
 			workingDay.setStatusCode(statusCode);
 			//ステータスで場合分け
-			//FIXME マジックナンバーやめて
-			if(statusCode == 1){
+			if(statusCode == WorkingDay.NORMAL_ATTENDANCE){
 				//もし出勤ならば
 				workingDay.setAttendanceTime(attendanceData.getStrTime().getStartTime());
 				workingDay.setLeaveTime(attendanceData.getStrTime().getEndTime());
