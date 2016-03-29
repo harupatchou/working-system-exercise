@@ -10,19 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.view.service.ViewEmployeeService;
-import main.java.kot.view.serviceImpl.ViewEmployeeServiceImpl;
 
 @WebServlet("/employee/Top")
 public class ViewEmployeeSevlet extends HttpServlet {
 
-	/* Serviceの呼び出し */
-	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		ViewEmployeeService viewEmployeeService = new ViewEmployeeServiceImpl();
-		viewEmployeeService.viewEmployee(req, resp);
-	}
+	private static ViewEmployeeService viewEmployeeService = new ViewEmployeeService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -32,7 +25,7 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, ServiceConstant.GET_REQUEST);
+		viewEmployeeService.executeGet(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");
