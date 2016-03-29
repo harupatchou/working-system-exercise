@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
 import main.java.kot.admin.calculation.serviceImpl.CalculationWorkingTimeServiceImpl;
+import main.java.kot.common.service.ServiceConstant;
 
 @WebServlet("/master/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
@@ -37,7 +38,7 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//serviceの呼び出し
-		serviceInvocation(req, resp, 1);
+		serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

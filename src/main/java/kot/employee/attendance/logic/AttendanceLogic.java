@@ -27,7 +27,7 @@ import main.java.kot.logic.OvertimeLogic;
 
 public class AttendanceLogic {
 
-	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	//working_day検索
 	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId){

@@ -22,6 +22,8 @@ public class StrTime {
 	String breakTime;
 	//遅刻時間
 	String lateTime;
+	//"0:00"定数
+	public static final String ZERO_HOUR = "0:00";
 
 	public String getStartTime() {
 		return startTime;
