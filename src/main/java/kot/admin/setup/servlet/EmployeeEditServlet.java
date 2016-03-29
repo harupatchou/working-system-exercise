@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.admin.setup.common.ServiceInvocation;
+import main.java.kot.common.service.ServiceInvocation;
 
 @WebServlet("/master/EmployeeEdit")
 public class EmployeeEditServlet extends HttpServlet{
