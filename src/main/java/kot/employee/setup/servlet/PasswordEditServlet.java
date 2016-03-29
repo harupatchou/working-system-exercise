@@ -10,18 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.service.ServiceConstant;
-import main.java.kot.employee.setup.service.EmployeeSetupService;
-import main.java.kot.employee.setup.serviceImpl.EmployeeSetupServiceImpl;
+import main.java.kot.employee.setup.service.PasswordEditService;
 @WebServlet("/employee/PasswordEdit")
 public class PasswordEditServlet extends HttpServlet {
 
-	/* Serviceの呼び出し */
-	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		EmployeeSetupService setupService = new EmployeeSetupServiceImpl();
-		setupService.passwordEdit(req, resp);
-	}
+	private static PasswordEditService passwordEditService = new PasswordEditService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -43,7 +36,7 @@ public class PasswordEditServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
+		passwordEditService.executePost(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/setup/passwordEdit.jsp");
