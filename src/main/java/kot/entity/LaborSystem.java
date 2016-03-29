@@ -12,11 +12,11 @@ public class LaborSystem {
 
 	/*労働制IDの定数*/
 	//通常労働制
-	public static final Integer normalLaborSystem = 1;
+	public static final Integer NORMAL_LABOR_SYSTEM = 1;
 	//変形労働制
-	public static final Integer deformationLaborSystem = 2;
+	public static final Integer DEFORMATION_LABOR_SYSTEM = 2;
 	//フレックス制
-	public static final Integer flexLaborSystem = 3;
+	public static final Integer FLEX_LABOR_SYSTEM = 3;
 
 	public Integer getId() {
 		return id;
