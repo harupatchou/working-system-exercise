@@ -244,7 +244,7 @@ public class AttendanceLogic {
 		//残業にinsertするためにworkingDayTableのIDを取得
 		WorkingDay insertDayInfo = selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
 
-		if(laborSystemId == LaborSystem.normalLaborSystem){
+		if(laborSystemId.equals(LaborSystem.normalLaborSystem)){
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
 			attendanceData.setStrTime(strTime);
@@ -253,7 +253,7 @@ public class AttendanceLogic {
 			//出勤を押した日のidを残業のdailyIdと紐付け
 			overtime.setDailyId(insertDayInfo.getId());
 			attendanceData.setOvertime(overtime);
-		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
+		}else if(laborSystemId.equals(LaborSystem.deformationLaborSystem)){
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
 			attendanceData.setStrTime(strTime);
@@ -261,7 +261,8 @@ public class AttendanceLogic {
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(attendanceData.getWorkingDay());
 			overtime.setDailyId(insertDayInfo.getId());
 			attendanceData.setOvertime(overtime);
-		}else if(laborSystemId == LaborSystem.flexLaborSystem){
+		//フレックス用
+		}else if(laborSystemId.equals(LaborSystem.flexLaborSystem)){
 			overtime = OvertimeLogic.getFlexTimeOvertime(attendanceData.getWorkingDay());
 			overtime.setDailyId(insertDayInfo.getId());
 			attendanceData.setOvertime(overtime);

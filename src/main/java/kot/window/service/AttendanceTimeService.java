@@ -28,7 +28,7 @@ public class AttendanceTimeService extends Service {
 		Integer laborSystemId = Integer.parseInt(req.getParameter("laborSystemId"));
 
 		//通常の場合、出勤時間と退勤時間を編集する画面
-		if(laborSystemId == LaborSystem.normalLaborSystem || laborSystemId == LaborSystem.deformationLaborSystem){
+		if(laborSystemId.equals(LaborSystem.normalLaborSystem) || laborSystemId.equals(LaborSystem.deformationLaborSystem)){
 			//TODO 謎の-1処理
 			String startTime = attendanceTimeList.get(laborSystemId-1).getStartTime();
 			String endTime = attendanceTimeList.get(laborSystemId-1).getEndTime();
