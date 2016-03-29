@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.service.ServiceConstant;
-import main.java.kot.common.service.ServiceInvocation;
+import main.java.kot.admin.setup.service.EmployeeListService;
 
 @WebServlet("/master/EmployeeList")
 public class EmployeeListServlet extends HttpServlet{
+
+	private static EmployeeListService employeeListService = new EmployeeListService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +25,7 @@ public class EmployeeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.GET_REQUEST, ServiceConstant.EMPLOYEE_LIST);
+		employeeListService.executeGet(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
@@ -40,7 +41,7 @@ public class EmployeeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.POST_REQUEST, ServiceConstant.EMPLOYEE_LIST);
+		employeeListService.executePost(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

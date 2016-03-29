@@ -11,19 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.view.service.ViewLoginService;
-import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 
 @WebServlet("/login")
 public class ViewLoginServlet extends HttpServlet {
 
-	/* Serviceの呼び出し */
-	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		ViewLoginService viewLoginService = new ViewLoginServiceImpl();
-		viewLoginService.viewLogin(req, resp);
-	}
+	private static ViewLoginService viewLoginService = new ViewLoginService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -50,7 +43,7 @@ public class ViewLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
+		viewLoginService.executePost(req, resp);
 
 		resp.sendRedirect("/kot/login/check");
 	}
