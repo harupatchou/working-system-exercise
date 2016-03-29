@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.common.service.ServiceInvocation;
 
 @WebServlet("/master/WorkingtypeList")
@@ -23,7 +24,7 @@ public class WorkingtypeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, 0, 4);
+		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.GET_REQUEST, ServiceConstant.WORKING_TYPE);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/working_type/workingTypeList.jsp");
@@ -39,7 +40,7 @@ public class WorkingtypeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, 1, 4);
+		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.POST_REQUEST, ServiceConstant.WORKING_TYPE);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

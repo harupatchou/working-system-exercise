@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.employee.setup.service.EmployeeSetupService;
 import main.java.kot.employee.setup.serviceImpl.EmployeeSetupServiceImpl;
 @WebServlet("/employee/PasswordEdit")
@@ -42,7 +43,7 @@ public class PasswordEditServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 1);
+		serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/setup/passwordEdit.jsp");

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import main.java.kot.common.SelectDate;
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
@@ -20,7 +21,7 @@ public class ViewMasterServiceImpl implements ViewMasterService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -34,7 +35,7 @@ public class ViewMasterServiceImpl implements ViewMasterService{
 			req.setAttribute("selectMonth", selectDate.getMonthList());
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			/* doPost側処理、今後追加する際はここに書く*/
 

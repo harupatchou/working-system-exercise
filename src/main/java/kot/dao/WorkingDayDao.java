@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.WorkingDay;
 
@@ -20,7 +20,7 @@ public class WorkingDayDao {
 		String sql = "INSERT INTO " + tableName + " (date,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,employee_id,legal_flag,attendance_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingDay.getDate());
@@ -57,7 +57,7 @@ public class WorkingDayDao {
 		String sql = "UPDATE " + tableName + " SET attendance_time = ?,leave_time = ?,break_time_start = ?,break_time_end = ?,nap_time = ?,attendance_status = ? WHERE employee_id = " + workingDay.getEmployeeId() + " AND date = ?";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingDay.getDate());
@@ -90,7 +90,7 @@ public class WorkingDayDao {
 
 		String sql = "select * from " + tableName + " where date = '" + selectDay +"' AND employee_id = " +employeeId;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			WorkingDay workingDay = new WorkingDay();
 			while(rs.next()){
@@ -119,7 +119,7 @@ public class WorkingDayDao {
 		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,work.id,week,attendance_time,leave_time,break_time_start,break_time_end,nap_time,legal_flag,attendance_status,status_name FROM " + tableName + " work INNER JOIN attendance_status attend ON work.attendance_status = attend.id  WHERE employee_id = " + userId;
 
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 		WorkingDay workingDay = new WorkingDay();
 		while(rs.next()){

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.LaborSystem;
@@ -21,7 +21,7 @@ public class EmployeeDao {
 	public static Employee getEmployee(Integer employeeId){
 		String sql = "SELECT emp.*,com.*,work.* FROM " + tableName + " emp INNER JOIN company com ON emp.company_id = com.id "
 				+ "INNER JOIN working_type work ON emp.working_type_id = work.id  WHERE emp.id = " + employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
 			while(rs.next()){
@@ -56,7 +56,7 @@ public class EmployeeDao {
 	public static Company getEmployeeFromCompanyId(Integer companyId){
 		String sql = "SELECT emp.*, com.*, work.* FROM " + tableName + " emp JOIN company com ON emp.company_id = com.id "
 				+ "JOIN working_type work ON emp.working_type_id = work.id WHERE emp.company_id =" + companyId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			Company company = new Company();
 			List<Employee> employeeList = new ArrayList<>();
@@ -98,7 +98,7 @@ public class EmployeeDao {
 		String sql = "INSERT INTO " + tableName + " (id, first_name, last_name, password, company_id, working_type_id) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
-            PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+            PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setInt(1, employee.getEmployeeId());
 			pstmt.setString(2, employee.getFirstName());
@@ -121,7 +121,7 @@ public class EmployeeDao {
 	public static boolean updateEmployee(Employee employee) {
 		String sql = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, password = ?, company_id = ?, working_type_id = ? WHERE id = " + employee.getEmployeeId();
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setString(1, employee.getFirstName());
 			pstmt.setString(2, employee.getLastName());
@@ -142,7 +142,7 @@ public class EmployeeDao {
 	//ログイン情報と比較用の取得
 	public static Employee LoginCheckInfo(Integer employeeId) {
 		String sql = "SELECT e.*,c.company_name,c.master_id FROM " + tableName + " e INNER JOIN company c ON e.company_id = c.id WHERE e.id = " + employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
 			Company company = new Company();
@@ -170,7 +170,7 @@ public class EmployeeDao {
 	public static boolean changePassword(Employee employee) {
 		String sql = "UPDATE " + tableName + " SET password = ? WHERE id = " + employee.getEmployeeId();
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setString(1,employee.getPassword());
 

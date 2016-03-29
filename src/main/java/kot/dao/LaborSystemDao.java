@@ -3,7 +3,7 @@ package main.java.kot.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.LaborSystem;
 
 public class LaborSystemDao {
@@ -16,7 +16,7 @@ public class LaborSystemDao {
 
 		String sql = "SELECT * FROM  " + tableName + " WHERE id = " + laborSystemId;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			LaborSystem loborSystem = new LaborSystem();
 				while(rs.next()){

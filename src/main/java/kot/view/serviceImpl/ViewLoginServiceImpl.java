@@ -1,10 +1,11 @@
 package main.java.kot.view.serviceImpl;
 
-import main.java.kot.view.service.ViewLoginService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import main.java.kot.common.service.ServiceConstant;
+import main.java.kot.view.service.ViewLoginService;
 
 public class ViewLoginServiceImpl implements ViewLoginService{
 
@@ -14,12 +15,12 @@ public class ViewLoginServiceImpl implements ViewLoginService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			/* doGett側処理、今後追加する際はここに書く*/
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			//初期化
 			HttpSession session=req.getSession(true);

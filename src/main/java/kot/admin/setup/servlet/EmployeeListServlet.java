@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.common.service.ServiceInvocation;
 
 @WebServlet("/master/EmployeeList")
@@ -23,7 +24,7 @@ public class EmployeeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, 0, 3);
+		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.GET_REQUEST, ServiceConstant.EMPLOYEE_LIST);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/employee/employeeList.jsp");
@@ -39,7 +40,7 @@ public class EmployeeListServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, 1, 3);
+		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.POST_REQUEST, ServiceConstant.EMPLOYEE_LIST);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.CoreTime;
 import main.java.kot.entity.Employee;
@@ -21,7 +21,7 @@ public class AttendanceTimeDao {
 		Integer laborSystemId = employee.getWorkingType().getLaborSystem().getId();
 		Integer companyId = employee.getCompany().getId();
 		String sql = "SELECT * FROM " + tableName + " at JOIN labor_system labor ON at.labor_system_id = labor.id WHERE labor_system_id = " + laborSystemId + " AND company_id = " + companyId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			AttendanceTime attendanceTime = new AttendanceTime();
 			while(rs.next()){
@@ -53,7 +53,7 @@ public class AttendanceTimeDao {
 	public static List<AttendanceTime> getAttendanceTime(Integer id) {
 		String sql = "SELECT at.*,ls.* FROM attendance_time at INNER JOIN labor_system ls ON at.labor_system_id = ls.id "
 				+ "WHERE at.company_id = " + id + " ORDER BY at.labor_system_id";
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			List<AttendanceTime> attendanceTimeList = new ArrayList<>();
 			while(rs.next()){
@@ -91,7 +91,7 @@ public class AttendanceTimeDao {
 				+ "WHERE labor_system_id = " + insertTime.getLaborSystem().getId() +" AND company_id = " + insertTime.getCompany().getId();
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setString(1, insertTime.getStartTime());
 			pstmt.setString(2, insertTime.getEndTime());
