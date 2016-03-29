@@ -2,6 +2,11 @@ package main.java.kot.common;
 
 
 public class StrTime {
+	//"0:00"定数
+	public static final String ZERO_HOUR = "0:00";
+	//"00:00"フロント用定数
+	public static final String FRONT_ZERO_HOUR = "00:00";
+
 	//出勤時間
 	String startTime;
 	//退社時間
@@ -22,8 +27,6 @@ public class StrTime {
 	String breakTime;
 	//遅刻時間
 	String lateTime;
-	//"0:00"定数
-	public static final String ZERO_HOUR = "0:00";
 
 	public String getStartTime() {
 		return startTime;

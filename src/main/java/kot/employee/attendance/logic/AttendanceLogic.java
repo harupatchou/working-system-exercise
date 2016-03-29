@@ -87,10 +87,10 @@ public class AttendanceLogic {
 
 		// 入力がなければ00:00を入れる
 		if (startTime.equals("")) {
-			/*startTime = ZERO_HOUR;
-			endTime = ZERO_HOUR;
-			breakStartTime = ZERO_HOUR;
-			breakEndTime = ZERO_HOUR;*/
+			startTime = StrTime.FRONT_ZERO_HOUR;
+			endTime = StrTime.FRONT_ZERO_HOUR;
+			breakStartTime = StrTime.FRONT_ZERO_HOUR;
+			breakEndTime = StrTime.FRONT_ZERO_HOUR;
 		}
 
 		// 00:00形式を0:00形式に
@@ -152,16 +152,16 @@ public class AttendanceLogic {
 				workingDay.setBreakTimeStart(attendanceData.getStrTime().getBreakStartTime());
 				workingDay.setBreakTimeEnd(attendanceData.getStrTime().getBreakEndTime());
 				//TODO 決め打ち
-				workingDay.setNapTime("0:00");
+				workingDay.setNapTime(StrTime.ZERO_HOUR);
 			//TODO 欠勤有給の場合
 			}else{
-				workingDay.setAttendanceTime("0:00");
-				workingDay.setLeaveTime("0:00");
-				workingDay.setBreakTimeStart("0:00");
-				workingDay.setBreakTimeEnd("0:00");
+				workingDay.setAttendanceTime(StrTime.ZERO_HOUR);
+				workingDay.setLeaveTime(StrTime.ZERO_HOUR);
+				workingDay.setBreakTimeStart(StrTime.ZERO_HOUR);
+				workingDay.setBreakTimeEnd(StrTime.ZERO_HOUR);
 
 				//TODO 決め打ち
-				workingDay.setNapTime("0:00");
+				workingDay.setNapTime(StrTime.ZERO_HOUR);
 			}
 			// ここまで
 		} catch (ParseException e) {
@@ -208,11 +208,11 @@ public class AttendanceLogic {
 		workingAll.setWorkingTimeAll(attendDay);
 
 		//遅刻時間
-		String lateTime = "0:00";
+		String lateTime = StrTime.ZERO_HOUR;
 
 		//TODO 深夜 今は決め打ち
-		String nightTime = "0:00";
-		String nightOvertime = "0:00";
+		String nightTime = StrTime.ZERO_HOUR;
+		String nightOvertime = StrTime.ZERO_HOUR;
 
 		overtime = setOverTime(attendanceData);
 
