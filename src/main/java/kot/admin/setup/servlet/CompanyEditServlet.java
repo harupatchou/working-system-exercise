@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.common.service.ServiceConstant;
-import main.java.kot.common.service.ServiceInvocation;
+import main.java.kot.admin.setup.service.CompanyEditService;
 
 @WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
+
+	private static CompanyEditService companyEditService = new CompanyEditService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,7 +25,7 @@ public class CompanyEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.GET_REQUEST, ServiceConstant.COMPANY_EDIT);
+		companyEditService.executeGet(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
@@ -41,7 +42,7 @@ public class CompanyEditServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		ServiceInvocation.serviceInvocation(req, resp, ServiceConstant.POST_REQUEST, ServiceConstant.COMPANY_EDIT);
+		companyEditService.executePost(req, resp);
 
 		resp.sendRedirect("/kot/login");
 	}
