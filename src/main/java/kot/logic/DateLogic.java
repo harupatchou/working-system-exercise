@@ -143,7 +143,7 @@ public class DateLogic {
 
 
 	/* Dataの変換 util→sql */
-	public static Date sqlDate (Date utilDate){
+	public static java.sql.Date sqlDate (Date utilDate){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(utilDate);
 		cal.set(Calendar.HOUR_OF_DAY, 0);

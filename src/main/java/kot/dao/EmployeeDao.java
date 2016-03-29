@@ -142,7 +142,7 @@ public class EmployeeDao {
 	//ログイン情報と比較用の取得
 	public static Employee LoginCheckInfo(Integer employeeId) {
 		String sql = "SELECT e.*,c.company_name,c.master_id FROM " + tableName + " e INNER JOIN company c ON e.company_id = c.id WHERE e.id = " + employeeId;
-		try(ResultSet rs = DBCommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql)){
 
 			Employee employee = new Employee();
 			Company company = new Company();

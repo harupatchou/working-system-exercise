@@ -29,6 +29,9 @@ public class AttendanceLogic {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+	static final int WORKING_ALL_PROCESS = 0;
+	static final int OVERTIME_PROCESS = 1;
+
 	//working_day検索
 	public static WorkingDay selectByDayAndEmployeeId(String selectDay,Integer employeeId){
 		return WorkingDayDao.selectByDayAndEmployeeId(selectDay,employeeId);
@@ -173,31 +176,12 @@ public class AttendanceLogic {
 	}
 
 	public static WorkingAll setWorkingAll(AttendanceData attendanceData) {
-		//勤怠時間関連取得
-		AttendanceTime attendanceTime = selectAttendTime(attendanceData.getEmployee());
 
-		StrTime strTime = new StrTime();
 		Overtime overtime = new Overtime();
 		WorkingAll workingAll = new WorkingAll();
 
-		//規定出勤時間
-		String provisionAttendTime = attendanceTime.getStartTime();
-		//規定退勤時間
-		//String provisionLeaveTime = attendanceTime.getEndTime();
-
-		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
-
-		//種別毎に必要な処理
-		//FIXME LaborSystemごとに処理を持つクラス作ったら？setOverTimeでも同じ分岐してますよね。
-		if(laborSystemId == LaborSystem.normalLaborSystem){
-			/* 通常労働制ならば */
-			//遅刻計算
-			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
-		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
-			//遅刻計算
-			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
-		//フレックス用
-		}
+		//LaborSystem毎の処理
+		setAllWithLaborSystemId(attendanceData);
 
 		//一日の総労働時間算出
 		String attendDayAll = DateLogic.getStringTime(attendanceData.getStrTime().getArrayStartTime(),attendanceData.getStrTime().getArrayEndTime());
@@ -214,13 +198,9 @@ public class AttendanceLogic {
 		String nightTime = StrTime.ZERO_HOUR;
 		String nightOvertime = StrTime.ZERO_HOUR;
 
-		overtime = setOverTime(attendanceData);
-
 		//TODO 休日出勤
-		//休日ならば
-		if(attendanceData.getSchedule().getHolidayFlag()==1){
-			//法定休日ならば
-			if(attendanceData.getWorkingDay().getLegalFlag()==1){
+		if(attendanceData.getSchedule().getHolidayFlag() == Schedule.HOLIDAY){
+			if(attendanceData.getWorkingDay().getLegalFlag() == WorkingDay.HOLIDAY_WORK){
 				workingAll.setDayStatus("法定");
 			}else{
 				//TODO 土曜出勤,祝日出勤は何として扱うか
@@ -233,8 +213,8 @@ public class AttendanceLogic {
 		try {
 			workingAll.setDate(sdf.parse(attendanceData.getInsertDay().getInsertDay()));
 			workingAll.setWeek(attendanceData.getSchedule().getWeekNum());
-			workingAll.setLegalOvertimeAll(overtime.getLegalOvertime());
-			workingAll.setStatutoryOverTimeAll(overtime.getStatutoryOvertime());
+			workingAll.setLegalOvertimeAll(attendanceData.getOvertime().getLegalOvertime());
+			workingAll.setStatutoryOverTimeAll(attendanceData.getOvertime().getStatutoryOvertime());
 			workingAll.setLateTimeAll(lateTime);
 			workingAll.setEmployeeId(attendanceData.getEmployee().getEmployeeId());
 			//TODO 決め打ち
@@ -247,25 +227,45 @@ public class AttendanceLogic {
 		return workingAll;
 	}
 
-	public static Overtime setOverTime(AttendanceData attendanceData) {
-		//残業にinsertするためにworkingDayTableのIDを取得
-		WorkingDay insertDayInfo = selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
-		Overtime overtime = new Overtime();
+	private static void setAllWithLaborSystemId(AttendanceData attendanceData) {
+		StrTime strTime = attendanceData.getStrTime();
+		Overtime overtime = attendanceData.getOvertime();
+
 		Integer laborSystemId = attendanceData.getWorkingtype().getLaborSystem().getId();
 
-		//種別毎に必要な処理
+		//勤怠時間関連取得
+		AttendanceTime attendanceTime = selectAttendTime(attendanceData.getEmployee());
+
+		//規定出勤時間
+		String provisionAttendTime = attendanceTime.getStartTime();
+		//規定退勤時間
+		//String provisionLeaveTime = attendanceTime.getEndTime();
+
+		//残業にinsertするためにworkingDayTableのIDを取得
+		WorkingDay insertDayInfo = selectByDayAndEmployeeId(attendanceData.getInsertDay().getInsertDay(), attendanceData.getEmployee().getEmployeeId());
+
 		if(laborSystemId == LaborSystem.normalLaborSystem){
+			//遅刻計算
+			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
+			attendanceData.setStrTime(strTime);
+
 			overtime = OvertimeLogic.getOvertime(attendanceData.getWorkingDay());
+			//出勤を押した日のidを残業のdailyIdと紐付け
+			overtime.setDailyId(insertDayInfo.getId());
+			attendanceData.setOvertime(overtime);
 		}else if(laborSystemId == LaborSystem.deformationLaborSystem){
+			//遅刻計算
+			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
+			attendanceData.setStrTime(strTime);
+
 			overtime = OvertimeLogic.getIrregularWorkingHourSystemOvertime(attendanceData.getWorkingDay());
-		//フレックス用
+			overtime.setDailyId(insertDayInfo.getId());
+			attendanceData.setOvertime(overtime);
 		}else if(laborSystemId == LaborSystem.flexLaborSystem){
 			overtime = OvertimeLogic.getFlexTimeOvertime(attendanceData.getWorkingDay());
+			overtime.setDailyId(insertDayInfo.getId());
+			attendanceData.setOvertime(overtime);
 		}
-
-		//出勤を押した日のidを残業のdailyIdと紐付け
-		overtime.setDailyId(insertDayInfo.getId());
-
-		return overtime;
 	}
+
 }

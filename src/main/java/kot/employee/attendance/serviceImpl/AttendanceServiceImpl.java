@@ -108,7 +108,6 @@ public class AttendanceServiceImpl implements AttendanceServise {
 
 		WorkingDay workingDay = new WorkingDay();
 		WorkingAll workingAll = new WorkingAll();
-		Overtime overtime = new Overtime();
 
 		workingDay = AttendanceLogic.setWorkingDay(req,attendanceData);
 		attendanceData.setWorkingDay(workingDay);
@@ -116,14 +115,12 @@ public class AttendanceServiceImpl implements AttendanceServise {
 		insertWorkingDay(workingDay);
 
 		workingAll = AttendanceLogic.setWorkingAll(attendanceData);
-		overtime = AttendanceLogic.setOverTime(attendanceData);
 		attendanceData.setWorkingAll(workingAll);
-		attendanceData.setOvertime(overtime);
 
 		//allInsert
 		insertWorkingAll(workingAll);
 		//overtimeInsert
-		insertOvertime(overtime);
+		insertOvertime(attendanceData.getOvertime());
 
 	}
 

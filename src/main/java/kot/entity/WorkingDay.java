@@ -12,11 +12,11 @@ public class WorkingDay {
 	public final static int HOLIDAY_WORK = 1;
 	//ステータスコード
 	/**
-	 * 0 通常出勤
-	 * 1 欠勤
+	 * 1 通常出勤
+	 * 2 欠勤
 	 **/
-	public final static int NORMAL_ATTENDANCE = 0;
-	public final static int ABSENCE = 1;
+	public final static int NORMAL_ATTENDANCE = 1;
+	public final static int ABSENCE = 2;
 
 
 	//id
