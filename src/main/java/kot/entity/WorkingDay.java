@@ -8,15 +8,15 @@ public class WorkingDay {
 	 * 0 通常出勤
 	 * 1 休日出勤
 	 **/
-	public final static int WEEKDAY_WORK = 0;
-	public final static int HOLIDAY_WORK = 1;
+	public final static Integer WEEKDAY_WORK = 0;
+	public final static Integer HOLIDAY_WORK = 1;
 	//ステータスコード
 	/**
 	 * 1 通常出勤
 	 * 2 欠勤
 	 **/
-	public final static int NORMAL_ATTENDANCE = 1;
-	public final static int ABSENCE = 2;
+	public final static Integer NORMAL_ATTENDANCE = 1;
+	public final static Integer ABSENCE = 2;
 
 
 	//id

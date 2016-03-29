@@ -96,8 +96,10 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//本日の労働時間で法定労働時間を超えた場合
-		//FIXME 分岐の処理の違いがわからない
+		//本日の労働時間のうち法定時間を超えた分を取得して法定外残業にセット
 		if(largeMonthlyWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeMonthlyWorkingTime.equals(monthlyLegalWorkingtime)){
+
+			//法定労働時間を超えた分の時間取得
 			String monthlyOvetime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
 
 			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
@@ -106,6 +108,7 @@ public class OvertimeLogic {
 			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		//昨日までに法定労働時間を超えている場合
+		//本日の労働時間を法定外残業にセット
 		}else if(untilYesterdayLargeMonthlyWorkingTime.equals(untilYesterdayWorkingTimeTotal)){
 			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(workingTime);
@@ -125,8 +128,7 @@ public class OvertimeLogic {
 		int endDay = day;
 
 		//金曜日に週の労働時間と法定労働時間から残業計算を行う
-		// FIXME Integerをイコールで比較するのはまずい。
-		if(workingday.getWeek() == CalendarUtil.FRIDAY){
+		if(workingday.getWeek().equals(CalendarUtil.FRIDAY)){
 			//第一週
 			if(day <= 5){
 				startDay = 1;
@@ -134,7 +136,7 @@ public class OvertimeLogic {
 				startDay = day - 6;
 			}
 		//金曜日以外の場合
-		}else if(workingday.getWeek() != CalendarUtil.FRIDAY){
+		}else if(!workingday.getWeek().equals(CalendarUtil.FRIDAY)){
 			startDay = day - workingday.getWeek() + 2;//土曜から今日までの期間(曜日が1～7までのint型で判定なので金曜日との差を出すために+2)
 		}
 
@@ -408,7 +410,7 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//土日用処理
-		if(workingday.getWeek() == CalendarUtil.SATURDAY || workingday.getWeek() == CalendarUtil.SUNDAY){
+		if(workingday.getWeek().equals(CalendarUtil.SATURDAY) || workingday.getWeek().equals(CalendarUtil.SUNDAY)){
 			overtime = getOvertimeOnSaturdayAndSunday(workingday);
 			return overtime;
 		}
@@ -438,7 +440,7 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//土日用処理
-		if(workingday.getWeek() == CalendarUtil.SATURDAY || workingday.getWeek() == CalendarUtil.SUNDAY){
+		if(workingday.getWeek().equals(CalendarUtil.SATURDAY) || workingday.getWeek().equals(CalendarUtil.SUNDAY)){
 			overtime = getOvertimeOnSaturdayAndSunday(workingday);
 			return overtime;
 		}
