@@ -1,4 +1,4 @@
-package main.java.kot.employee.attendance.serviceImpl;
+package main.java.kot.employee.attendance.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,11 +12,11 @@ import main.java.kot.common.AttendanceData;
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
 import main.java.kot.common.StrTime;
+import main.java.kot.common.service.Service;
 import main.java.kot.dao.OvertimeDao;
 import main.java.kot.dao.WorkingAllDao;
 import main.java.kot.dao.WorkingDayDao;
 import main.java.kot.employee.attendance.logic.AttendanceLogic;
-import main.java.kot.employee.attendance.service.AttendanceServise;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Employee;
@@ -27,7 +27,7 @@ import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.DateLogic;
 import main.java.kot.util.CalendarUtil;
 
-public class AttendanceServiceImpl implements AttendanceServise {
+public class AttendanceService extends Service {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -125,65 +125,61 @@ public class AttendanceServiceImpl implements AttendanceServise {
 	}
 
 	@Override
-	public void attendance(HttpServletRequest req,HttpServletResponse resp){
+	public void executeGet(HttpServletRequest req, HttpServletResponse resp) {
 
-		Integer reqParam = (Integer)req.getAttribute("reqParam");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-		/* Get*/
-		if(reqParam == 0){
+		//セッション情報の取得
+		HttpSession session=req.getSession();
+		Employee employee = (Employee) session.getAttribute("sesEmployee");
 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		WorkingDay workingDay = new WorkingDay();
 
-			//セッション情報の取得
-			HttpSession session=req.getSession();
-			Employee employee = (Employee) session.getAttribute("sesEmployee");
+		List<AttendanceStatus> attendanceStatus = AttendanceLogic.selectAttendStatusAll();
 
-			WorkingDay workingDay = new WorkingDay();
+		String selectDay = "";
 
-			List<AttendanceStatus> attendanceStatus = AttendanceLogic.selectAttendStatusAll();
+		String strDay = req.getParameter("day_num");
 
-			String selectDay = "";
-
-			String strDay = req.getParameter("day_num");
-
-			if(strDay != null){
-				selectDay = DateLogic.formatDate(strDay);
-			}else{
-				//サイドバーから遷移した場合は当日の編集
-				Date today = new Date();
-				selectDay = sdf.format(today);
-			}
-
-			//画面から送られてきた「/」区切りの日付を「-」区切りに変換
-			String serverSideDate = selectDay.replace("/","-");
-
-			workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, employee.getEmployeeId());
-
-			if(workingDay.getAttendanceTime()!=null){
-				workingDay.setAttendanceTime(DateLogic.formatTime(workingDay.getAttendanceTime()));
-				workingDay.setLeaveTime(DateLogic.formatTime(workingDay.getLeaveTime()));
-			}
-
-			req.setAttribute("selectDay", selectDay);
-			req.setAttribute("workingDay", workingDay);
-			req.setAttribute("attendanceStatus", attendanceStatus);
-
-			//従業員の出社時間と退社時間を算出
-			AttendanceTime attendanceTime = AttendanceLogic.selectAttendTime(employee);
-
-			req.setAttribute("attendanceTime", attendanceTime);
-
-		/* Post */
+		if(strDay != null){
+			selectDay = DateLogic.formatDate(strDay);
 		}else{
-
-			//attendanceに必要なものを取得
-			AttendanceData attendanceData = new AttendanceData();
-			attendanceData = setAttendanceData(req, resp);
-
-			//insert処理
-			insertAll(req,attendanceData);
-
+			//サイドバーから遷移した場合は当日の編集
+			Date today = new Date();
+			selectDay = sdf.format(today);
 		}
+
+		//画面から送られてきた「/」区切りの日付を「-」区切りに変換
+		String serverSideDate = selectDay.replace("/","-");
+
+		workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, employee.getEmployeeId());
+
+		if(workingDay.getAttendanceTime()!=null){
+			workingDay.setAttendanceTime(DateLogic.formatTime(workingDay.getAttendanceTime()));
+			workingDay.setLeaveTime(DateLogic.formatTime(workingDay.getLeaveTime()));
+		}
+
+		req.setAttribute("selectDay", selectDay);
+		req.setAttribute("workingDay", workingDay);
+		req.setAttribute("attendanceStatus", attendanceStatus);
+
+		//従業員の出社時間と退社時間を算出
+		AttendanceTime attendanceTime = AttendanceLogic.selectAttendTime(employee);
+
+		req.setAttribute("attendanceTime", attendanceTime);
+
+	}
+
+	@Override
+	public void executePost(HttpServletRequest req, HttpServletResponse resp) {
+
+		//attendanceに必要なものを取得
+		AttendanceData attendanceData = new AttendanceData();
+		attendanceData = setAttendanceData(req, resp);
+
+		//insert処理
+		insertAll(req,attendanceData);
+
 	}
 
 }

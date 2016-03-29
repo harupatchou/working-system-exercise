@@ -10,18 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.kot.employee.attendance.service.AttendanceServise;
-import main.java.kot.employee.attendance.serviceImpl.AttendanceServiceImpl;
+import main.java.kot.employee.attendance.service.AttendanceService;
 
 @WebServlet("/employee/Attendance")
 public class AttendanceServlet extends HttpServlet{
 
-	/* Serviceの呼び出し */
-	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		AttendanceServise attendanceService = new AttendanceServiceImpl();
-		attendanceService.attendance(req, resp);
-	}
+	private static AttendanceService attendanceService = new AttendanceService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
@@ -30,7 +24,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 0);
+		attendanceService.executeGet(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/daily/dailyAttendance.jsp");
@@ -45,7 +39,7 @@ public class AttendanceServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 1);
+		attendanceService.executePost(req, resp);
 
 		resp.sendRedirect("/kot/employee/MonthlyAttendance");
 

@@ -11,17 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.employee.attendance.service.MonthlyAttendanceService;
-import main.java.kot.employee.attendance.serviceImpl.MonthlyAttendanceServiceImpl;
 
 @WebServlet("/employee/MonthlyAttendance")
 public class MonthlyAttedanceServlet extends HttpServlet{
 
-	/* Serviceの呼び出し */
-	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
-		req.setAttribute("reqParam", reqParam);
-		MonthlyAttendanceService monthlyAttendanceService = new MonthlyAttendanceServiceImpl();
-		monthlyAttendanceService.monthlyAttendance(req, resp);
-	}
+	private static MonthlyAttendanceService monthlyAttendanceService = new MonthlyAttendanceService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -31,7 +25,7 @@ public class MonthlyAttedanceServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//serviceの呼び出し
-		serviceInvocation(req, resp, 0);
+		monthlyAttendanceService.executeGet(req, resp);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/monthly/monthlyAttendance.jsp");
