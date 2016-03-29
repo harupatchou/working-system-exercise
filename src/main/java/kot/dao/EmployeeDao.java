@@ -9,8 +9,8 @@ import java.util.List;
 import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
+import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Workingtype;
-import main.java.kot.logic.DataLogic;
 
 public class EmployeeDao {
 
@@ -19,7 +19,8 @@ public class EmployeeDao {
 
 	/*従業員IDから従業員情報取得*/
 	public static Employee getEmployee(Integer employeeId){
-		String sql = "SELECT * FROM " + tableName + " WHERE id = " + employeeId + "ORDER BY id";
+		String sql = "SELECT emp.*,com.*,work.* FROM " + tableName + " emp INNER JOIN company com ON emp.company_id = com.id "
+				+ "INNER JOIN working_type work ON emp.working_type_id = work.id  WHERE emp.id = " + employeeId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Employee employee = new Employee();
@@ -28,42 +29,20 @@ public class EmployeeDao {
 				employee.setFirstName(rs.getString("first_name"));
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
-				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("working_type_id"));
-				employee.setWorkingType(DataLogic.getWorkingtype(employee.getWorkingTypeId()));
-			}
-			return employee;
-
-		}catch(SQLException e){
-			System.err.println("SQL = " + sql);
-			throw new RuntimeException("処理に失敗しました", e);
-		}
-	}
-
-	/*従業員IDから取得したIDでCompanyとWorkingType取得*/
-	public static Employee getEmployeeWithCompany(Integer employeeId){
-		String sql = "SELECT emp.*,com.*,work.* FROM employee emp INNER JOIN company com ON emp.company_id = com.id "
-				+ "INNER JOIN working_type work ON emp.working_type_id = work.id  WHERE emp.id = "+ employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
-
-			Employee employee = new Employee();
-			while(rs.next()){
-				employee.setEmployeeId(rs.getInt("id"));
-				employee.setFirstName(rs.getString("first_name"));
-				employee.setLastName(rs.getString("last_name"));
-				employee.setPassword(rs.getString("password"));
-				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("working_type_id"));
 
 				Company tempCom = new Company();
+				tempCom.setId(rs.getInt("company_id"));
 				tempCom.setCompanyName(rs.getString("company_name"));
 				employee.setCompany(tempCom);
 
 				Workingtype tempWork = new Workingtype();
-				tempWork.setLaborSystemId(rs.getInt("labor_system_id"));
+				tempWork.setId(rs.getInt("working_type_id"));
 				tempWork.setWorkingName(rs.getString("working_name"));
-				employee.setWorkingType(tempWork);
 
+				LaborSystem tempLabor = new LaborSystem();
+				tempLabor.setId(rs.getInt("labor_system_id"));
+				tempWork.setLaborSystem(tempLabor);
+				employee.setWorkingType(tempWork);
 			}
 			return employee;
 
@@ -73,10 +52,10 @@ public class EmployeeDao {
 		}
 	}
 
-
 	/*会社IDから従業員リスト取得*/
 	public static Company getEmployeeFromCompanyId(Integer companyId){
-		String sql = "SELECT * FROM " + tableName + " WHERE company_id = " + companyId;
+		String sql = "SELECT emp.*, com.*, work.* FROM " + tableName + " emp JOIN company com ON emp.company_id = com.id "
+				+ "JOIN working_type work ON emp.working_type_id = work.id WHERE emp.company_id =" + companyId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			Company company = new Company();
@@ -87,9 +66,21 @@ public class EmployeeDao {
 				employee.setFirstName(rs.getString("first_name"));
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
-				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("working_type_id"));
-				employee.setWorkingType(DataLogic.getWorkingtype(employee.getWorkingTypeId()));
+
+				Company tempCom = new Company();
+				tempCom.setId(rs.getInt("company_id"));
+				tempCom.setCompanyName(rs.getString("company_name"));
+				employee.setCompany(tempCom);
+
+				Workingtype tempWork = new Workingtype();
+				tempWork.setId(rs.getInt("working_type_id"));
+				tempWork.setWorkingName(rs.getString("working_name"));
+
+				LaborSystem tempLabor = new LaborSystem();
+				tempLabor.setId(rs.getInt("labor_system_id"));
+				tempWork.setLaborSystem(tempLabor);
+
+				employee.setWorkingType(tempWork);
 				employeeList.add(employee);
 			}
 			company.setEmployeeList(employeeList);
@@ -113,8 +104,8 @@ public class EmployeeDao {
 			pstmt.setString(2, employee.getFirstName());
 			pstmt.setString(3, employee.getLastName());
 			pstmt.setString(4, employee.getPassword());
-			pstmt.setInt(5, employee.getCompanyId());
-			pstmt.setInt(6, employee.getWorkingTypeId());
+			pstmt.setInt(5, employee.getCompany().getId());
+			pstmt.setInt(6, employee.getWorkingType().getId());
 
 			pstmt.executeUpdate();
 
@@ -135,8 +126,8 @@ public class EmployeeDao {
 			pstmt.setString(1, employee.getFirstName());
 			pstmt.setString(2, employee.getLastName());
 			pstmt.setString(3, employee.getPassword());
-			pstmt.setInt(4, employee.getCompanyId());
-			pstmt.setInt(5, employee.getWorkingTypeId());
+			pstmt.setInt(4, employee.getCompany().getId());
+			pstmt.setInt(5, employee.getWorkingType().getId());
 
 			pstmt.executeUpdate();
 
@@ -160,11 +151,12 @@ public class EmployeeDao {
 				employee.setFirstName(rs.getString("first_name"));
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
-				employee.setCompanyId(rs.getInt("company_id"));
-				employee.setWorkingTypeId(rs.getInt("working_type_id"));
+
+				company.setId(rs.getInt("company_id"));
 				company.setCompanyName(rs.getString("company_name"));
 				company.setMasterId(rs.getInt("master_id"));
 				employee.setCompany(company);
+
 			}
 			return employee;
 
@@ -180,7 +172,7 @@ public class EmployeeDao {
 		try {
 			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
 
-			pstmt.setString(1,employee.getNewPassword());
+			pstmt.setString(1,employee.getPassword());
 
 			pstmt.executeUpdate();
 

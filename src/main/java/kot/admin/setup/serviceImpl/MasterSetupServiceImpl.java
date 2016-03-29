@@ -1,4 +1,4 @@
-package main.java.kot.admin.setup.service;
+package main.java.kot.admin.setup.serviceImpl;
 
 import java.util.List;
 
@@ -6,17 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.kot.admin.setup.logic.SetupLogic;
+import main.java.kot.admin.setup.logic.MasterSetupLogic;
+import main.java.kot.admin.setup.service.MasterSetupService;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.Employee;
+import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.WorkingTime;
 import main.java.kot.entity.Workingtype;
 import main.java.kot.logic.DataLogic;
 
-public class SetupServiceImpl implements SetupService{
+public class MasterSetupServiceImpl implements MasterSetupService{
 
 	@Override
 	public void employeeList(HttpServletRequest req, HttpServletResponse resp){
@@ -32,17 +34,16 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員情報
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 
 			req.setAttribute("employeeList", company.getEmployeeList());
 
 		/* Post */
 		}else{
 
-			/*現状なにもなし、今後追加する際はここに書く*/
+			/* doPost側処理、今後追加する際はここに書く*/
 
 		}
-
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員種別情報
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 			company = DataLogic.getWorkingTypeOfCompany(company);
 
 			req.setAttribute("workingtypeList", company.getWorkingtypeList());
@@ -81,8 +82,15 @@ public class SetupServiceImpl implements SetupService{
 
 			workingtype.setId(workingtypeId);
 			workingtype.setWorkingName(workingName);
-			workingtype.setLaborSystemId(laborSystemId);
-			workingtype.setCompanyId(companyId);
+
+			LaborSystem laborSystem = new LaborSystem();
+			laborSystem.setId(laborSystemId);
+			workingtype.setLaborSystem(laborSystem);
+
+			Company company = new Company();
+			company.setId(companyId);
+
+			workingtype.setCompany(company);
 
 			WorkingtypeDao.registWorkingtype(workingtype);
 
@@ -90,7 +98,7 @@ public class SetupServiceImpl implements SetupService{
 	}
 
 	@Override
-	public void epmloyeeEdit(HttpServletRequest req, HttpServletResponse resp){
+	public void employeeEdit(HttpServletRequest req, HttpServletResponse resp){
 
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
@@ -103,7 +111,7 @@ public class SetupServiceImpl implements SetupService{
 
 			//従業員種別リスト
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 			company = DataLogic.getWorkingTypeOfCompany(company);
 
 			req.setAttribute("workingtypeList", company.getWorkingtypeList());
@@ -142,12 +150,15 @@ public class SetupServiceImpl implements SetupService{
 			employee.setFirstName(firstName);
 			employee.setLastName(lastName);
 			employee.setEmployeeId(employeeId);
-			employee.setWorkingTypeId(workingtypeId);
+
+			Workingtype workingtype = new Workingtype();
+			workingtype.setId(workingtypeId);
+			employee.setWorkingType(workingtype);
 			employee.setPassword(password);
-			employee.setCompanyId(sessEmployee.getCompanyId());
+			employee.setCompany(sessEmployee.getCompany());
 
 			//従業員登録
-			SetupLogic.registEmployee(employee);
+			MasterSetupLogic.registEmployee(employee);
 
 		}
 	}
@@ -167,7 +178,7 @@ public class SetupServiceImpl implements SetupService{
 			req.setAttribute("userCompany", userCompany);
 
 			//勤怠時間関連取得
-			List<AttendanceTime> attendanceTimeList = SetupLogic.getAttendanceTime(userCompany.getId());
+			List<AttendanceTime> attendanceTimeList = MasterSetupLogic.getAttendanceTime(userCompany.getId());
 
 			req.setAttribute("attendanceTimeList", attendanceTimeList);
 
@@ -176,12 +187,12 @@ public class SetupServiceImpl implements SetupService{
 			//変形労働があるかどうか判別
 			Integer count = 0;
 			for(int i=0;i<attendanceTimeList.size();i++){
-				if(attendanceTimeList.get(i).getLaborSystemId() == 2){
+				if(attendanceTimeList.get(i).getLaborSystem().getId() == LaborSystem.deformationLaborSystem){
 					count += 1;
-					Integer irregularId = attendanceTimeList.get(i).getLaborSystemId();
+					Integer irregularId = attendanceTimeList.get(i).getLaborSystem().getId();
 					req.setAttribute("irregular", irregularId);
 					//workingTimeを取得
-					workingTime = SetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystemId());
+					workingTime = MasterSetupLogic.getWorkingTime(attendanceTimeList.get(i).getLaborSystem().getId());
 				}
 			}
 
@@ -206,7 +217,7 @@ public class SetupServiceImpl implements SetupService{
 			company.setCompanyName(companyName);
 
 			//companyの登録
-			SetupLogic.registCompany(company,userCompany);
+			MasterSetupLogic.registCompany(company,userCompany);
 
 			String strLaborSystemId =req.getParameter("laborSystemId");
 			Integer laborSystemId = Integer.parseInt(strLaborSystemId);
@@ -217,12 +228,14 @@ public class SetupServiceImpl implements SetupService{
 			//勤怠時間の登録
 			AttendanceTime insertTime = new AttendanceTime();
 
-			insertTime.setLaborSystemId(laborSystemId);
+			LaborSystem laborSystem = new LaborSystem();
+			laborSystem.setId(laborSystemId);
+			insertTime.setLaborSystem(laborSystem);
 			insertTime.setStartTime(attendanceTime);
 			insertTime.setEndTime(leaveTime);
 			insertTime.setCompany(userCompany);
 
-			SetupLogic.registAttendTime(insertTime);
+			MasterSetupLogic.registAttendTime(insertTime);
 
 			//もし変形労働ならば
 			if(laborSystemId == 2){
@@ -232,10 +245,13 @@ public class SetupServiceImpl implements SetupService{
 				//所定時間の登録
 				WorkingTime insertWorkingTime = new WorkingTime();
 
-				insertWorkingTime.setLaborSystemId(laborSystemId);
+
+				LaborSystem tempLabor = new LaborSystem();
+				tempLabor.setId(laborSystemId);
+				insertWorkingTime.setLaborSystem(laborSystem);
 				insertWorkingTime.setWorkingTime(regularTime);
 
-				SetupLogic.registWorkingTime(insertWorkingTime);
+				MasterSetupLogic.registWorkingTime(insertWorkingTime);
 			}
 
 		}

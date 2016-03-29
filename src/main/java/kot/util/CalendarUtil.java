@@ -1,11 +1,21 @@
 package main.java.kot.util;
 
+import main.java.kot.common.Schedule;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import main.java.kot.common.Schedule;
-
+//TODO DATEUTIL使った？？？
 public class CalendarUtil {
+
+	//曜日定数
+	public static final Integer SUNDAY = 1;
+	public static final Integer MONDAY = 2;
+	public static final Integer TUESDAY = 3;
+	public static final Integer WEDNESDAY = 4;
+	public static final Integer THURSDAY = 5;
+	public static final Integer FRIDAY = 6;
+	public static final Integer SATURDAY = 7;
 
 	//年月日から曜日取得
 	public static Schedule getWeek(Integer year,Integer month,Integer day){

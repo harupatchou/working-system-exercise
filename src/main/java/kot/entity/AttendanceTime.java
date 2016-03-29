@@ -11,12 +11,9 @@ public class AttendanceTime {
 	private String startTime;
 	//退勤時間
 	private String endTime;
-	//コアタイム開始時間
-	private String coreTimeStrat;
-	//コアタイム終了時間
-	private String coreTimeEnd;
-	//従業員種別コード
-	private Integer laborSystemId;
+	//コアタイム
+	// FIXME 全ての勤務時間にコアタイムが適用されるような表現ですが・・・？
+	private CoreTime coreTime;
 	//従業員種別
 	private LaborSystem laborSystem;
 	//カンパニー
@@ -47,28 +44,12 @@ public class AttendanceTime {
 		this.endTime = endTime;
 	}
 
-	public String getCoreTimeStrat() {
-		return coreTimeStrat;
+	public CoreTime getCoreTime() {
+		return coreTime;
 	}
 
-	public void setCoreTimeStrat(String coreTimeStrat) {
-		this.coreTimeStrat = coreTimeStrat;
-	}
-
-	public String getCoreTimeEnd() {
-		return coreTimeEnd;
-	}
-
-	public void setCoreTimeEnd(String coreTimeEnd) {
-		this.coreTimeEnd = coreTimeEnd;
-	}
-
-	public Integer getLaborSystemId() {
-		return laborSystemId;
-	}
-
-	public void setLaborSystemId(Integer workingtypeId) {
-		this.laborSystemId = workingtypeId;
+	public void setCoreTime(CoreTime coreTime) {
+		this.coreTime = coreTime;
 	}
 
 	public AttendanceTime(){

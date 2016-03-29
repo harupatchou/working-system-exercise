@@ -1,12 +1,12 @@
 package main.java.kot.logic;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import main.java.kot.common.TempTime;
 import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
 import main.java.kot.common.workingtime.constant.MonthlyLegalWorkingTime;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 労働時間関連ロジック
@@ -85,6 +85,7 @@ public class WorkingTimeLogic {
 
 
 	/*2つのstring型の時刻から大きいほうの値を返す*/
+	//FIXME いいの？これでいいの？
 	public static String compareWorkingTime(String compareFirst, String compareSecond){
 
 		TempTime compareTempTimeFirst = getTimeInt(compareFirst);

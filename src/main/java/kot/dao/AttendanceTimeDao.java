@@ -8,6 +8,7 @@ import java.util.List;
 
 import main.java.kot.common.database.DBcommon;
 import main.java.kot.entity.AttendanceTime;
+import main.java.kot.entity.CoreTime;
 import main.java.kot.entity.Employee;
 import main.java.kot.entity.LaborSystem;
 
@@ -16,8 +17,10 @@ public class AttendanceTimeDao {
 	private static String tableName = "attendance_time";
 
 	/*従業員種別IDから種別ごとの労働時間を取得*/
-	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee ,Integer labor_system_id){
-		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + labor_system_id + " AND company_id = " + employee.getCompanyId();
+	public static AttendanceTime getAttendanceTimeFromLaborSystemId(Employee employee){
+		Integer laborSystemId = employee.getWorkingType().getLaborSystem().getId();
+		Integer companyId = employee.getCompany().getId();
+		String sql = "SELECT * FROM " + tableName + " at JOIN labor_system labor ON at.labor_system_id = labor.id WHERE labor_system_id = " + laborSystemId + " AND company_id = " + companyId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			AttendanceTime attendanceTime = new AttendanceTime();
@@ -25,9 +28,16 @@ public class AttendanceTimeDao {
 				attendanceTime.setId(rs.getInt("id"));
 				attendanceTime.setStartTime(rs.getString("start_time"));
 				attendanceTime.setEndTime(rs.getString("end_time"));
-				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
-				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
-				attendanceTime.setLaborSystemId(rs.getInt("labor_system_id"));
+
+				CoreTime coreTime = new CoreTime();
+				coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+				coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+				attendanceTime.setCoreTime(coreTime);
+
+				LaborSystem laborSystem = new LaborSystem();
+				laborSystem.setId(rs.getInt("labor_system_id"));
+				laborSystem.setLaborSystemName(rs.getString("labor_system_name"));
+				attendanceTime.setLaborSystem(laborSystem);
 			}
 
 			return attendanceTime;
@@ -52,9 +62,11 @@ public class AttendanceTimeDao {
 				attendanceTime.setId(rs.getInt("id"));
 				attendanceTime.setStartTime(rs.getString("start_time"));
 				attendanceTime.setEndTime(rs.getString("end_time"));
-				attendanceTime.setCoreTimeStrat(rs.getString("core_time_start"));
-				attendanceTime.setCoreTimeEnd(rs.getString("core_time_end"));
-				attendanceTime.setLaborSystemId(rs.getInt("labor_system_id"));
+
+				CoreTime coreTime = new CoreTime();
+				coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+				coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+				attendanceTime.setCoreTime(coreTime);
 
 				LaborSystem tempLaborSystem = new LaborSystem();
 				tempLaborSystem.setId(rs.getInt("labor_system_id"));
@@ -76,7 +88,7 @@ public class AttendanceTimeDao {
 	//update
 	public static void editAttendanceTime(AttendanceTime insertTime) {
 		String sql = "UPDATE " + tableName + " SET start_time = ?,end_time = ? "
-				+ "WHERE labor_system_id = " + insertTime.getLaborSystemId() +" AND company_id = " + insertTime.getCompany().getId();
+				+ "WHERE labor_system_id = " + insertTime.getLaborSystem().getId() +" AND company_id = " + insertTime.getCompany().getId();
 
 		try {
 			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);

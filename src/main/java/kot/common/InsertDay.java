@@ -1,5 +1,6 @@
 package main.java.kot.common;
 
+//TODO この使い道は？
 public class InsertDay {
 
 	//insertする年

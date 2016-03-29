@@ -18,12 +18,12 @@
           <li>
             <label>新規パスワード：</label>
             <div>
-              <input type="text" name="new_password">
+              <input class="password_info"  type="text" name="new_password">
             </div>
           <li>
             <label>新規パスワード確認：</label>
             <div>
-              <input type="password" name="confirm_new_password">
+              <input class="password_conf" type="password" name="confirm_new_password">
             </div>
           </li>
         </ul>

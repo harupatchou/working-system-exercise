@@ -1,6 +1,6 @@
 package main.java.kot.admin.setup.servlet;
 
-import java.io.IOException;
+import main.java.kot.admin.setup.common.ServiceInvocation;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import main.java.kot.admin.setup.service.SetupService;
-import main.java.kot.admin.setup.service.SetupServiceImpl;
+import java.io.IOException;
 
 @WebServlet("/master/CompanyEdit")
 public class CompanyEditServlet extends HttpServlet{
@@ -23,10 +21,8 @@ public class CompanyEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 0);
-		SetupService setupService = new SetupServiceImpl();
-		setupService.companyEdit(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 0, 1);//FIXME マジックナンバーおおくない？
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/setup/companyEdit.jsp");
@@ -42,10 +38,8 @@ public class CompanyEditServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		SetupService setupService = new SetupServiceImpl();
-		setupService.companyEdit(req, resp);
+		//Serviceの呼び出し
+		ServiceInvocation.serviceInvocation(req, resp, 1, 1);
 
 		resp.sendRedirect("/kot/login");
 	}

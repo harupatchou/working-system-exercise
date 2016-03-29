@@ -1,4 +1,4 @@
-package main.java.kot.view;
+package main.java.kot.view.servlet;
 
 import java.io.IOException;
 
@@ -9,15 +9,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import main.java.kot.common.LimitWorkingTime;
-import main.java.kot.entity.Employee;
-import main.java.kot.logic.DataLogic;
-import main.java.kot.logic.OvertimeLogic;
+import main.java.kot.view.service.ViewEmployeeService;
+import main.java.kot.view.serviceImpl.ViewEmployeeServiceImpl;
 
 @WebServlet("/employee/Top")
 public class ViewEmployeeSevlet extends HttpServlet {
+
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		ViewEmployeeService viewEmployeeService = new ViewEmployeeServiceImpl();
+		viewEmployeeService.viewEmployee(req, resp);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -26,15 +30,8 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//セッション情報取得
-		HttpSession session=req.getSession();
-		int loginId = (Integer) session.getAttribute("loginId");
-
-		//月次労働時間情報
-		Employee employee = DataLogic.getEmployee(loginId);
-		LimitWorkingTime limitWorkingtime = OvertimeLogic.getPossibleOvertime(employee);
-
-		req.setAttribute("limitWorkingtime", limitWorkingtime);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 0);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");

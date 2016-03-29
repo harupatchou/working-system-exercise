@@ -3,11 +3,8 @@ package main.java.kot.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import main.java.kot.common.database.DBcommon;
-import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 
 public class CompanyDao {
@@ -24,7 +21,6 @@ public class CompanyDao {
 
 			pstmt.setInt(1, company.getId());
 			pstmt.setString(2, company.getCompanyName());
-
 
 			pstmt.executeUpdate();
 
@@ -74,7 +70,8 @@ public class CompanyDao {
 			}
 	}
 
-	//companyIdから情報取得(紐付いている情報全て)
+	// TODO 使ってなかったのでコメントアウト(今後使う予定有？)
+/*	//companyIdから情報取得(紐付いている情報全て)
 	public static Company getCompanyAll(Integer companyId) {
 		String sql = "SELECT c.*,at.* FROM company c INNER JOIN attendance_time at ON c.id = at.company_id WHERE c.id = " + companyId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
@@ -89,8 +86,11 @@ public class CompanyDao {
 
 					tempAttend.setStartTime(rs.getString("start_time"));
 					tempAttend.setEndTime(rs.getString("end_time"));
-					tempAttend.setCoreTimeStrat(rs.getString("core_time_start"));
-					tempAttend.setCoreTimeEnd(rs.getString("core_time_end"));
+
+					CoreTime coreTime = new CoreTime();
+					coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
+					coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
+					tempAttend.setCoreTime(coreTime);
 
 					attendList.add(tempAttend);
 
@@ -106,6 +106,6 @@ public class CompanyDao {
 				System.err.println("SQL = " + sql);
 				throw new RuntimeException("処理に失敗しました", e);
 			}
-	}
+	}*/
 
 }

@@ -9,22 +9,22 @@ public class Workingtype {
 	private Integer id;
 	//種別名
 	private String workingName;
-	//労働制
-	private Integer labor_system_id;
-	//会社コード
-	private Integer company_id;
+	//会社
+	private Company company;
 	//労働制
 	private LaborSystem laborSystem;
+	//勤怠時間
+	private AttendanceTime attendanceTime;
 
 	public Workingtype(){
 	}
 
-	public Workingtype(Integer id, String workingName, Integer labor_system_id,Integer company_id,LaborSystem laborSystem){
+	public Workingtype(Integer id, String workingName, Integer company_id,Company company,LaborSystem laborSystem, AttendanceTime attendanceTime){
 		this.id = id;
 		this.workingName = workingName;
-		this.labor_system_id = labor_system_id;
-		this.company_id = company_id;
+		this.company = company;
 		this.laborSystem = laborSystem;
+		this.attendanceTime = attendanceTime;
 	}
 
 	public Integer getId() {
@@ -39,17 +39,11 @@ public class Workingtype {
 	public void setWorkingName(String workingName) {
 		this.workingName = workingName;
 	}
-	public Integer getLaborSystemId() {
-		return labor_system_id;
+	public Company getCompany() {
+		return company;
 	}
-	public void setLaborSystemId(Integer labor_system_id) {
-		this.labor_system_id = labor_system_id;
-	}
-	public Integer getCompanyId() {
-		return company_id;
-	}
-	public void setCompanyId(Integer company_id) {
-		this.company_id = company_id;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 	public LaborSystem getLaborSystem() {
 		return laborSystem;
@@ -57,5 +51,12 @@ public class Workingtype {
 	public void setLaborSystem(LaborSystem loborSystem) {
 		this.laborSystem = loborSystem;
 	}
+	public AttendanceTime getAttendanceTime() {
+		return attendanceTime;
+	}
+	public void setAttendanceTime(AttendanceTime attendanceTime) {
+		this.attendanceTime = attendanceTime;
+	}
+
 
 }

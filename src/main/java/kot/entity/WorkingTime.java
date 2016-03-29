@@ -7,18 +7,18 @@ public class WorkingTime {
 	private double workingTime;
 	/*持越し時間(フレックス制のみ、法定労働時間に達しなかった場合翌月に持越し)*/
 	private String carryoverTime;
-	/*従業員種別ID*/
-	private Integer laborSystemId;
+	/*労働制*/
+	private LaborSystem laborSystem;
 
 	public WorkingTime() {
 	}
 
 	public WorkingTime(Integer workingTimeId, double workingTime, String carryoverTime,
-			Integer laborSystemId) {
+			LaborSystem laborSystem) {
 		this.workingTimeId = workingTimeId;
 		this.workingTime = workingTime;
 		this.carryoverTime = carryoverTime;
-		this.laborSystemId = laborSystemId;
+		this.laborSystem = laborSystem;
 	}
 
 	public Integer getWorkingTimeId() {
@@ -39,11 +39,11 @@ public class WorkingTime {
 	public void setCarryoverTime(String carryoverTime) {
 		this.carryoverTime = carryoverTime;
 	}
-	public Integer getLaborSystemId() {
-		return laborSystemId;
+	public LaborSystem getLaborSystem() {
+		return laborSystem;
 	}
-	public void setLaborSystemId(Integer laborSystemId) {
-		this.laborSystemId = laborSystemId;
+	public void setLaborSystem(LaborSystem laborSystem) {
+		this.laborSystem = laborSystem;
 	}
 
 

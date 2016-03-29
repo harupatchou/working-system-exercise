@@ -31,12 +31,12 @@
                 <div>
                   <select name="laborSystemId" id="laborSystem">
                     <c:forEach items="${attendanceTimeList}" var="attend">
-                      <option value="${attend.laborSystemId}">${attend.laborSystem.laborSystemName}</option>
+                      <option value="${attend.laborSystem.id}">${attend.laborSystem.laborSystemName}</option>
                    </c:forEach>
                   </select>
                   <c:forEach items="${attendanceTimeList}" var="attend" varStatus="i">
-                    <input type="hidden" id="selectStart_${attend.laborSystemId}" value="${attendanceTimeList.get(i.index).getStartTime()}">
-                    <input type="hidden" id="selectEnd_${attend.laborSystemId}" value="${attendanceTimeList.get(i.index).getEndTime()}">
+                    <input type="hidden" id="selectStart_${attend.laborSystem.id}" value="${attendanceTimeList.get(i.index).getStartTime()}">
+                    <input type="hidden" id="selectEnd_${attend.laborSystem.id}" value="${attendanceTimeList.get(i.index).getEndTime()}">
                   </c:forEach>
                   <input type="button" value="編集" id="windowButton">
                 </div>

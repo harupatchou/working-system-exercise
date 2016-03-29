@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.kot.common.database.DBcommon;
+import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.WorkingTime;
 
 public class WorkingTimeDao {
@@ -13,7 +14,7 @@ public class WorkingTimeDao {
 
 	/*労働制IDから労働時間情報取得*/
 	public static WorkingTime getWorkingTime(Integer laborSystemId){
-		String sql = "SELECT * FROM " + tableName + " WHERE labor_system_id = " + laborSystemId;
+		String sql = "SELECT work.*, labor.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id WHERE labor_system_id = " + laborSystemId;
 		try(ResultSet rs = DBcommon.getResultSet(sql);){
 
 			WorkingTime workingTime = new WorkingTime();
@@ -21,7 +22,12 @@ public class WorkingTimeDao {
 				workingTime.setWorkingTimeId(rs.getInt("id"));
 				workingTime.setWorkingTime(rs.getDouble("working_time"));
 				workingTime.setCarryoverTime(rs.getString("carryover_time"));
-				workingTime.setLaborSystemId(rs.getInt("labor_system_id"));
+
+				LaborSystem tempLabor = new LaborSystem();
+				tempLabor.setId(rs.getInt("labor_system_id"));
+				tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
+				workingTime.setLaborSystem(tempLabor);
+
 			}
 			return workingTime;
 
@@ -53,7 +59,7 @@ public class WorkingTimeDao {
 
 	//update
 	public static void editWorkingTime(WorkingTime workingTime) {
-		String sql = "UPDATE " + tableName + " SET working_time = ? WHERE labor_system_id = " + workingTime.getLaborSystemId();
+		String sql = "UPDATE " + tableName + " SET working_time = ? WHERE labor_system_id = " + workingTime.getLaborSystem().getId();
 
 		try {
 			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);

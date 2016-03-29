@@ -11,10 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
-import main.java.kot.admin.calculation.service.CalculationWorkingTimeServiceImpl;
+import main.java.kot.admin.calculation.serviceImpl.CalculationWorkingTimeServiceImpl;
 
 @WebServlet("/master/Calculation")
 public class CalculationWorkingTimeServlet extends HttpServlet{
+
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		CalculationWorkingTimeService calculationWorkingTimeService = new CalculationWorkingTimeServiceImpl();
+		calculationWorkingTimeService.CalculationWorkingTime(req, resp);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,10 +36,8 @@ public class CalculationWorkingTimeServlet extends HttpServlet{
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//処理を委譲したServiceの呼び出し
-		req.setAttribute("reqParam", 1);
-		CalculationWorkingTimeService calculationWorkingTimeService = new CalculationWorkingTimeServiceImpl();
-		calculationWorkingTimeService.CalculationWorkingTime(req, resp);
+		//serviceの呼び出し
+		serviceInvocation(req, resp, 1);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/master/working/calculation.jsp");

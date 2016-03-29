@@ -1,4 +1,4 @@
-package main.java.kot.admin.calculation.service;
+package main.java.kot.admin.calculation.serviceImpl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import main.java.kot.admin.calculation.logic.CalculationWorkingTimeLogic;
+import main.java.kot.admin.calculation.service.CalculationWorkingTimeService;
 import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.TempDate;
 import main.java.kot.dao.EmployeeDao;
@@ -24,7 +25,7 @@ public class CalculationWorkingTimeServiceImpl implements CalculationWorkingTime
 		/* Get*/
 		if(reqParam == 0){
 
-			/*doGet側処理、ここに書く*/
+			/* doGet側処理、今後追加する際はここに書く*/
 
 		/* Post */
 		}else{
@@ -34,7 +35,7 @@ public class CalculationWorkingTimeServiceImpl implements CalculationWorkingTime
 			int loginId = (Integer) session.getAttribute("loginId");
 
 			Employee employee = DataLogic.getEmployee(loginId);
-			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompanyId());
+			Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
 
 			String stringYear = req.getParameter("year");
 			Integer year = Integer.parseInt(stringYear);

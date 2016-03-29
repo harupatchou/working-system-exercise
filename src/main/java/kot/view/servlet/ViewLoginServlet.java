@@ -1,6 +1,7 @@
-package main.java.kot.view;
+package main.java.kot.view.servlet;
 
-import java.io.IOException;
+import main.java.kot.view.service.ViewLoginService;
+import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,9 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @WebServlet("/login")
 public class ViewLoginServlet extends HttpServlet {
+
+	/* Serviceの呼び出し */
+	private static void serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
+		req.setAttribute("reqParam", reqParam);
+		ViewLoginService viewLoginService = new ViewLoginServiceImpl();
+		viewLoginService.viewLogin(req, resp);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -22,6 +31,7 @@ public class ViewLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//セッション破棄
+		//TODO なんで破棄？
 		HttpSession session=req.getSession(true);
 		session.invalidate();
 
@@ -37,19 +47,8 @@ public class ViewLoginServlet extends HttpServlet {
 		//文字形式をUTF-8指定
 		req.setCharacterEncoding("UTF-8");
 
-		//初期化
-		HttpSession session=req.getSession(true);
-		//セッションのタイムアウト時間20分
-		session.setMaxInactiveInterval(1200);
-
-		String strUserId =req.getParameter("userId");
-		Integer userId = Integer.parseInt(strUserId);
-
-		String password  =req.getParameter("password");
-
-		/* tex をセッションへ格納します。 */
-		session.setAttribute("loginId",userId);
-		session.setAttribute("password",password);
+		//Serviceの呼び出し
+		serviceInvocation(req, resp, 1);//FIXME マジックナンバーやめて
 
 		resp.sendRedirect("/kot/login/check");
 	}
