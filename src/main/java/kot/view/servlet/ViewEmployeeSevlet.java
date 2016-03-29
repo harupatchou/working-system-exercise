@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.view.service.ViewEmployeeService;
 import main.java.kot.view.serviceImpl.ViewEmployeeServiceImpl;
 
@@ -31,7 +32,7 @@ public class ViewEmployeeSevlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 0);
+		serviceInvocation(req, resp, ServiceConstant.GET_REQUEST);
 
 		ServletContext application = req.getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher("/jsp/employee/top/Top.jsp");

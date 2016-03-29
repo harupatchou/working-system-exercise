@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import main.java.kot.admin.setup.logic.MasterSetupLogic;
 import main.java.kot.admin.setup.service.MasterSetupService;
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.dao.WorkingtypeDao;
 import main.java.kot.entity.AttendanceTime;
@@ -26,7 +27,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -39,7 +40,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			req.setAttribute("employeeList", company.getEmployeeList());
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			/* doPost側処理、今後追加する際はここに書く*/
 
@@ -52,7 +53,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get */
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -66,7 +67,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			req.setAttribute("workingtypeList", company.getWorkingtypeList());
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			Workingtype workingtype = new Workingtype();
 
@@ -103,7 +104,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -128,7 +129,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			req.setAttribute("employee", tempEmployee);
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -169,7 +170,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -200,7 +201,7 @@ public class MasterSetupServiceImpl implements MasterSetupService{
 			req.setAttribute("workingTime", workingTime);
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();

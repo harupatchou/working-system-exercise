@@ -1,7 +1,6 @@
 package main.java.kot.view.servlet;
 
-import main.java.kot.view.service.ViewLoginService;
-import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
+import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+
+import main.java.kot.common.service.ServiceConstant;
+import main.java.kot.view.service.ViewLoginService;
+import main.java.kot.view.serviceImpl.ViewLoginServiceImpl;
 
 @WebServlet("/login")
 public class ViewLoginServlet extends HttpServlet {
@@ -48,7 +50,7 @@ public class ViewLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		serviceInvocation(req, resp, 1);//FIXME マジックナンバーやめて
+		serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
 
 		resp.sendRedirect("/kot/login/check");
 	}

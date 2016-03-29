@@ -11,7 +11,7 @@ import java.util.List;
 import main.java.kot.admin.calculation.logic.CalculationWorkingTimeLogic;
 import main.java.kot.common.CalculationWorkingTimeTotal;
 import main.java.kot.common.SelectDate;
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.ArrayListLogic;
@@ -27,7 +27,7 @@ public class WorkingAllDao {
 		String sql = "INSERT INTO " + tableName + " (date,week,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all,late_time_all,day_status,employee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingAll.getDate());
@@ -64,7 +64,7 @@ public class WorkingAllDao {
 		String sql = "UPDATE " + tableName + " SET working_time_all = ?,legal_overtime_all = ?,statutory_overtime_all = ?,night_time_all = ?,night_overtime_all = ?,late_time_all = ? WHERE employee_id = " + workingAll.getEmployeeId() + " AND date = ?";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(workingAll.getDate());
@@ -97,7 +97,7 @@ public class WorkingAllDao {
 
 		String sql = "select * from " + tableName + " where date = '" + day +"' AND employee_id = " +employeeId;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			WorkingAll workingAll = new WorkingAll();
 			while(rs.next()){
@@ -123,7 +123,7 @@ public class WorkingAllDao {
 	/*年月・従業員IDから総労働時間取得*/
 	public static CalculationWorkingTimeTotal workingTimeTotal(Integer employeeId, Integer month, Integer year){
 		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all,day_status FROM " + tableName + " WHERE employee_id = " + employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			//総労働時間格納用
 			CalculationWorkingTimeTotal workingTimeTotal = new CalculationWorkingTimeTotal();
@@ -170,7 +170,7 @@ public class WorkingAllDao {
 	/*年月・従業員IDから現時点での総労働時間取得*/
 	public static CalculationWorkingTimeTotal getCurrentWorkingTimeTotal(Integer employeeId, Date date){
 		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE employee_id = " + employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			//総労働時間格納用
 			CalculationWorkingTimeTotal workingTimeTotal = new CalculationWorkingTimeTotal();
@@ -219,7 +219,7 @@ public class WorkingAllDao {
 	/*年月日・曜日・従業員IDから指定週での総労働時間取得*/
 	public static CalculationWorkingTimeTotal getCurrentWeeklyWorkingTimeTotal(WorkingDay workingDay, Integer startDay, Integer endDay){
 		String sql = "SELECT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month,DATE_PART('DAY', date) AS day,working_time_all,legal_overtime_all,statutory_overtime_all,night_time_all,night_overtime_all FROM " + tableName + " WHERE employee_id = " + workingDay.getEmployeeId();
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			//総労働時間格納用
 			CalculationWorkingTimeTotal workingTimeTotal = new CalculationWorkingTimeTotal();
@@ -269,7 +269,7 @@ public class WorkingAllDao {
 	/*年月を取得*/
 	public static SelectDate getYearAndMonth(Integer employeeId){
 		String sql = "SELECT DISTINCT DATE_PART('YEAR', date) AS year,DATE_PART('MONTH', date) AS month FROM " + tableName + " WHERE employee_id = " + employeeId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			SelectDate selectDate = new SelectDate();
 

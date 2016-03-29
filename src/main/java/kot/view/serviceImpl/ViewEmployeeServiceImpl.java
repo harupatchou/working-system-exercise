@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import main.java.kot.common.LimitWorkingTime;
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.entity.Employee;
 import main.java.kot.logic.DataLogic;
 import main.java.kot.logic.OvertimeLogic;
@@ -18,7 +19,7 @@ public class ViewEmployeeServiceImpl implements ViewEmployeeService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();
@@ -31,7 +32,7 @@ public class ViewEmployeeServiceImpl implements ViewEmployeeService{
 			req.setAttribute("limitWorkingtime", limitWorkingtime);
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			/* doPost側処理、今後追加する際はここに書く*/
 

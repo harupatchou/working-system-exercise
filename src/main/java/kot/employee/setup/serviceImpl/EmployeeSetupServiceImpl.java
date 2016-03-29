@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.dao.EmployeeDao;
 import main.java.kot.employee.setup.service.EmployeeSetupService;
 import main.java.kot.entity.Employee;
@@ -17,12 +18,12 @@ public class EmployeeSetupServiceImpl implements EmployeeSetupService{
 		Integer reqParam = (Integer)req.getAttribute("reqParam");
 
 		/* Get*/
-		if(reqParam == 0){
+		if(reqParam == ServiceConstant.GET_REQUEST){
 
 			/* doGet側処理、今後追加する際はここに書く*/
 
 		/* Post */
-		}else{
+		}else if(reqParam == ServiceConstant.POST_REQUEST){
 
 			//セッション情報取得
 			HttpSession session=req.getSession();

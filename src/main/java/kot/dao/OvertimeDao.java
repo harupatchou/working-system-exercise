@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.Overtime;
 
 
@@ -17,7 +17,7 @@ public class OvertimeDao {
 		String sql = "INSERT INTO " + tableName + " (legal_overtime,statutory_overtime,night_overtime,statutory_night_overtime,daily_id) VALUES (?, ?, ?, ?, ?)";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setString(1,overtime.getLegalOvertime());
 			pstmt.setString(2,overtime.getStatutoryOvertime());
@@ -40,7 +40,7 @@ public class OvertimeDao {
 		String sql = "UPDATE " + tableName + " SET legal_overtime = ?,statutory_overtime = ? ,night_overtime = ?,statutory_night_overtime = ?,daily_id = ? WHERE daily_id = " + overtime.getDailyId();
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setString(1,overtime.getLegalOvertime());
 			pstmt.setString(2,overtime.getStatutoryOvertime());
@@ -62,7 +62,7 @@ public class OvertimeDao {
 	public static boolean getOvertimeFromDailyId(Overtime overtime){
 		String sql = "SELECT * FROM " + tableName + " WHERE daily_id = " + overtime.getDailyId();
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 				boolean overtimeJudge = false;
 

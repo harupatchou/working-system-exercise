@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.kot.common.service.ServiceConstant;
 import main.java.kot.login.service.LoginServise;
 import main.java.kot.login.serviceImpl.LoginServiceImpl;
 
@@ -36,7 +37,7 @@ public class LoginServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 
 		//Serviceの呼び出し
-		String url = serviceInvocation(req, resp, 1);
+		String url = serviceInvocation(req, resp, ServiceConstant.POST_REQUEST);
 
 		resp.sendRedirect(url);
 	}

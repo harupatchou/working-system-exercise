@@ -1,6 +1,6 @@
 package main.java.kot.dao;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.AttendanceStatus;
 
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class AttendanceStatusDao {
 	public static List<AttendanceStatus> selectAttendStatusAll() {
 		String sql = "select * from " + tableName;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			//TODO もっと共通化できる気が・・・。
 			List<AttendanceStatus> statusList = new ArrayList<>();

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kot.common.database.DBcommon;
+import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
 import main.java.kot.entity.CoreTime;
@@ -24,7 +24,7 @@ public class WorkingtypeDao {
 		String sql = "INSERT INTO " + tableName + " (id, working_name, labor_system_id ,company_id) VALUES (?, ?,?, ?)";
 
 		try {
-			PreparedStatement pstmt = DBcommon.getPreparedStatement(sql);
+			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
 			pstmt.setInt(1, workingtype.getId());
 			pstmt.setString(2, workingtype.getWorkingName());
@@ -47,7 +47,7 @@ public class WorkingtypeDao {
 		String sql = "SELECT work.*,labor.*,attend.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id "
 				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.id = " + workingtypeId;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			Workingtype workingtype = new Workingtype();
 				while(rs.next()){
@@ -87,7 +87,7 @@ public class WorkingtypeDao {
 		String sql = "SELECT work.*,labor.*,attend.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id "
 				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.id = " + companyId;
 
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
+		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			List<Workingtype> workingytpeList = new ArrayList<>();
 				while(rs.next()){
