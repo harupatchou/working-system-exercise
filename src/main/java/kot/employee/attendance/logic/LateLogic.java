@@ -1,4 +1,4 @@
-package main.java.kot.logic;
+package main.java.kot.employee.attendance.logic;
 
 public class LateLogic {
 

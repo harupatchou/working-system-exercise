@@ -1,4 +1,4 @@
-package main.java.kot.logic;
+package main.java.kot.employee.attendance.logic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +16,9 @@ import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Overtime;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
+import main.java.kot.logic.DateLogic;
+import main.java.kot.logic.GeneralLogic;
+import main.java.kot.logic.OvertimeLogic;
 
 public class AttendanceLogic {
 
@@ -27,20 +30,23 @@ public class AttendanceLogic {
 		List<String> strInsertDay = new ArrayList<String>();
 
 		// 画面から得た日付
-		insertDay.setDay(Integer.parseInt(req.getParameter("day")));
-		insertDay.setDayStr(req.getParameter("day"));
-		insertDay.setMonth(Integer.parseInt(req.getParameter("month")));
-		insertDay.setMonthStr(req.getParameter("month"));
-		insertDay.setYear(Integer.parseInt(req.getParameter("year")));
-		insertDay.setYearStr(req.getParameter("year"));
+		String tempDay = req.getParameter("day");
+		if(tempDay != null){
+			insertDay.setDay(Integer.parseInt(req.getParameter("day")));
+			insertDay.setDayStr(req.getParameter("day"));
+			insertDay.setMonth(Integer.parseInt(req.getParameter("month")));
+			insertDay.setMonthStr(req.getParameter("month"));
+			insertDay.setYear(Integer.parseInt(req.getParameter("year")));
+			insertDay.setYearStr(req.getParameter("year"));
 
-		// string型のinsertする形式にするために使用
-		strInsertDay.add(insertDay.getYearStr());
-		strInsertDay.add(insertDay.getMonthStr());
-		strInsertDay.add(insertDay.getDayStr());
+			// string型のinsertする形式にするために使用
+			strInsertDay.add(insertDay.getYearStr());
+			strInsertDay.add(insertDay.getMonthStr());
+			strInsertDay.add(insertDay.getDayStr());
 
-		// サーバに登録するための日付をinsertDayにset
-		insertDay.setInsertDay(GeneralLogic.joinString(strInsertDay, "-"));
+			// サーバに登録するための日付をinsertDayにset
+			insertDay.setInsertDay(GeneralLogic.joinString(strInsertDay, "-"));
+		}
 
 		return insertDay;
 	}
@@ -56,8 +62,8 @@ public class AttendanceLogic {
 
 		// 入力がなければ00:00を入れる
 		if (startTime.equals("")) {
-			startTime = "0:00";
-			endTime = "0:00";
+			startTime = "00:00";
+			endTime = "00:00";
 			breakStartTime = "0:00";
 			breakEndTime = "0:00";
 		}
@@ -154,7 +160,6 @@ public class AttendanceLogic {
 
 		//種別毎に必要な処理
 		if(attendanceData.getWorkingtype().getLaborSystemId() == 1){
-			/* 通常労働制ならば */
 			//遅刻計算
 			strTime.setLateTime(LateLogic.lateCheckForNormal(provisionAttendTime,attendanceData.getStrTime().getStartTime()));
 		}else if(attendanceData.getWorkingtype().getLaborSystemId() == 2){

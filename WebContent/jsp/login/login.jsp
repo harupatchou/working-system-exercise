@@ -22,7 +22,7 @@
         </ul>
       </div>
       <div class="saveButton">
-        <input type="submit" value="登録">
+        <input type="submit" value="ログイン">
       </div>
     </form>
 <%--ここから上にコンテンツを挿入 --%>
