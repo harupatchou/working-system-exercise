@@ -1,4 +1,8 @@
 package main.java.kot.entity;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * 従業員種別情報
  * @author kuro
@@ -25,6 +29,37 @@ public class Workingtype {
 		this.company = company;
 		this.laborSystem = laborSystem;
 		this.attendanceTime = attendanceTime;
+	}
+
+
+	public void getWorkingTypeByResultSet(ResultSet rs){
+		try {
+
+			this.setId(rs.getInt("id"));
+			this.setWorkingName(rs.getString("working_name"));
+
+			Company tempCompany = new Company();
+			tempCompany.setId(rs.getInt("company_id"));
+			this.setCompany(tempCompany);
+
+			LaborSystem tempLabor = new LaborSystem();
+			tempLabor.setId(rs.getInt("labor_system_id"));
+			tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
+			this.setLaborSystem(tempLabor);
+
+			AttendanceTime tempAttend = new AttendanceTime();
+			tempAttend.setStartTime(rs.getString("start_time"));
+			tempAttend.setEndTime(rs.getString("end_time"));
+
+			CoreTime tempCore = new CoreTime();
+			tempCore.setCoreTimeStrat(rs.getString("core_time_start"));
+			tempCore.setCoreTimeEnd(rs.getString("core_time_end"));
+			tempAttend.setCoreTime(tempCore);
+			this.setAttendanceTime(tempAttend);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Integer getId() {

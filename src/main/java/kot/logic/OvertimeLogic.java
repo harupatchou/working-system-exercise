@@ -47,10 +47,7 @@ public class OvertimeLogic {
 		//一日の実労働時間算出
 		String attendDay= getWorkingTime(workingday);
 
-		overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 		overtime.setStatutoryOvertime(attendDay);
-		overtime.setNightOvertime(StrTime.ZERO_HOUR);
-		overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 
 		return overtime;
 	}
@@ -96,21 +93,18 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//本日の労働時間で法定労働時間を超えた場合
-		//FIXME 分岐の処理の違いがわからない
+		//本日の労働時間のうち法定時間を超えた分を取得して法定外残業にセット
 		if(largeMonthlyWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeMonthlyWorkingTime.equals(monthlyLegalWorkingtime)){
-			String monthlyOvetime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
 
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
+			//法定労働時間を超えた分の時間取得
+			String monthlyOvetime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
 			overtime.setStatutoryOvertime(monthlyOvetime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
+
 		//昨日までに法定労働時間を超えている場合
+		//本日の労働時間を法定外残業にセット
 		}else if(untilYesterdayLargeMonthlyWorkingTime.equals(untilYesterdayWorkingTimeTotal)){
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(workingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		}
 		return null;
@@ -125,8 +119,7 @@ public class OvertimeLogic {
 		int endDay = day;
 
 		//金曜日に週の労働時間と法定労働時間から残業計算を行う
-		// FIXME Integerをイコールで比較するのはまずい。
-		if(workingday.getWeek() == CalendarUtil.FRIDAY){
+		if(workingday.getWeek().equals(CalendarUtil.FRIDAY)){
 			//第一週
 			if(day <= 5){
 				startDay = 1;
@@ -134,7 +127,7 @@ public class OvertimeLogic {
 				startDay = day - 6;
 			}
 		//金曜日以外の場合
-		}else if(workingday.getWeek() != CalendarUtil.FRIDAY){
+		}else if(!workingday.getWeek().equals(CalendarUtil.FRIDAY)){
 			startDay = day - workingday.getWeek() + 2;//土曜から今日までの期間(曜日が1～7までのint型で判定なので金曜日との差を出すために+2)
 		}
 
@@ -160,17 +153,11 @@ public class OvertimeLogic {
 		//本日の労働時間で法定労働時間を超えた場合
 		if(largeWeeklyWorkingTime.equals(currentWeeklyWorkingTimeTotal) && untilYesterdayLargeWeeklyWorkingTime.equals(weeklyLegalWorkingTime)){
 			String weeklyOvertime = WorkingTimeLogic.subtractionWorkingTimeString(currentWeeklyWorkingTimeTotal,weeklyLegalWorkingTime);
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(weeklyOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		//昨日までに法定労働時間を超えている場合
 		}else if(untilYesterdayLargeWeeklyWorkingTime.equals(untilYesterdayWeeklyWorkingTimeTotal)){
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(workingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		}
 		return null;
@@ -196,22 +183,11 @@ public class OvertimeLogic {
 			String statutoryOvertime = WorkingTimeLogic.getWorkingtimeLag(WorkingTimeLogic.getTimeInt(timeLagStr),WorkingTimeLogic.getTimeInt(totalOvertime));
 			overtime.setLegalOvertime(timeLagStr);
 			overtime.setStatutoryOvertime(statutoryOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//法定内で収まる場合
 		}else if(tempTotalOverTime.getHour() == tempLegalOvertime.getHour() &&
 				tempTotalOverTime.getMinute() > 0 &&
 				tempTotalOverTime.getMinute() < tempLegalOvertime.getMinute()){
 			overtime.setLegalOvertime(totalOvertime);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
-		//残業なし
-		}else{
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		}
 		return overtime;
 	}
@@ -262,23 +238,13 @@ public class OvertimeLogic {
 				String carryoverWorkingTime = WorkingTimeLogic.subtractionWorkingTimeString(monthlyLegalWorkingtime, currentWorkingTimeTotal);
 				WorkingTimeDao.updateCarryOverTime(workingTime.getWorkingTimeId(), carryoverWorkingTime);
 			}
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//昨日までの総労働時間が法定労働時間を超えていない場合
 		}else if(currentLargeWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeWorkingTime.equals(monthlyLegalWorkingtime)){
 			String statutoryOvertime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(statutoryOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//昨日までで法定労働時間を超えている場合
 		}else{
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(todayWorkingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		}
 		return overtime;
 	}
@@ -408,18 +374,14 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//土日用処理
-		if(workingday.getWeek() == CalendarUtil.SATURDAY || workingday.getWeek() == CalendarUtil.SUNDAY){
+		if(workingday.getWeek().equals(CalendarUtil.SATURDAY) || workingday.getWeek().equals(CalendarUtil.SUNDAY)){
 			overtime = getOvertimeOnSaturdayAndSunday(workingday);
 			return overtime;
 		}
 
 		//残業時間
 		String tempOvertime = getTempOverTime(workingday);
-
-		overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 		overtime.setStatutoryOvertime(tempOvertime);
-		overtime.setNightOvertime(StrTime.ZERO_HOUR);
-		overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		return overtime;
 	}
 
@@ -438,7 +400,7 @@ public class OvertimeLogic {
 		Overtime overtime = new Overtime();
 
 		//土日用処理
-		if(workingday.getWeek() == CalendarUtil.SATURDAY || workingday.getWeek() == CalendarUtil.SUNDAY){
+		if(workingday.getWeek().equals(CalendarUtil.SATURDAY) || workingday.getWeek().equals(CalendarUtil.SUNDAY)){
 			overtime = getOvertimeOnSaturdayAndSunday(workingday);
 			return overtime;
 		}

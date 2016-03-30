@@ -1,12 +1,12 @@
 package main.java.kot.logic;
 
-import main.java.kot.common.TempTime;
-import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
-import main.java.kot.common.workingtime.constant.MonthlyLegalWorkingTime;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import main.java.kot.common.TempTime;
+import main.java.kot.common.workingtime.constant.ConstantWorkingTime;
+import main.java.kot.common.workingtime.constant.MonthlyLegalWorkingTime;
 
 /**
  * 労働時間関連ロジック
@@ -85,23 +85,28 @@ public class WorkingTimeLogic {
 
 
 	/*2つのstring型の時刻から大きいほうの値を返す*/
-	//FIXME いいの？これでいいの？
 	public static String compareWorkingTime(String compareFirst, String compareSecond){
 
 		TempTime compareTempTimeFirst = getTimeInt(compareFirst);
 		TempTime compareTempTimeSecond = getTimeInt(compareSecond);
 
 		String answerCompare = "";
+
+		//時比較(compareFirstが大きい場合)
 		if(compareTempTimeFirst.getHour() > compareTempTimeSecond.getHour()){
 			answerCompare = compareFirst;
+		//時比較(compareSecondが大きい場合)
 		}else if(compareTempTimeSecond.getHour() > compareTempTimeFirst.getHour()){
 			answerCompare = compareSecond;
+		//時が同じ場合の分比較(compareFirstが大きい場合)
 		}else if(compareTempTimeFirst.getHour() == compareTempTimeSecond.getHour() &&
 				compareTempTimeFirst.getMinute() > compareTempTimeSecond.getMinute()){
 			answerCompare = compareFirst;
+		//時が同じ場合の分比較(compareSecondが大きい場合)
 		}else if(compareTempTimeSecond.getHour() == compareTempTimeFirst.getHour() &&
 				compareTempTimeSecond.getMinute() > compareTempTimeFirst.getMinute()){
 			answerCompare = compareSecond;
+		//同じ場合
 		}else if(compareTempTimeFirst.getHour() == compareTempTimeSecond.getHour() &&
 				compareTempTimeFirst.getMinute() == compareTempTimeSecond.getMinute()){
 			answerCompare = "same";

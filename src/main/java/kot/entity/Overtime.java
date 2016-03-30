@@ -15,7 +15,12 @@ public class Overtime {
 	/*日付ID*/
 	private Integer dailyId;
 
+	//初期値"0:00"で初期化
 	public Overtime(){
+		this.legalOvertime = "0:00";
+		this.statutoryOvertime = "0:00";
+		this.nightOvertime = "0:00";
+		this.statutoryNightOvertime = "0:00";
 	}
 
 	public Overtime(Integer overtimeId,String legalOvertime,String statutoryOvertime,String nightOvertime,String statutoryNightOvertime, Integer dailyId){

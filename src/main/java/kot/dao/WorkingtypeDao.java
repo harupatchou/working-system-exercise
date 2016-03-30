@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.kot.common.database.DBCommon;
-import main.java.kot.entity.AttendanceTime;
 import main.java.kot.entity.Company;
-import main.java.kot.entity.CoreTime;
-import main.java.kot.entity.LaborSystem;
 import main.java.kot.entity.Workingtype;
 
 public class WorkingtypeDao {
@@ -51,27 +48,9 @@ public class WorkingtypeDao {
 
 			Workingtype workingtype = new Workingtype();
 				while(rs.next()){
-					workingtype.setId(rs.getInt("id"));
-					workingtype.setWorkingName(rs.getString("working_name"));
 
-					Company tempCompany = new Company();
-					tempCompany.setId(rs.getInt("company_id"));
-					workingtype.setCompany(tempCompany);
+					workingtype.getWorkingTypeByResultSet(rs);
 
-					LaborSystem tempLabor = new LaborSystem();
-					tempLabor.setId(rs.getInt("labor_system_id"));
-					tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
-					workingtype.setLaborSystem(tempLabor);
-
-					AttendanceTime tempAttend = new AttendanceTime();
-					tempAttend.setStartTime(rs.getString("start_time"));
-					tempAttend.setEndTime(rs.getString("end_time"));
-
-					CoreTime tempCore = new CoreTime();
-					tempCore.setCoreTimeStrat(rs.getString("core_time_start"));
-					tempCore.setCoreTimeEnd(rs.getString("core_time_end"));
-					tempAttend.setCoreTime(tempCore);
-					workingtype.setAttendanceTime(tempAttend);
 				}
 				return workingtype;
 
@@ -82,37 +61,18 @@ public class WorkingtypeDao {
 	}
 
 	/*会社IDから従業員種別情報を取得*/
-	public static List<Workingtype>  getWorkingtypeFromCompanyId(Integer companyId){
+	public static List<Workingtype>  getWorkingtypeFromCompanyId(Company company){
 
 		String sql = "SELECT work.*,labor.*,attend.* FROM " + tableName + " work JOIN labor_system labor ON work.labor_system_id = labor.id "
-				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.id = " + companyId;
+				+ "LEFT OUTER JOIN attendance_time attend ON labor.id = attend.labor_system_id WHERE work.company_id = " + company.getId();
 
 		try(ResultSet rs = DBCommon.getResultSet(sql);){
 
 			List<Workingtype> workingytpeList = new ArrayList<>();
 				while(rs.next()){
+
 					Workingtype workingtype = new Workingtype();
-					workingtype.setId(rs.getInt("id"));
-					workingtype.setWorkingName(rs.getString("working_name"));
-
-					Company tempCompany = new Company();
-					tempCompany.setId(rs.getInt("company_id"));
-					workingtype.setCompany(tempCompany);
-
-					LaborSystem tempLabor = new LaborSystem();
-					tempLabor.setId(rs.getInt("labor_system_id"));
-					tempLabor.setLaborSystemName(rs.getString("labor_system_name"));
-					workingtype.setLaborSystem(tempLabor);
-
-					AttendanceTime tempAttend = new AttendanceTime();
-					tempAttend.setStartTime(rs.getString("start_time"));
-					tempAttend.setEndTime(rs.getString("end_time"));
-
-					CoreTime tempCore = new CoreTime();
-					tempCore.setCoreTimeStrat(rs.getString("core_time_start"));
-					tempCore.setCoreTimeEnd(rs.getString("core_time_end"));
-					tempAttend.setCoreTime(tempCore);
-					workingtype.setAttendanceTime(tempAttend);
+					workingtype.getWorkingTypeByResultSet(rs);
 
 					workingytpeList.add(workingtype);
 				}
