@@ -182,6 +182,13 @@ public class DateLogic {
 			if(tempWork.getId() == null){
 				tempSchedule.setEnterStatus("未入力");
 				tempWork.setStatusCode(4);
+
+				AttendanceStatus tempAttend = new AttendanceStatus();
+
+				tempAttend.setId(4);
+				tempAttend.setStatusName("未入力");
+
+				tempWork.setAttendanceStatus(tempAttend);
 			}else{
 				tempSchedule.setEnterStatus("入力済");
 
@@ -225,8 +232,6 @@ public class DateLogic {
 
 				tempSchedule.setBreakTime(DateLogic.getStringTime(tempBreakStartTime,tempBreakEndTime));
 			}
-
-
 
 			scheduleList.add(tempSchedule);
 		}

@@ -177,7 +177,6 @@ public class AttendanceLogic {
 
 	public static WorkingAll setWorkingAll(AttendanceData attendanceData) {
 
-		Overtime overtime = new Overtime();
 		WorkingAll workingAll = new WorkingAll();
 
 		//LaborSystem毎の処理

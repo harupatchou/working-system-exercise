@@ -8,24 +8,15 @@ public class LateLogic {
 		String[] tempProvision = provisionAttendTime.split(":");
 		String[] tempAttendance = startTime.split(":");
 
-		//TODO 一旦Stringにする意味は？
-		String strProvisionHour = tempProvision[0];
-		String strProvisionMinutes = tempProvision[1];
-		String strAttendanceHour = tempAttendance[0];
-		String strAttendanceMinutes = tempAttendance[1];
-
-		Integer provisionHour = Integer.parseInt(strProvisionHour);
-		Integer provisionMinutes = Integer.parseInt(strProvisionMinutes);
-		Integer attendanceHour = Integer.parseInt(strAttendanceHour);
-		Integer attendanceMinutes = Integer.parseInt(strAttendanceMinutes);
+		Integer provisionHour = Integer.parseInt(tempProvision[0]);
+		Integer provisionMinutes = Integer.parseInt(tempProvision[1]);
+		Integer attendanceHour = Integer.parseInt(tempAttendance[0]);
+		Integer attendanceMinutes = Integer.parseInt(tempAttendance[1]);
 
 		String tempLateHour = "";
 		String tempLateMinutes = "";
 
 		String lateTime = "";
-
-		//10:00
-		//09:30
 
 		//出社時間が規定時間を超えていれば
 		if(provisionHour<=attendanceHour){
@@ -43,10 +34,10 @@ public class LateLogic {
 				tempLateMinutes = "0" + tempLateMinutes;
 			}
 
-			lateTime += tempLateHour + ":" + tempLateMinutes; //FIXME +=の意味がわかんない
+			lateTime = tempLateHour + ":" + tempLateMinutes;
 
 		}else{
-			lateTime="0:00";
+			lateTime = "0:00";
 		}
 
 		return lateTime;

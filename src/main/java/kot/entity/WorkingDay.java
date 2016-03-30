@@ -1,6 +1,9 @@
 package main.java.kot.entity;
 
+import java.util.Calendar;
 import java.util.Date;
+
+import main.java.kot.common.StrTime;
 
 public class WorkingDay {
 	//所定フラグ
@@ -14,9 +17,14 @@ public class WorkingDay {
 	/**
 	 * 1 通常出勤
 	 * 2 欠勤
+	 * 3 有給
+	 * 4 未入力
 	 **/
 	public final static int NORMAL_ATTENDANCE = 1;
 	public final static int ABSENCE = 2;
+	public final static int SALARIED = 3;
+	public final static int NO_INPUT = 4;
+
 
 
 	//id
@@ -43,6 +51,19 @@ public class WorkingDay {
 	private Integer statusCode;
 
 	private AttendanceStatus attendanceStatus;
+
+	public WorkingDay(){
+		Calendar cal = Calendar.getInstance();
+
+		this.date = new Date();
+		this.week = cal.get(Calendar.DAY_OF_WEEK);
+		this.attendanceTime = StrTime.ZERO_HOUR;
+		this.leaveTime = StrTime.ZERO_HOUR;
+		this.breakTimeStart = StrTime.ZERO_HOUR;
+		this.breakTimeEnd = StrTime.ZERO_HOUR;
+		this.napTime = StrTime.ZERO_HOUR;
+		this.statusCode = NO_INPUT;
+	}
 
 	public Integer getId() {
 		return id;

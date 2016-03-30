@@ -104,9 +104,4 @@ public class AttendanceTimeDao {
 		}
 	}
 
-	public static Object selectAttendTime() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
 }

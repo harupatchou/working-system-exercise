@@ -15,6 +15,7 @@ import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.WorkingAll;
 import main.java.kot.entity.WorkingDay;
 import main.java.kot.logic.ArrayListLogic;
+import main.java.kot.logic.DateLogic;
 import main.java.kot.logic.HolidayLogic;
 
 public class WorkingAllDao {
@@ -29,16 +30,7 @@ public class WorkingAllDao {
 		try {
 			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(workingAll.getDate());
-			cal.set(Calendar.HOUR_OF_DAY, 0);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			cal.set(Calendar.MILLISECOND, 0);
-			java.sql.Date sqlDate = new java.sql.Date(cal.getTimeInMillis());
-
-			//TODO 微妙
-			pstmt.setDate(1,sqlDate);
+			pstmt.setDate(1,DateLogic.sqlDate(workingAll.getDate()));
 			pstmt.setInt(2,workingAll.getWeek());
 			pstmt.setString(3,workingAll.getWorkingTimeAll());
 			pstmt.setString(4,workingAll.getLegalOvertimeAll());

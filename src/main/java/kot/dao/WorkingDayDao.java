@@ -8,6 +8,7 @@ import java.util.Calendar;
 import main.java.kot.common.database.DBCommon;
 import main.java.kot.entity.AttendanceStatus;
 import main.java.kot.entity.WorkingDay;
+import main.java.kot.logic.DateLogic;
 
 
 public class WorkingDayDao {
@@ -22,16 +23,7 @@ public class WorkingDayDao {
 		try {
 			PreparedStatement pstmt = DBCommon.getPreparedStatement(sql);
 
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(workingDay.getDate());
-			cal.set(Calendar.HOUR_OF_DAY, 0);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			cal.set(Calendar.MILLISECOND, 0);
-			java.sql.Date sqlDate = new java.sql.Date(cal.getTimeInMillis());
-
-			//TODO 微妙
-			pstmt.setDate(1,sqlDate);
+			pstmt.setDate(1,DateLogic.sqlDate(workingDay.getDate()));
 			pstmt.setInt(2,workingDay.getWeek());
 			pstmt.setString(3, workingDay.getAttendanceTime());
 			pstmt.setString(4, workingDay.getLeaveTime());
