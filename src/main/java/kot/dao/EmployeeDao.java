@@ -61,16 +61,15 @@ public class EmployeeDao {
 			Company company = new Company();
 			List<Employee> employeeList = new ArrayList<>();
 			while(rs.next()){
+
+				company.setId(rs.getInt("company_id"));
+				company.setCompanyName(rs.getString("company_name"));
+
 				Employee employee = new Employee();
 				employee.setEmployeeId(rs.getInt("id"));
 				employee.setFirstName(rs.getString("first_name"));
 				employee.setLastName(rs.getString("last_name"));
 				employee.setPassword(rs.getString("password"));
-
-				Company tempCom = new Company();
-				tempCom.setId(rs.getInt("company_id"));
-				tempCom.setCompanyName(rs.getString("company_name"));
-				employee.setCompany(tempCom);
 
 				Workingtype tempWork = new Workingtype();
 				tempWork.setId(rs.getInt("working_type_id"));

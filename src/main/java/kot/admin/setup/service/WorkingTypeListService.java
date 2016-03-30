@@ -25,6 +25,7 @@ public class WorkingTypeListService extends Service {
 		//従業員種別情報
 		Employee employee = DataLogic.getEmployee(loginId);
 		Company company = EmployeeDao.getEmployeeFromCompanyId(employee.getCompany().getId());
+		System.out.println();
 		company = DataLogic.getWorkingTypeOfCompany(company);
 
 		req.setAttribute("workingtypeList", company.getWorkingtypeList());
