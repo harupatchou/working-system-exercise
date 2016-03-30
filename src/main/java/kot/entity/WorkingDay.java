@@ -20,17 +20,10 @@ public class WorkingDay {
 	 * 3 有給
 	 * 4 未入力
 	 **/
-<<<<<<< HEAD
 	public final static int NORMAL_ATTENDANCE = 1;
 	public final static int ABSENCE = 2;
 	public final static int SALARIED = 3;
 	public final static int NO_INPUT = 4;
-
-=======
-	public final static Integer NORMAL_ATTENDANCE = 1;
-	public final static Integer ABSENCE = 2;
->>>>>>> 0ee03a8edae21ac000c78f821a47272a39196978
-
 
 	//id
 	private Integer id;
