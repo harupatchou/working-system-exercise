@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import main.java.kot.common.AttendanceData;
-import main.java.kot.common.CreateWorkingDate;
 import main.java.kot.common.InsertDay;
 import main.java.kot.common.Schedule;
 import main.java.kot.common.StrTime;
@@ -39,7 +38,7 @@ public class AttendanceService extends Service {
 
 		tempWorking = WorkingDayDao.selectByDayAndEmployeeId(sdf.format(tempDate), workingDay.getEmployeeId());
 
-		if(tempWorking.getDate()==null){
+		if(tempWorking.getId()==null){
 			return WorkingDayDao.insertWorkingDay(workingDay);
 		}else{
 			return WorkingDayDao.updateWorkingDay(workingDay);
@@ -154,8 +153,6 @@ public class AttendanceService extends Service {
 		String serverSideDate = selectDay.replace("/","-");
 
 		workingDay = WorkingDayDao.selectByDayAndEmployeeId(serverSideDate, employee.getEmployeeId());
-
-		CreateWorkingDate c = new CreateWorkingDate(workingDay);
 
 		if(workingDay.getAttendanceTime()!=null){
 			workingDay.setAttendanceTime(DateLogic.formatTime(workingDay.getAttendanceTime()));
