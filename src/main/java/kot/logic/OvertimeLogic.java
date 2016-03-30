@@ -47,10 +47,7 @@ public class OvertimeLogic {
 		//一日の実労働時間算出
 		String attendDay= getWorkingTime(workingday);
 
-		overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 		overtime.setStatutoryOvertime(attendDay);
-		overtime.setNightOvertime(StrTime.ZERO_HOUR);
-		overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 
 		return overtime;
 	}
@@ -101,19 +98,13 @@ public class OvertimeLogic {
 
 			//法定労働時間を超えた分の時間取得
 			String monthlyOvetime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
-
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(monthlyOvetime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
+
 		//昨日までに法定労働時間を超えている場合
 		//本日の労働時間を法定外残業にセット
 		}else if(untilYesterdayLargeMonthlyWorkingTime.equals(untilYesterdayWorkingTimeTotal)){
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(workingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		}
 		return null;
@@ -162,17 +153,11 @@ public class OvertimeLogic {
 		//本日の労働時間で法定労働時間を超えた場合
 		if(largeWeeklyWorkingTime.equals(currentWeeklyWorkingTimeTotal) && untilYesterdayLargeWeeklyWorkingTime.equals(weeklyLegalWorkingTime)){
 			String weeklyOvertime = WorkingTimeLogic.subtractionWorkingTimeString(currentWeeklyWorkingTimeTotal,weeklyLegalWorkingTime);
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(weeklyOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		//昨日までに法定労働時間を超えている場合
 		}else if(untilYesterdayLargeWeeklyWorkingTime.equals(untilYesterdayWeeklyWorkingTimeTotal)){
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(workingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 			return overtime;
 		}
 		return null;
@@ -198,22 +183,11 @@ public class OvertimeLogic {
 			String statutoryOvertime = WorkingTimeLogic.getWorkingtimeLag(WorkingTimeLogic.getTimeInt(timeLagStr),WorkingTimeLogic.getTimeInt(totalOvertime));
 			overtime.setLegalOvertime(timeLagStr);
 			overtime.setStatutoryOvertime(statutoryOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//法定内で収まる場合
 		}else if(tempTotalOverTime.getHour() == tempLegalOvertime.getHour() &&
 				tempTotalOverTime.getMinute() > 0 &&
 				tempTotalOverTime.getMinute() < tempLegalOvertime.getMinute()){
 			overtime.setLegalOvertime(totalOvertime);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
-		//残業なし
-		}else{
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		}
 		return overtime;
 	}
@@ -264,23 +238,13 @@ public class OvertimeLogic {
 				String carryoverWorkingTime = WorkingTimeLogic.subtractionWorkingTimeString(monthlyLegalWorkingtime, currentWorkingTimeTotal);
 				WorkingTimeDao.updateCarryOverTime(workingTime.getWorkingTimeId(), carryoverWorkingTime);
 			}
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryOvertime(StrTime.ZERO_HOUR);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//昨日までの総労働時間が法定労働時間を超えていない場合
 		}else if(currentLargeWorkingTime.equals(currentWorkingTimeTotal) && untilYesterdayLargeWorkingTime.equals(monthlyLegalWorkingtime)){
 			String statutoryOvertime = WorkingTimeLogic.subtractionWorkingTimeString(currentWorkingTimeTotal, monthlyLegalWorkingtime);
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(statutoryOvertime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		//昨日までで法定労働時間を超えている場合
 		}else{
-			overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 			overtime.setStatutoryOvertime(todayWorkingTime);
-			overtime.setNightOvertime(StrTime.ZERO_HOUR);
-			overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		}
 		return overtime;
 	}
@@ -417,11 +381,7 @@ public class OvertimeLogic {
 
 		//残業時間
 		String tempOvertime = getTempOverTime(workingday);
-
-		overtime.setLegalOvertime(StrTime.ZERO_HOUR);
 		overtime.setStatutoryOvertime(tempOvertime);
-		overtime.setNightOvertime(StrTime.ZERO_HOUR);
-		overtime.setStatutoryNightOvertime(StrTime.ZERO_HOUR);
 		return overtime;
 	}
 

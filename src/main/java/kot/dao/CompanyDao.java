@@ -70,42 +70,4 @@ public class CompanyDao {
 			}
 	}
 
-	// TODO 使ってなかったのでコメントアウト(今後使う予定有？)
-/*	//companyIdから情報取得(紐付いている情報全て)
-	public static Company getCompanyAll(Integer companyId) {
-		String sql = "SELECT c.*,at.* FROM company c INNER JOIN attendance_time at ON c.id = at.company_id WHERE c.id = " + companyId;
-		try(ResultSet rs = DBcommon.getResultSet(sql);){
-
-				Company company = new Company();
-				List<AttendanceTime> attendList = new ArrayList<AttendanceTime>();
-				while(rs.next()){
-					company.setId(rs.getInt("id"));
-					company.setCompanyName(rs.getString("company_name"));
-
-					AttendanceTime tempAttend = new AttendanceTime();
-
-					tempAttend.setStartTime(rs.getString("start_time"));
-					tempAttend.setEndTime(rs.getString("end_time"));
-
-					CoreTime coreTime = new CoreTime();
-					coreTime.setCoreTimeStrat(rs.getString("core_time_start"));
-					coreTime.setCoreTimeEnd(rs.getString("core_time_end"));
-					tempAttend.setCoreTime(coreTime);
-
-					attendList.add(tempAttend);
-
-
-
-				}
-
-				company.setAttendanceTime(attendList);
-
-				return company;
-
-			}catch(SQLException e){
-				System.err.println("SQL = " + sql);
-				throw new RuntimeException("処理に失敗しました", e);
-			}
-	}*/
-
 }
