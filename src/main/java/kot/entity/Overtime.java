@@ -1,5 +1,7 @@
 package main.java.kot.entity;
 
+import main.java.kot.common.StrTime;
+
 public class Overtime {
 
 	/*残業ID*/
@@ -17,10 +19,10 @@ public class Overtime {
 
 	//初期値"0:00"で初期化
 	public Overtime(){
-		this.legalOvertime = "0:00";
-		this.statutoryOvertime = "0:00";
-		this.nightOvertime = "0:00";
-		this.statutoryNightOvertime = "0:00";
+		this.legalOvertime = StrTime.ZERO_HOUR;
+		this.statutoryOvertime = StrTime.ZERO_HOUR;
+		this.nightOvertime = StrTime.ZERO_HOUR;
+		this.statutoryNightOvertime = StrTime.ZERO_HOUR;
 	}
 
 	public Overtime(Integer overtimeId,String legalOvertime,String statutoryOvertime,String nightOvertime,String statutoryNightOvertime, Integer dailyId){
