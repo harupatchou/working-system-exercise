@@ -55,7 +55,7 @@
                   <input type="checkbox" name="approval">
                 </td>
                 <td class="check">${schedule.enterStatus}</td>
-                <td class="day"><a href="/kot/employee/Attendance?day_num=${schedule.monthlyDate}">${schedule.monthlyDate}</a></td>
+                <td class="day"><a href="/working/employee/Attendance?day_num=${schedule.monthlyDate}">${schedule.monthlyDate}</a></td>
                 <td class="week">${schedule.weekStr}</td>
                 <td>${schedule.strHoliday}</td>
                 <td>${schedule.workingDay.attendanceStatus.statusName}</td>

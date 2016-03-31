@@ -4,7 +4,7 @@
 <c:import url="/jsp/master/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
-    <form action="/kot/master/EmployeeEdit" method="POST">
+    <form action="/working/master/EmployeeEdit" method="POST">
       <h1>従業員情報編集</h1>
       <span class="warnA">*</span>は必須項目
       <div class="patternA">

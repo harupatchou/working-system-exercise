@@ -21,7 +21,7 @@ div#header-bk {
   width:100%;             /* 横の幅を100% */
 }
 /* ヘッダーの表示領域 */
-div#kot-header {
+div#working-header {
   height: 120px;  /* 縦の表示領域120px */
   width: 95%;   /* 横の幅970px */
   margin: auto;   /* 中央揃え */
@@ -37,7 +37,7 @@ div#main-bk{
 }
 
 /* ボディ */
-div#kot-main{
+div#working-main{
   margin-left: 250px;
 }
 
@@ -59,7 +59,7 @@ div#side-bk{
 }
 
 /* サイド */
-div#kot-side ul{
+div#working-side ul{
   list-style:none;
 }
 }
@@ -83,7 +83,7 @@ div#footer-bk
 }
 
 /* フッターの表示領域 */
-div#kot-footer{
+div#working-footer{
   color:#ffffff;
   height: 50px;          /* 縦幅の指定100px */
   width: 95%;            /* 横の幅970px */

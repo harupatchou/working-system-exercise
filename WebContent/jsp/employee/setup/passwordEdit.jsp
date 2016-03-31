@@ -4,7 +4,7 @@
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
 
-    <form action="/kot/employee/PasswordEdit" method="POST">
+    <form action="/working/employee/PasswordEdit" method="POST">
       <h1>パスワード編集</h1>
       <p>${message}</p>
       <div class="patternA">

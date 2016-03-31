@@ -14,6 +14,6 @@ $(document).ready(function(){
 });
 
 $(document).on("change",".changeMonth",function(){
-	document.monthlyAttendance.action="/kot/employee/MonthlyAttendance";
+	document.monthlyAttendance.action="/working/employee/MonthlyAttendance";
 	document.monthlyAttendance.submit();
 });

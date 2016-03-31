@@ -30,9 +30,9 @@ INSERT INTO attendance_status VALUES (3,'有給');
 INSERT INTO attendance_status VALUES (4,'未入力');
 
 /*従業員情報*/
-INSERT INTO employee VALUES (1, '通常','従業員','rakus2000',1,1);
-INSERT INTO employee VALUES (2, '変形','従業員','rakus2000',1,2);
-INSERT INTO employee VALUES (3, 'フレックス','従業員','rakus2000',1,3);
+INSERT INTO employee VALUES (1, '通常','従業員','user2000',1,1);
+INSERT INTO employee VALUES (2, '変形','従業員','user2000',1,2);
+INSERT INTO employee VALUES (3, 'フレックス','従業員','user2000',1,3);
 INSERT INTO employee VALUES (4, 'A','マスター','master',1,1);
 INSERT INTO employee VALUES (5, 'B','マスター','master',2,2);
 INSERT INTO employee VALUES (6, 'C','マスター','master',3,3);

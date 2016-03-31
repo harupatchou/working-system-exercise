@@ -9,22 +9,22 @@
 <link rel="stylesheet" type="text/css" href="css/login/layout.css">
 <link rel="stylesheet" type="text/css" href="css/login/contents.css">
 <link rel="stylesheet" type="text/css" href="css/login/login.css">
-<title>KOT</title>
+<title>working</title>
 </head>
 <body>
   <div id="content">
     <div id="header-bk">
-      <div id="kot-header">
+      <div id="working-header">
         <c:import url="/jsp/login/common/header.jsp"/>
       </div>
     </div>
     <div id="main-bk">
-      <div id="kot-main">
+      <div id="working-main">
         ${param.content}
       </div>
     </div>
     <div id="footer-bk">
-      <div id="kot-footer">
+      <div id="working-footer">
         <c:import url="/jsp/login/common/footer.jsp"/>
       </div>
     </div>

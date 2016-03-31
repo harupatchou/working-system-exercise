@@ -1,6 +1,6 @@
 $(document).ready(function(){
   var tempData = $("#laborSystem").val();
-  var tempUrl = "return openWin('/kot/window/attendanceTime?laborSystemId="+tempData+"')";
+  var tempUrl = "return openWin('/working/window/attendanceTime?laborSystemId="+tempData+"')";
 
   $("#windowButton").attr('onclick',tempUrl);
 });
@@ -9,7 +9,7 @@ $(document).ready(function(){
 $(function(){
 	$(document).on("change","#laborSystem",function(){
 		var tempData = $("#laborSystem").val();
-		var tempUrl = "return openWin('/kot/window/attendanceTime?laborSystemId="+tempData+"')";
+		var tempUrl = "return openWin('/working/window/attendanceTime?laborSystemId="+tempData+"')";
 
 		$("#windowButton").attr('onclick',tempUrl);
 	});

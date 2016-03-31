@@ -6,7 +6,7 @@
 <%--ここから下にコンテンツを挿入 --%>
 
     <h4 class="subTitle">月次勤務情報</h4>
-    <form action="/kot/master/Calculation" method="POST">
+    <form action="/working/master/Calculation" method="POST">
       <select name="year">
         <c:forEach var="year" items="${selectYear}">
           <option value="${year}">${year}</option>

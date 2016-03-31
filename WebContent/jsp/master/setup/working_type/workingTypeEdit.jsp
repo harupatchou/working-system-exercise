@@ -3,7 +3,7 @@
 <c:import url="/jsp/master/common/base.jsp">
   <c:param name="content">
 <%--ここから下にコンテンツを挿入 --%>
-    <form action="/kot/master/WorkingtypeEdit" method="POST">
+    <form action="/working/master/WorkingtypeEdit" method="POST">
       <h1>従業員種別情報編集</h1>
       <span class="warnA">*</span>は必須項目
       <div class="patternA">

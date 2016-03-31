@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form action="/kot/master" method="GET" id="sideform">
+<form action="/working/master" method="GET" id="sideform">
   <div>
     <ul>
       <li>

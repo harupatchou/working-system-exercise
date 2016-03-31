@@ -12,27 +12,27 @@
 <link rel="stylesheet" type="text/css" href="../css/master/layout.css">
 <link rel="stylesheet" type="text/css" href="../css/master/contents.css">
 <link rel="stylesheet" type="text/css" href="../css/master/a_pattern.css">
-<title>KOT</title>
+<title>working</title>
 </head>
 <body>
   <div id="content">
     <div id="header-bk">
-      <div id="kot-header">
+      <div id="working-header">
         <c:import url="/jsp/master/common/header.jsp"/>
       </div>
     </div>
     <div id="main-bk">
-      <div id="kot-main">
+      <div id="working-main">
         ${param.content}
       </div>
     </div>
     <div id="side-bk">
-      <div id="kot-side">
+      <div id="working-side">
         <c:import url="/jsp/master/common/sideMenu.jsp"/>
       </div>
     </div>
     <%-- <div id="footer-bk">
-      <div id="kot-footer">
+      <div id="working-footer">
         <c:import url="/jsp/master/common/footer.jsp"/>
       </div>
     </div> --%>
