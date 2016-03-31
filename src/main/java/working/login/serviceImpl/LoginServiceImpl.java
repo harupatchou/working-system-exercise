@@ -9,10 +9,10 @@ import main.java.working.dao.CompanyDao;
 import main.java.working.dao.EmployeeDao;
 import main.java.working.entity.Company;
 import main.java.working.entity.Employee;
-import main.java.working.login.service.LoginServise;
+import main.java.working.login.service.LoginService;
 import main.java.working.login.session.LoginSession;
 
-public class LoginServiceImpl implements LoginServise{
+public class LoginServiceImpl implements LoginService{
 
 	//employee_idからログインチェック
 	private static Employee LoginCheckInfo(Integer employeeId){

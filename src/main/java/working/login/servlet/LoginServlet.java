@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import main.java.working.common.service.ServiceConstant;
-import main.java.working.login.service.LoginServise;
+import main.java.working.login.service.LoginService;
 import main.java.working.login.serviceImpl.LoginServiceImpl;
 
 @WebServlet("/login/check")
@@ -18,7 +18,7 @@ public class LoginServlet extends HttpServlet{
 	/* Serviceの呼び出し */
 	private static String serviceInvocation(HttpServletRequest req, HttpServletResponse resp, Integer reqParam){
 		req.setAttribute("reqParam", reqParam);
-		LoginServise loginService = new LoginServiceImpl();
+		LoginService loginService = new LoginServiceImpl();
 		String url = loginService.Login(req, resp);
 		return url;
 	}

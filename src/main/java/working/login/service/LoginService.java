@@ -3,8 +3,8 @@ package main.java.working.login.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface LoginServise{
+public interface LoginService{
 
-	/*LoginSevlet委譲処理*/
+	/*LoginServlet委譲処理*/
 	public String Login(HttpServletRequest req, HttpServletResponse resp);
 }

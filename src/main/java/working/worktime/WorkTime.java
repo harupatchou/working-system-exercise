@@ -2,6 +2,7 @@ package main.java.working.worktime;
 
 import java.util.Date;
 
+/*サンプル用*/
 public class WorkTime {
 
 	private Date workTime;
@@ -12,15 +13,22 @@ public class WorkTime {
 	workTime = new Date(); //"00:00"分をセット。日時はどうしようかな・・・
 	}
 
-	//任意の日時を設定するコンストラクタ
-	/*public WorkTime(WorkTimeEntity entity){
+/*	//任意の日時を設定するコンストラクタ
+	public WorkTime(WorkTimeEntity entity){
 	workTime = entity.getWorkDateTime;
 	}*/
 
+
 	//そのまま返す
 	public Date getDateTime(){
-	return workTime;
+		return workTime;
 	}
+
+	//文字列をDate型にコンバート : 時分
+	public Date getTimeDate(){
+		return null;
+	}
+
 	//workTimeを文字列にコンバート: 時分
 	public String getTimeString(){
 	return "12:34";
