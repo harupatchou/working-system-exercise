@@ -226,6 +226,7 @@ public class AttendanceLogic {
 		return workingAll;
 	}
 
+	//LaborSystem毎の処理を記述
 	private static void setAllWithLaborSystemId(AttendanceData attendanceData) {
 		StrTime strTime = attendanceData.getStrTime();
 		Overtime overtime = attendanceData.getOvertime();
